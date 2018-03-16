@@ -1,0 +1,66 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/ahmed/Compilers/lexical analyzer/Automata/DFATransformer.cpp
+DFATransformer.h
+/home/ahmed/Compilers/lexical analyzer/Automata/DFATransformer.h
+
+/home/ahmed/Compilers/lexical analyzer/Automata/DFATransformer.h
+
+/home/ahmed/Compilers/lexical analyzer/Automata/NFAGenerator.cpp
+NFAGenerator.h
+/home/ahmed/Compilers/lexical analyzer/Automata/NFAGenerator.h
+
+/home/ahmed/Compilers/lexical analyzer/Automata/NFAGenerator.h
+
+/home/ahmed/Compilers/lexical analyzer/Automata/ReducedDFA.cpp
+ReducedDFA.h
+/home/ahmed/Compilers/lexical analyzer/Automata/ReducedDFA.h
+
+/home/ahmed/Compilers/lexical analyzer/Automata/ReducedDFA.h
+
+/home/ahmed/Compilers/lexical analyzer/ErrorHandler.cpp
+ErrorHandler.h
+/home/ahmed/Compilers/lexical analyzer/ErrorHandler.h
+
+/home/ahmed/Compilers/lexical analyzer/ErrorHandler.h
+
+/home/ahmed/Compilers/lexical analyzer/LexicalController.cpp
+LexicalController.h
+/home/ahmed/Compilers/lexical analyzer/LexicalController.h
+
+/home/ahmed/Compilers/lexical analyzer/LexicalController.h
+
+/home/ahmed/Compilers/lexical analyzer/SymbolTable.cpp
+SymbolTable.h
+/home/ahmed/Compilers/lexical analyzer/SymbolTable.h
+
+/home/ahmed/Compilers/lexical analyzer/SymbolTable.h
+
+/home/ahmed/Compilers/lexical analyzer/file services/FileReader.cpp
+FileReader.h
+/home/ahmed/Compilers/lexical analyzer/file services/FileReader.h
+
+/home/ahmed/Compilers/lexical analyzer/file services/FileReader.h
+
+/home/ahmed/Compilers/lexical analyzer/file services/FileWriter.cpp
+FileWriter.h
+/home/ahmed/Compilers/lexical analyzer/file services/FileWriter.h
+
+/home/ahmed/Compilers/lexical analyzer/file services/FileWriter.h
+
+/home/ahmed/Compilers/lexical analyzer/file services/SourceProgramReader.cpp
+SourceProgramReader.h
+/home/ahmed/Compilers/lexical analyzer/file services/SourceProgramReader.h
+
+/home/ahmed/Compilers/lexical analyzer/file services/SourceProgramReader.h
+
+/home/ahmed/Compilers/lexical analyzer/main.cpp
+iostream
+-
+
