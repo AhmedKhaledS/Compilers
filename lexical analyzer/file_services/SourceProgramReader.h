@@ -10,8 +10,12 @@
 
 class Source_program_reader: public File_Reader
 {
+    private:
+        int index;
+        std::string src_program;
     public:
-        std::string read_grammar_rules(std::string file_name);
-        std::string read_source_file(std::string file_name);
+        Source_program_reader();
+        std::string read_next_grammar_rule_line(std::string file_name, int line_num);
+        char get_next_char_from_src_program(std::string file_name);
 };
 #endif //LEXICAL_ANALYZER_SOURCEPROGRAMREADER_H

@@ -3,3 +3,25 @@
 //
 
 #include "GrammarReader.h"
+
+using namespace std;
+
+Grammar_Reader::Grammar_Reader()
+{
+}
+
+string Grammar_Reader::read_next_grammar_rule_line(string file_name, int line_num)
+{
+    if (file_stream.empty())
+        read(file_name);
+
+    if (line_num > file_stream.size() || line_num <= 0)
+        return NULL;
+
+    // Line number is 1-based.
+    return file_stream[line_num - 1];
+}
+char Grammar_Reader::get_next_char_from_src_program(std::string file_name)
+{
+
+}

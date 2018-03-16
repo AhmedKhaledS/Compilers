@@ -11,8 +11,9 @@
 class Grammar_Reader: public File_Reader
 {
     public:
-        std::string read_grammar_rules(std::string file_name) override;
-        std::string read_source_file(std::string file_name) override;
+        Grammar_Reader();
+        std::string read_next_grammar_rule_line(std::string file_name, int line_num) override;
+        char get_next_char_from_src_program(std::string file_name) override;
 };
 
 #endif //LEXICAL_ANALYZER_GRAMMARREADER_H
