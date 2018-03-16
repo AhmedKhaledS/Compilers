@@ -123,87 +123,6 @@ lexical_analyzer/fast:
 	$(MAKE) -f CMakeFiles/lexical_analyzer.dir/build.make CMakeFiles/lexical_analyzer.dir/build
 .PHONY : lexical_analyzer/fast
 
-Automata/DFATransformer.o: Automata/DFATransformer.cpp.o
-
-.PHONY : Automata/DFATransformer.o
-
-# target to build an object file
-Automata/DFATransformer.cpp.o:
-	$(MAKE) -f CMakeFiles/lexical_analyzer.dir/build.make CMakeFiles/lexical_analyzer.dir/Automata/DFATransformer.cpp.o
-.PHONY : Automata/DFATransformer.cpp.o
-
-Automata/DFATransformer.i: Automata/DFATransformer.cpp.i
-
-.PHONY : Automata/DFATransformer.i
-
-# target to preprocess a source file
-Automata/DFATransformer.cpp.i:
-	$(MAKE) -f CMakeFiles/lexical_analyzer.dir/build.make CMakeFiles/lexical_analyzer.dir/Automata/DFATransformer.cpp.i
-.PHONY : Automata/DFATransformer.cpp.i
-
-Automata/DFATransformer.s: Automata/DFATransformer.cpp.s
-
-.PHONY : Automata/DFATransformer.s
-
-# target to generate assembly for a file
-Automata/DFATransformer.cpp.s:
-	$(MAKE) -f CMakeFiles/lexical_analyzer.dir/build.make CMakeFiles/lexical_analyzer.dir/Automata/DFATransformer.cpp.s
-.PHONY : Automata/DFATransformer.cpp.s
-
-Automata/NFAGenerator.o: Automata/NFAGenerator.cpp.o
-
-.PHONY : Automata/NFAGenerator.o
-
-# target to build an object file
-Automata/NFAGenerator.cpp.o:
-	$(MAKE) -f CMakeFiles/lexical_analyzer.dir/build.make CMakeFiles/lexical_analyzer.dir/Automata/NFAGenerator.cpp.o
-.PHONY : Automata/NFAGenerator.cpp.o
-
-Automata/NFAGenerator.i: Automata/NFAGenerator.cpp.i
-
-.PHONY : Automata/NFAGenerator.i
-
-# target to preprocess a source file
-Automata/NFAGenerator.cpp.i:
-	$(MAKE) -f CMakeFiles/lexical_analyzer.dir/build.make CMakeFiles/lexical_analyzer.dir/Automata/NFAGenerator.cpp.i
-.PHONY : Automata/NFAGenerator.cpp.i
-
-Automata/NFAGenerator.s: Automata/NFAGenerator.cpp.s
-
-.PHONY : Automata/NFAGenerator.s
-
-# target to generate assembly for a file
-Automata/NFAGenerator.cpp.s:
-	$(MAKE) -f CMakeFiles/lexical_analyzer.dir/build.make CMakeFiles/lexical_analyzer.dir/Automata/NFAGenerator.cpp.s
-.PHONY : Automata/NFAGenerator.cpp.s
-
-Automata/ReducedDFA.o: Automata/ReducedDFA.cpp.o
-
-.PHONY : Automata/ReducedDFA.o
-
-# target to build an object file
-Automata/ReducedDFA.cpp.o:
-	$(MAKE) -f CMakeFiles/lexical_analyzer.dir/build.make CMakeFiles/lexical_analyzer.dir/Automata/ReducedDFA.cpp.o
-.PHONY : Automata/ReducedDFA.cpp.o
-
-Automata/ReducedDFA.i: Automata/ReducedDFA.cpp.i
-
-.PHONY : Automata/ReducedDFA.i
-
-# target to preprocess a source file
-Automata/ReducedDFA.cpp.i:
-	$(MAKE) -f CMakeFiles/lexical_analyzer.dir/build.make CMakeFiles/lexical_analyzer.dir/Automata/ReducedDFA.cpp.i
-.PHONY : Automata/ReducedDFA.cpp.i
-
-Automata/ReducedDFA.s: Automata/ReducedDFA.cpp.s
-
-.PHONY : Automata/ReducedDFA.s
-
-# target to generate assembly for a file
-Automata/ReducedDFA.cpp.s:
-	$(MAKE) -f CMakeFiles/lexical_analyzer.dir/build.make CMakeFiles/lexical_analyzer.dir/Automata/ReducedDFA.cpp.s
-.PHONY : Automata/ReducedDFA.cpp.s
-
 ErrorHandler.o: ErrorHandler.cpp.o
 
 .PHONY : ErrorHandler.o
@@ -284,6 +203,60 @@ SymbolTable.s: SymbolTable.cpp.s
 SymbolTable.cpp.s:
 	$(MAKE) -f CMakeFiles/lexical_analyzer.dir/build.make CMakeFiles/lexical_analyzer.dir/SymbolTable.cpp.s
 .PHONY : SymbolTable.cpp.s
+
+automata/DFATransformer.o: automata/DFATransformer.cpp.o
+
+.PHONY : automata/DFATransformer.o
+
+# target to build an object file
+automata/DFATransformer.cpp.o:
+	$(MAKE) -f CMakeFiles/lexical_analyzer.dir/build.make CMakeFiles/lexical_analyzer.dir/automata/DFATransformer.cpp.o
+.PHONY : automata/DFATransformer.cpp.o
+
+automata/DFATransformer.i: automata/DFATransformer.cpp.i
+
+.PHONY : automata/DFATransformer.i
+
+# target to preprocess a source file
+automata/DFATransformer.cpp.i:
+	$(MAKE) -f CMakeFiles/lexical_analyzer.dir/build.make CMakeFiles/lexical_analyzer.dir/automata/DFATransformer.cpp.i
+.PHONY : automata/DFATransformer.cpp.i
+
+automata/DFATransformer.s: automata/DFATransformer.cpp.s
+
+.PHONY : automata/DFATransformer.s
+
+# target to generate assembly for a file
+automata/DFATransformer.cpp.s:
+	$(MAKE) -f CMakeFiles/lexical_analyzer.dir/build.make CMakeFiles/lexical_analyzer.dir/automata/DFATransformer.cpp.s
+.PHONY : automata/DFATransformer.cpp.s
+
+automata/ReducedDFA.o: automata/ReducedDFA.cpp.o
+
+.PHONY : automata/ReducedDFA.o
+
+# target to build an object file
+automata/ReducedDFA.cpp.o:
+	$(MAKE) -f CMakeFiles/lexical_analyzer.dir/build.make CMakeFiles/lexical_analyzer.dir/automata/ReducedDFA.cpp.o
+.PHONY : automata/ReducedDFA.cpp.o
+
+automata/ReducedDFA.i: automata/ReducedDFA.cpp.i
+
+.PHONY : automata/ReducedDFA.i
+
+# target to preprocess a source file
+automata/ReducedDFA.cpp.i:
+	$(MAKE) -f CMakeFiles/lexical_analyzer.dir/build.make CMakeFiles/lexical_analyzer.dir/automata/ReducedDFA.cpp.i
+.PHONY : automata/ReducedDFA.cpp.i
+
+automata/ReducedDFA.s: automata/ReducedDFA.cpp.s
+
+.PHONY : automata/ReducedDFA.s
+
+# target to generate assembly for a file
+automata/ReducedDFA.cpp.s:
+	$(MAKE) -f CMakeFiles/lexical_analyzer.dir/build.make CMakeFiles/lexical_analyzer.dir/automata/ReducedDFA.cpp.s
+.PHONY : automata/ReducedDFA.cpp.s
 
 file_services/FileReader.o: file_services/FileReader.cpp.o
 
@@ -402,15 +375,6 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... lexical_analyzer"
-	@echo "... Automata/DFATransformer.o"
-	@echo "... Automata/DFATransformer.i"
-	@echo "... Automata/DFATransformer.s"
-	@echo "... Automata/NFAGenerator.o"
-	@echo "... Automata/NFAGenerator.i"
-	@echo "... Automata/NFAGenerator.s"
-	@echo "... Automata/ReducedDFA.o"
-	@echo "... Automata/ReducedDFA.i"
-	@echo "... Automata/ReducedDFA.s"
 	@echo "... ErrorHandler.o"
 	@echo "... ErrorHandler.i"
 	@echo "... ErrorHandler.s"
@@ -420,6 +384,12 @@ help:
 	@echo "... SymbolTable.o"
 	@echo "... SymbolTable.i"
 	@echo "... SymbolTable.s"
+	@echo "... automata/DFATransformer.o"
+	@echo "... automata/DFATransformer.i"
+	@echo "... automata/DFATransformer.s"
+	@echo "... automata/ReducedDFA.o"
+	@echo "... automata/ReducedDFA.i"
+	@echo "... automata/ReducedDFA.s"
 	@echo "... file_services/FileReader.o"
 	@echo "... file_services/FileReader.i"
 	@echo "... file_services/FileReader.s"

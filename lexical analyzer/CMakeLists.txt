@@ -3,4 +3,11 @@ project(lexical_analyzer)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(lexical_analyzer main.cpp "file services/FileHandler.h" "file services/FileReader.cpp" "file services/FileReader.h" "file services/FileWriter.cpp" "file services/FileWriter.h" "file services/SourceProgramReader.cpp" "file services/SourceProgramReader.h" LexicalController.cpp LexicalController.h SymbolTable.cpp SymbolTable.h ErrorHandler.cpp ErrorHandler.h automata/NFAGenerator.cpp automata/NFAGenerator.h automata/DFATransformer.cpp automata/DFATransformer.h automata/ReducedDFA.cpp automata/ReducedDFA.h)
+set(SOURCEFILES main.cpp file_services/FileReader.cpp  file_services/FileWriter.cpp file_services/SourceProgramReader.cpp
+                LexicalController.cpp SymbolTable.cpp ErrorHandler.cpp automata/DFATransformer.cpp automata/ReducedDFA.cpp)
+
+set(HEADERFILES file_services/FileReader.h file_services/FileWriter.h file_services/SourceProgramReader.h
+                LexicalController.h SymbolTable.h ErrorHandler.h automata/NFAGenerator.h  automata/DFATransformer.h
+                automata/ReducedDFA.h)
+
+add_executable(lexical_analyzer ${SOURCEFILES})

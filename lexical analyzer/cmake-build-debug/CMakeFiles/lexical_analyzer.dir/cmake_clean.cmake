@@ -6,9 +6,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/lexical_analyzer.dir/LexicalController.cpp.o"
   "CMakeFiles/lexical_analyzer.dir/SymbolTable.cpp.o"
   "CMakeFiles/lexical_analyzer.dir/ErrorHandler.cpp.o"
-  "CMakeFiles/lexical_analyzer.dir/Automata/NFAGenerator.cpp.o"
-  "CMakeFiles/lexical_analyzer.dir/Automata/DFATransformer.cpp.o"
-  "CMakeFiles/lexical_analyzer.dir/Automata/ReducedDFA.cpp.o"
+  "CMakeFiles/lexical_analyzer.dir/automata/DFATransformer.cpp.o"
+  "CMakeFiles/lexical_analyzer.dir/automata/ReducedDFA.cpp.o"
   "lexical_analyzer.pdb"
   "lexical_analyzer"
 )

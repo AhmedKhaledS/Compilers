@@ -4,15 +4,14 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/ahmed/Compilers/lexical analyzer/Automata/DFATransformer.cpp" "/home/ahmed/Compilers/lexical analyzer/cmake-build-debug/CMakeFiles/lexical_analyzer.dir/Automata/DFATransformer.cpp.o"
-  "/home/ahmed/Compilers/lexical analyzer/Automata/NFAGenerator.cpp" "/home/ahmed/Compilers/lexical analyzer/cmake-build-debug/CMakeFiles/lexical_analyzer.dir/Automata/NFAGenerator.cpp.o"
-  "/home/ahmed/Compilers/lexical analyzer/Automata/ReducedDFA.cpp" "/home/ahmed/Compilers/lexical analyzer/cmake-build-debug/CMakeFiles/lexical_analyzer.dir/Automata/ReducedDFA.cpp.o"
   "/home/ahmed/Compilers/lexical analyzer/ErrorHandler.cpp" "/home/ahmed/Compilers/lexical analyzer/cmake-build-debug/CMakeFiles/lexical_analyzer.dir/ErrorHandler.cpp.o"
   "/home/ahmed/Compilers/lexical analyzer/LexicalController.cpp" "/home/ahmed/Compilers/lexical analyzer/cmake-build-debug/CMakeFiles/lexical_analyzer.dir/LexicalController.cpp.o"
   "/home/ahmed/Compilers/lexical analyzer/SymbolTable.cpp" "/home/ahmed/Compilers/lexical analyzer/cmake-build-debug/CMakeFiles/lexical_analyzer.dir/SymbolTable.cpp.o"
-  "/home/ahmed/Compilers/lexical analyzer/file services/FileReader.cpp" "/home/ahmed/Compilers/lexical analyzer/cmake-build-debug/CMakeFiles/lexical_analyzer.dir/file_services/FileReader.cpp.o"
-  "/home/ahmed/Compilers/lexical analyzer/file services/FileWriter.cpp" "/home/ahmed/Compilers/lexical analyzer/cmake-build-debug/CMakeFiles/lexical_analyzer.dir/file_services/FileWriter.cpp.o"
-  "/home/ahmed/Compilers/lexical analyzer/file services/SourceProgramReader.cpp" "/home/ahmed/Compilers/lexical analyzer/cmake-build-debug/CMakeFiles/lexical_analyzer.dir/file_services/SourceProgramReader.cpp.o"
+  "/home/ahmed/Compilers/lexical analyzer/automata/DFATransformer.cpp" "/home/ahmed/Compilers/lexical analyzer/cmake-build-debug/CMakeFiles/lexical_analyzer.dir/automata/DFATransformer.cpp.o"
+  "/home/ahmed/Compilers/lexical analyzer/automata/ReducedDFA.cpp" "/home/ahmed/Compilers/lexical analyzer/cmake-build-debug/CMakeFiles/lexical_analyzer.dir/automata/ReducedDFA.cpp.o"
+  "/home/ahmed/Compilers/lexical analyzer/file_services/FileReader.cpp" "/home/ahmed/Compilers/lexical analyzer/cmake-build-debug/CMakeFiles/lexical_analyzer.dir/file_services/FileReader.cpp.o"
+  "/home/ahmed/Compilers/lexical analyzer/file_services/FileWriter.cpp" "/home/ahmed/Compilers/lexical analyzer/cmake-build-debug/CMakeFiles/lexical_analyzer.dir/file_services/FileWriter.cpp.o"
+  "/home/ahmed/Compilers/lexical analyzer/file_services/SourceProgramReader.cpp" "/home/ahmed/Compilers/lexical analyzer/cmake-build-debug/CMakeFiles/lexical_analyzer.dir/file_services/SourceProgramReader.cpp.o"
   "/home/ahmed/Compilers/lexical analyzer/main.cpp" "/home/ahmed/Compilers/lexical analyzer/cmake-build-debug/CMakeFiles/lexical_analyzer.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
