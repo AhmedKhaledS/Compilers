@@ -11,7 +11,7 @@ Source_program_reader::Source_program_reader()
     index = 0;
 }
 
-char Source_program_reader::get_next_char_from_src_program(std::string file_name)
+char Source_program_reader::get_next_char_from_src_program(const std::string file_name)
 {
     if (file_stream.empty())
     {
@@ -26,5 +26,5 @@ char Source_program_reader::get_next_char_from_src_program(std::string file_name
     return src_program[index++];
 }
 
-string Source_program_reader::read_next_grammar_rule_line(string file_name, int line_num)
+string Source_program_reader::read_next_grammar_rule_line(const string file_name, const int line_num)
 {}

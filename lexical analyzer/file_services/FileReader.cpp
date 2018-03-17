@@ -10,7 +10,7 @@ using namespace std;
 File_Reader::File_Reader()
 {}
 
-std::vector<std::string> File_Reader::read(std::string file_name)
+std::vector<std::string> File_Reader::read(const std::string file_name)
 {
     string line;
 
@@ -25,5 +25,5 @@ std::vector<std::string> File_Reader::read(std::string file_name)
     return file_stream;
 }
 
-void File_Reader::write(std::string file_name, std::vector<std::string> data_stream)
+void File_Reader::write(const std::string file_name, const std::vector<std::string> data_stream)
 {}
