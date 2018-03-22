@@ -9,16 +9,16 @@
 class Transition {
 
     public:
+
         Transition(int destination,char value);
 
         int get_destination();
-
         char get_value();
 
 
     private:
-        int destination;
 
+        int destination;
         char value;
 
 

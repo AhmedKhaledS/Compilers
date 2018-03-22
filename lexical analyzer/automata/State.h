@@ -23,6 +23,7 @@ class State {
         bool is_acceptance_state();
 
     private:
+
         int state_number;
         bool acceptance_state;
         std::vector<Transition> transitions;
