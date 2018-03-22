@@ -4,9 +4,10 @@
 
 #include <algorithm>
 #include "ReducedDFA.h"
+#include "TransitionTable.h"
 
 
-Minimize_DFA::Minimize_DFA(std::vector<std::vector<DFANode>> dfa_graph)
+Minimize_DFA::Minimize_DFA(std::vector<std::vector<std::pair<DFANode,char>>> dfa_graph)
 {
     Graph = dfa_graph;
     set_up_bool_matrix();
@@ -22,7 +23,7 @@ void Minimize_DFA::set_up_bool_matrix()
         Cells_to_be_marked.push_back(temp);
     }
     for(int x = 0 ; x <= Graph.size() ; x ++){
-        States ; //get_dfa_node(int id)
+        States = *get_dfa_node(int id);
     }
 }
 
@@ -88,7 +89,7 @@ bool Minimize_DFA::check_pair_compatibility(int i , int j)
 
 
     for(char x : Common_Transitions){
-        DFANode temp1 /* = Next_State(i , x)*/;
+        DFANode temp1 = new DFANode(); /* = Next_State(i , x)*/;
         DFANode temp2 /* = Next_State(j , x)*/;
         if( Cells_to_be_marked[temp1.id][temp2.id] == true ||
                 Cells_to_be_marked[temp2.id][temp1.id] == true ){
