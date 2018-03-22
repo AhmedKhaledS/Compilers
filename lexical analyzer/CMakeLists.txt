@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(SOURCEFILES main.cpp file_services/FileReader.cpp  file_services/FileWriter.cpp file_services/SourceProgramReader.cpp
                 LexicalController.cpp SymbolTable.cpp ErrorHandler.cpp automata/Transition.cpp automata/State.cpp automata/NFAGenerator.cpp automata/NFA.cpp automata/DFATransformer.cpp automata/ReducedDFA.cpp file_services/GrammarReader.cpp file_services/GrammarReader.h automata/DFANode.h automata/TransitionTable.cpp automata/TransitionTable.h automata/DFANode.cpp)
 
-set(HEADERFILES file_services/FileReader.h file_services/FileWriter.h file_services/SourceProgramReader.h
+set(HEADERFILES file_services/FileHandler.h file_services/FileReader.h file_services/FileWriter.h file_services/SourceProgramReader.h
                 LexicalController.h SymbolTable.h ErrorHandler.h automata/State.h automata/Transition.h automata/NFAGenerator.h automata/NFAGenerator.h  automata/DFATransformer.h
                 automata/ReducedDFA.h automata/NFA.h)
 
