@@ -13,20 +13,22 @@
 class Minimize_DFA
 {
     private:
-    int marked_count;
+    int marked_count = 0 ;
     std::vector<std::vector<bool>> Cells_to_be_marked;
     std::vector<std::vector<DFANode>> Graph ;
     std::vector<DFANode> States;
-    std::vector<DFANode> Final_Unmarked_States;
-    // here we will need a boolean Myhill_Nerode;
-    void Myhill_Nerode_Iteration(int it);
+    std::vector<std::pair<int,int>> Unmatched_States;
     void set_up_bool_matrix();
-    void merge_final_states();
+    void Myhill_Nerode();
+    int Myhill_Nerode_Iteration();
+    bool check_pair_compatibility(int i , int j);
+    void determine_Final_Unmatched_States();
+    std::vector<std::vector<DFANode>> merge_final_states();
 
     public:
 
     Minimize_DFA(std::vector<std::vector<DFANode>> dfa_graph);
-    std::vector<std::vector> Calculate_Minimum_DFA();
+    std::vector<std::vector<DFANode>> Calculate_Minimum_DFA();
 };
 
 #endif //LEXICAL_ANALYZER_REDUCEDDFA_H
