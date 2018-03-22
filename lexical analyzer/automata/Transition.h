@@ -9,8 +9,18 @@
 class Transition {
 
     public:
-    int destination;
-    char value;
+        Transition(int destination,char value);
+
+        int get_destination();
+
+        char get_value();
+
+
+    private:
+        int destination;
+
+        char value;
+
 
 };
 
