@@ -4,24 +4,29 @@
 
 #include "State.h"
 
-State::State(int state_number){
+State::State(int state_number)
+{
     this->state_number = state_number;
     this->acceptance_state = false;
 }
 
-void State::add_transition(Transition T) {
+void State::add_transition(Transition T)
+{
     transitions.push_back(T);
 }
 
-std::vector<Transition> State::get_transitions() {
+std::vector<Transition> State::get_transitions()
+{
     return transitions;
 }
 
-int State::get_state_number() {
+int State::get_state_number()
+{
     return this->state_number;
 }
 
-void State::set_accepted() {
+void State::set_accepted()
+{
     this->acceptance_state = true;
 }
 

@@ -31,21 +31,13 @@ int main()
 
     //DFATransformer dt;
     TransitionTable t;
-    DFANode d_node;
-    d_node.acceptance_state = false;
-    d_node.id = 1;
-    d_node.marked= true;
-    d_node.registered_in_transition_table = true;
+    DFANode d_node(false, 1, true, true);
 
-    DFANode entry_node;
-    entry_node.acceptance_state = true;
-    entry_node.id = 2;
-    entry_node.marked= true;
-    entry_node.registered_in_transition_table = true;
-    t.add(d_node, 'a', entry_node);
+    DFANode entry_node(true, 2, true, true);
+    t.add(d_node, 'b', &entry_node);
 
-    if (t.search(d_node))
-        cout << "Found \n id= " << t.get_entry(d_node, 'b').id;
+    if (t.search(&d_node))
+        cout << "Found \n id= " << t.get_entry(&d_node, 'b')->id;
     else
         cout << "Error \n";
 

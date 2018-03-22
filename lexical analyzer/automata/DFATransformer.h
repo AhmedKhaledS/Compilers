@@ -14,9 +14,12 @@ class DFATransformer
 {
 
     private:
-        std::map<int, DFANode> id_to_node;
+        std::map<int, DFANode*> id_to_node;
+
+
     public:
         DFATransformer();
-        DFANode get_dfa_node(int id);
+        std::vector< std::vector<DFANode> > transform(std::vector<Transition> nfa_graph);
+        DFANode* get_dfa_node(int id);
 };
 #endif //LEXICAL_ANALYZER_DFATRANSFORMER_H
