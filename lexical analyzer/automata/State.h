@@ -8,7 +8,8 @@
 #include "Transition.h"
 #include <vector>
 
-class State {
+class State
+{
 
     public:
 

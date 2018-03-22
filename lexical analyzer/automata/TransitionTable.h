@@ -19,7 +19,7 @@ class TransitionTable
     public:
         TransitionTable();
         void add(DFANode node, char input, DFANode *entry_node);
-        DFANode get_entry(DFANode *dfa_node, char input);
+        DFANode* get_entry(DFANode *dfa_node, char input);
         bool search(DFANode *node);
 };
 

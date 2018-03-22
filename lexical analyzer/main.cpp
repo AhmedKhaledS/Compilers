@@ -37,7 +37,7 @@ int main()
     t.add(d_node, 'b', &entry_node);
 
     if (t.search(&d_node))
-        cout << "Found \n id= " << t.get_entry(&d_node, 'b').id;
+        cout << "Found \n id= " << t.get_entry(&d_node, 'b')->id;
     else
         cout << "Error \n";
 
