@@ -8,7 +8,7 @@
 #include <vector>
 #include <string>
 #include "DFANode.h"
-
+#include "DFATransformer.h"
 
 class Minimize_DFA
 {
@@ -16,7 +16,7 @@ class Minimize_DFA
     int marked_count = 0 ;
     std::vector<std::vector<bool>> Cells_to_be_marked;
     std::vector<std::vector<std::pair<DFANode,char>>> Graph ;
-    std::vector<DFANode> States;
+    std::vector<DFANode> State_Nodes;
     std::vector<std::pair<int,int>> Unmatched_States;
     void set_up_bool_matrix();
     void Myhill_Nerode();
@@ -27,7 +27,7 @@ class Minimize_DFA
 
     public:
 
-    Minimize_DFA(std::vector<std::vector<std::pair<DFANode,char>>> dfa_graph);
+    Minimize_DFA(/*std::vector<std::vector<std::pair<DFANode,char>>> dfa_graph*/);
     std::vector<std::vector<DFANode>> Calculate_Minimum_DFA();
 };
 
