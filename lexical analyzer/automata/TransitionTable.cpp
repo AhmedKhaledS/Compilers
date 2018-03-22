@@ -20,11 +20,11 @@ bool TransitionTable::search(DFANode *node)
     return node->registered_in_transition_table;
 }
 
-DFANode TransitionTable::get_entry(DFANode *dfa_node, char input)
+DFANode* TransitionTable::get_entry(DFANode *dfa_node, char input)
 {
-    if (t_table.find({dfa_node->id, input}) != t_table.end());
-        return *t_table[{dfa_node->id, input}];
+    if (t_table.find({dfa_node->id, input}) != t_table.end())
+        return t_table[{dfa_node->id, input}];
 
     // Don't forget check for NULL value in the invoking function.
-    return *t_table[{dfa_node->id, input}];
+    return t_table[{dfa_node->id, input}];
 }

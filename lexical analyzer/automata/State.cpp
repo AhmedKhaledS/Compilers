@@ -5,7 +5,8 @@
 
 #include "State.h"
 
-State::State(int state_number) {
+State::State(int state_number)
+{
     this->state_number = state_number;
     this->acceptance_state = false;
 }
@@ -14,7 +15,8 @@ void State::set_state_number(int state_number) {
     this->state_number = state_number;
 }
 
-int State::get_state_number() {
+int State::get_state_number()
+{
     return this->state_number;
 }
 
