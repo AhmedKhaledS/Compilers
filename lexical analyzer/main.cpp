@@ -5,12 +5,15 @@
 #include "file_services/FileWriter.h"
 #include "file_services/GrammarReader.h"
 #include "file_services/SourceProgramReader.h"
+#include "LexicalController.h"
 #include "SymbolTable.h"
 #include "automata/DFATransformer.h"
 #include <fstream>
 
-#include "automata/Transition.h"
-#include "automata/State.h"
+#include "automata/NFAOperations.h"
+#include "automata/NFA.h"
+#include "automata/NFAGenerator.h"
+
 
 using namespace std;
 
@@ -30,7 +33,7 @@ int main()
 //    cout << sr.get_next_char_from_src_program("dataa.lan");
 
     //DFATransformer dt;
-    TransitionTable t;
+    /*TransitionTable t;
     DFANode d_node(false, 1, true, true);
 
     DFANode entry_node(true, 2, true, true);
@@ -39,7 +42,7 @@ int main()
     if (t.search(&d_node))
         cout << "Found \n id= " << t.get_entry(&d_node, 'b').id;
     else
-        cout << "Error \n";
+        cout << "Error \n";*/
 
 
 /*    Transition t_1;
@@ -61,5 +64,20 @@ int main()
         cout << x[i].value << endl;
     }
 */
+    Grammar_Reader r;
+    string test =  r.read_next_grammar_rule_line("grammar.txt", 1);
+    NFAGenerator generator;
+    NFA result = generator.RE_to_NFA(test);
+
+    vector<State> states = (*result.get_states());
+    for (int i = 0; i < states.size(); i++) {
+        cout << "S " << states[i].get_state_number() << endl;
+        vector<pair <State, char>> transitions = *states[i].get_transitions();
+        for (int j = 0; j < transitions.size(); j++) {
+            cout << " T" << j << " " << transitions[j].first.get_state_number()
+                                     << " " << transitions[j].second << endl;
+        }
+    }
+
     return 0;
 }
