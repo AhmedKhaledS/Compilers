@@ -3,3 +3,13 @@
 //
 
 #include "LexicalController.h"
+
+#include <string>
+#include <vector>
+
+using namespace std;
+
+void Lexical_controller::run(const string grammar_rule_file, const string src_program_file)
+{
+
+}
