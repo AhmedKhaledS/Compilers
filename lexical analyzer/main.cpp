@@ -30,17 +30,21 @@ int main()
 //    cout << sr.get_next_char_from_src_program("dataa.lan");
 
     //DFATransformer dt;
-    TransitionTable t;
-    DFANode d_node(false, 1, true, true);
+//    TransitionTable t;
+    vector<State> x;
+    DFANode d_node(x, false, 1, true, true);
+//
+//    DFANode entry_node(true, 2, true, true);
+//    t.add(d_node, 'b', &entry_node);
+//
+//    if (t.search(&d_node))
+//        cout << "Found \n id= " << t.get_entry(&d_node, 'b')->id;
+//    else
+//        cout << "Error \n";
 
-    DFANode entry_node(true, 2, true, true);
-    t.add(d_node, 'b', &entry_node);
-
-    if (t.search(&d_node))
-        cout << "Found \n id= " << t.get_entry(&d_node, 'b')->id;
-    else
-        cout << "Error \n";
-
+    DFATransformer t;
+    t.add_dfa_node(&d_node, 1);
+    cout << t.get_dfa_node(1)->id << endl;
 
 /*    Transition t_1;
     t_1.destination = 2;
