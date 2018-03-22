@@ -11,6 +11,7 @@
 class DFANode
 {
     public:
+        DFANode(bool acc_state, bool marked, bool reg_in_t_table, int id);
         //std::vector<Node> dfa_state;
 
         /* Identifying whether it's an acceptance state or not. */
