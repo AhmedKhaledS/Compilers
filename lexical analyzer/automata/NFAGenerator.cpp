@@ -72,7 +72,7 @@ NFA NFAGenerator::generate_machine() {
     NFA result;
     NFA temp = grammar[0];
 
-    helper.copy_prev_states(&result, *temp.get_states());
+    helper.copy_prev_states(&result, *temp.get_states(), 1);
 
     State s_1(0);
     s_1.add_transition(make_pair((*result.get_states())[0], EPSILON));
