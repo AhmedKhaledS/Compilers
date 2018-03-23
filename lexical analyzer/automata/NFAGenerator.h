@@ -20,8 +20,6 @@ class NFAGenerator
 
         NFA generate_machine();
 
-        void handle_assignment();
-
         bool is_operation(char c);
 
         void perform_operation(stack<NFA>& operands, stack<char>& operations);

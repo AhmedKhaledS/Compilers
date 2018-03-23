@@ -43,25 +43,44 @@ void NFAGenerator::generate_grammar(string expression) {
     // 2. Find Type
     if(is_type(expanded_version, KEY_WORDS)) {
         cout << "KEY_WORDS" << endl;
+        string key_words = expanded_version.substr(1,expanded_version.length() - 2);
+        cout << "KEY_WORDS:" << key_words << endl;
+        std::vector<std::string> tokens =
+                helper.tokenaize(key_words, ' ');
+        for (int i = 0; i < tokens.size(); ++i) {
+            if(tokens[i] == "") continue;
+            tokens[i] = helper.insert_concatination(tokens[i]);
+            cout << i << "K " << tokens[i] << endl;
+            NFA result = RE_to_NFA(tokens[i]);
+            grammar.push_back(result);
+        }
 
     } else if(is_type(expanded_version, PUNCS)) {
         cout << "PUNCS" << endl;
+        string puncs_1 = expanded_version.substr(1,expanded_version.length() - 2);
+        cout << "PUNCS_1:" << puncs_1 << endl;
+
+
+
+        std::vector<std::string> tokens =
+                helper.tokenaize(puncs_1, ' ');
+        for (int i = 0; i < tokens.size(); ++i) {
+            if(tokens[i] == "") continue;
+            // tokens[i] = helper.insert_concatination(tokens[i]);
+            cout << i << "P " << tokens[i] << endl;
+            NFA result = RE_to_NFA(tokens[i]);
+            grammar.push_back(result);
+        }
+
 
     } else if (is_type(expanded_version, EXPRSSION)) {
 
         cout << "EXPRSSION" << endl;
 
-        std::stringstream test(expanded_version);
-        std::string segment;
-        std::vector<std::string> tokens;
 
-        while(std::getline(test, segment, '='))
-        {
-            tokens.push_back(segment);
-        }
+        std::vector<std::string> tokens = helper.tokenaize(expanded_version, '=');
 
         NFA result = RE_to_NFA(tokens[1]);
-
         grammar.push_back(result);
 
     } else {
@@ -78,14 +97,10 @@ NFA NFAGenerator::generate_machine() {
     return result;
 }
 
-void NFAGenerator::handle_assignment()
-{
-
-}
 
 bool NFAGenerator::is_operation(char c)
 {
-    return c == '(' || c == ')' || c == '.' || c == '|' || c == '*';
+    return c == '(' || c == ')' || c == '@' || c == '|' || c == '*' || c == '+';
 }
 
 void NFAGenerator::perform_operation(stack<NFA>& operands, stack<char>& operations)
@@ -103,7 +118,7 @@ void NFAGenerator::perform_operation(stack<NFA>& operands, stack<char>& operatio
         case ('|'):
             operands.push(nfa_operation.oring(y, x));
             break;
-        case ('.'):
+        case ('@'):
             operands.push(nfa_operation.concatenating(y, x));
             break;
     }
@@ -120,14 +135,18 @@ NFA NFAGenerator::RE_to_NFA(string expression)
 
     for (unsigned int i = 0; i < expression.length(); i++) {
 
-        if (!is_operation(expression[i])) {
+        if(expression[i] == ' ') continue;
+
+        if(expression[i] == '\\') {
+            i++;
+            operand += expression[i];
+        } else if (!is_operation(expression[i])) {
             /// TO BE EDITED: Operand collection depends on context
             operand += expression[i];
         }
         else {
 
             if (operand != EMPTY_OPERAND) {
-                /// TO BE EDITED: Adding a hash map for predefined operands
                 operands.push(nfa_operation.create_NFA(operand[0]));
                 operand = EMPTY_OPERAND;
             }
@@ -143,16 +162,20 @@ NFA NFAGenerator::RE_to_NFA(string expression)
                 }
                 operations.pop();
             }
-            else if (expression[i] == '*') {
+            else if (expression[i] == '*' || expression[i] == '+') {
 
                 NFA x = operands.top();
                 operands.pop();
-                operands.push(nfa_operation.kleene_closuring(x));
+                if(expression[i] == '*') {
+                    operands.push(nfa_operation.kleene_closuring(x));
+                } else {
+                    operands.push(nfa_operation.positive_closuring(x));
+                }
             }
             else {
                 if (operations.size() != 0) {
                     if(expression[i] == '|') {
-                        while (operations.size() > 0 && operations.top() == '.') {
+                        while (operations.size() > 0 && operations.top() == '@') {
                             perform_operation(operands, operations);
                         }
                     } else {

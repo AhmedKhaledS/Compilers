@@ -155,6 +155,14 @@ void NFAOperations::copy_prev_states(NFA *nfa, std::vector<State> x, std::vector
     (*nfa).add_state(y);
 }
 
+
+NFA NFAOperations::positive_closuring(NFA x) {
+    NFA kleen = kleene_closuring(x);
+    NFA result = concatenating(x , kleen);
+    return result;
+}
+
+
 NFA NFAOperations::oring_all(vector<NFA> all) {
 
     NFA result;
@@ -172,3 +180,5 @@ NFA NFAOperations::oring_all(vector<NFA> all) {
 
     return result;
 }
+
+

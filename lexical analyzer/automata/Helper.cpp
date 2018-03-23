@@ -58,3 +58,46 @@ string Helper::normalize_classes(string expression) {
 
     return output;
 }
+
+string Helper::insert_concatination(string expression) {
+
+    string result = "";
+
+    if(expression.length() == 1) {
+        return expression;
+    }
+
+    result += expression[0];
+
+    for (int i = 1; i < expression.length(); ++i) {
+        result += "|";
+        result += expression[i];
+    }
+
+    return result;
+}
+
+vector<string> Helper::tokenaize(string s, char delim) {
+
+    std::stringstream test(s);
+    std::string segment;
+    std::vector<std::string> tokens;
+
+    while(std::getline(test, segment, delim))
+    {
+        tokens.push_back(segment);
+    }
+
+    return tokens;
+}
+
+string Helper::remove_escape_char(string s) {
+    string result = "";
+    for (int i = 0; i < s.length(); i++) {
+        if(s[i] == '\\')
+            continue;
+
+        result += s[i];
+    }
+    return result;
+}

@@ -18,6 +18,7 @@ class NFAOperations {
         NFA oring(NFA x, NFA y);
         NFA concatenating(NFA x, NFA y);
         NFA kleene_closuring(NFA x);
+        NFA positive_closuring(NFA x);
         NFA oring_all(vector<NFA> all);
 
         void copy_prev_states(NFA *nfa, std::vector<State> x, int offset);

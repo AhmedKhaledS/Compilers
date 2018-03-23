@@ -80,9 +80,7 @@ int main()
 //    }
 
     NFAGenerator generator;
-    generator.generate_grammar("id=a|b");
-    generator.generate_grammar("id=a|b");
-    generator.generate_grammar("id=a|b");
+    generator.generate_grammar("id=a+");
     NFA machine = generator.generate_machine();
     vector<State> states = (*machine.get_states());
     for (int i = 0; i < states.size(); i++) {
