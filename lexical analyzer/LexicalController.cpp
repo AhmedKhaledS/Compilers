@@ -33,8 +33,8 @@ void Lexical_controller::run_(const string grammar_rule_file, const string src_p
     DFATransformer transformer;
     transformer.set_nfa_graph(states);
     transformer.transform();
-    //DFANode res = transformer.normal_transition(&dfa_node, 'a');
     vector<DFANode> tmp = *transformer.get_dfa_nodes();
+
     cout << "After running NFA-to-DFA transformation, these nodes are mapped to :\n";
     for (DFANode x : tmp)
     {
