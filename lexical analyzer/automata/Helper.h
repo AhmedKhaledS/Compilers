@@ -18,6 +18,16 @@ class Helper {
         string expand_classes(char start, char end);
         vector<string> get_classes(const string s);
         string normalize_classes(string expression);
+
+        string insert_concatination(string expression);
+
+        vector<string> tokenaize(string s, char delim);
+
+        string remove_escape_char(string s);
+
+        string trim(const string& str);
+
+
 };
 
 

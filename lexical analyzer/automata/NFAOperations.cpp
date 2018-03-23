@@ -24,7 +24,6 @@ NFA NFAOperations::create_NFA(char c) {
     return result;
 }
 
-
 NFA NFAOperations::oring(NFA x, NFA y) {
 
     int nodes_count = x.get_no_of_nodes() + y.get_no_of_nodes();
@@ -74,14 +73,13 @@ NFA NFAOperations::concatenating(NFA x, NFA y) {
     return result;
 }
 
-
 NFA NFAOperations::kleene_closuring(NFA x) {
 
     int nodes_count = x.get_no_of_nodes();
 
     NFA result;
 
-    copy_prev_states(&result, (*x.get_states()), 1);
+    copy_prev_states(&result, (*x.get_states()), 1, true);
 
     State s_1(0);
     State s_2(nodes_count + 1);
@@ -99,13 +97,14 @@ NFA NFAOperations::kleene_closuring(NFA x) {
     return result;
 }
 
-void NFAOperations::copy_prev_states(NFA* nfa, std::vector<State> states, int offset) {
+void NFAOperations::copy_prev_states(NFA* nfa, std::vector<State> states, int offset, bool clear) {
 
     for(int i = 0; i < states.size(); i++) {
 
         int pre_state_number = states[i].get_state_number();
         states[i].set_state_number(pre_state_number + offset);
-        states[i].set_acceptance_state(false);
+
+        if(clear == true) states[i].set_acceptance_state(false);
 
         for (int j = 0; j < states[i].get_transitions()->size(); j++) {
 
@@ -155,6 +154,16 @@ void NFAOperations::copy_prev_states(NFA *nfa, std::vector<State> x, std::vector
     (*nfa).add_state(y);
 }
 
+NFA NFAOperations::positive_closuring(NFA x) {
+    NFA kleen = kleene_closuring(x);
+    NFA result = concatenating(x , kleen);
+
+
+    //(*result.get_states())[10].set_acceptance_state(true);
+
+    return result;
+}
+
 NFA NFAOperations::oring_all(vector<NFA> all) {
 
     NFA result;
@@ -163,7 +172,7 @@ NFA NFAOperations::oring_all(vector<NFA> all) {
     State s_1(0);
 
     for (int i = 0; i < all.size(); i++) {
-            copy_prev_states(&result, (*all[i].get_states()) , count);
+            copy_prev_states(&result, (*all[i].get_states()) , count, false);
             s_1.add_transition(make_pair((*result.get_states())[count - 1], EPSILON));
             count += (*all[i].get_states()).size();
     }

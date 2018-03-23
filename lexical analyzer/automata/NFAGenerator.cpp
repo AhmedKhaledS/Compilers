@@ -10,10 +10,10 @@
 #include <iostream>
 #include "Helper.h"
 
-#define EMPTY_OPERAND ""
-#define EXPRSSION "(.)*=(.)*"
-#define KEY_WORDS "\\[(.)*\\]"
-#define PUNCS "\\{(.)*\\}"
+#define EXPRSSION "(.)*:(.)*"
+#define PUNCS "\\[(.)*\\]"
+#define KEY_WORDS "\\{(.)*\\}"
+
 
 #define EPSILON '$'
 
@@ -41,30 +41,54 @@ void NFAGenerator::generate_grammar(string expression) {
 
     // 2. Find Type
     if(is_type(expanded_version, KEY_WORDS)) {
-        cout << "KEY_WORDS" << endl;
+        cout << "--KEY_WORDS" << endl;
+        string key_words = expanded_version.substr(1,expanded_version.length() - 2);
+        cout << "--KEY_WORDS:" << key_words << endl;
+        std::vector<std::string> tokens =
+                helper.tokenaize(key_words, ' ');
+        for (int i = 0; i < tokens.size(); ++i) {
+            if(tokens[i] == "") continue;
+            tokens[i] = helper.insert_concatination(tokens[i]);
+            cout << i << "K:" << tokens[i] << endl;
+            NFA result = RE_to_NFA(tokens[i]);
+            grammar.push_back(result);
+        }
 
     } else if(is_type(expanded_version, PUNCS)) {
-        cout << "PUNCS" << endl;
+        cout << "--PUNCS" << endl;
+        string puncs_1 = expanded_version.substr(1,expanded_version.length() - 2);
+        cout << "--PUNCS#" << puncs_1 << endl;
+
+
+
+        std::vector<std::string> tokens =
+                helper.tokenaize(puncs_1, ' ');
+        for (int i = 0; i < tokens.size(); ++i) {
+            if(tokens[i] == "") continue;
+            // tokens[i] = helper.insert_concatination(tokens[i]);
+            cout << i << "P#" << tokens[i] << "#" << endl;
+            NFA result = RE_to_NFA(tokens[i]);
+            grammar.push_back(result);
+        }
+
 
     } else if (is_type(expanded_version, EXPRSSION)) {
 
         cout << "EXPRSSION" << endl;
 
-        std::stringstream test(expanded_version);
-        std::string segment;
-        std::vector<std::string> tokens;
 
-        while(std::getline(test, segment, '='))
-        {
-            tokens.push_back(segment);
-        }
+        std::vector<std::string> tokens = helper.tokenaize(expanded_version, ':');
 
         NFA result = RE_to_NFA(tokens[1]);
-
         grammar.push_back(result);
 
     } else {
-        cout << "DEFINITION" << endl;
+        cout << "-- DEFINITION" << endl;
+
+        std::vector<std::string> tokens = helper.tokenaize(expanded_version, '=');
+        NFA result = RE_to_NFA(tokens[1]);
+        ///ABO 5ALED: PUSH TO MAP
+        cout << "-- " << tokens[0] << " pushed to map as " << tokens[1] << endl;
 
     }
 }
@@ -77,14 +101,9 @@ NFA NFAGenerator::generate_machine() {
     return result;
 }
 
-void NFAGenerator::handle_assignment()
-{
-
-}
-
 bool NFAGenerator::is_operation(char c)
 {
-    return c == '(' || c == ')' || c == '.' || c == '|' || c == '*';
+    return c == '(' || c == ')' || c == '@' || c == '|' || c == '*' || c == '+';
 }
 
 void NFAGenerator::perform_operation(stack<NFA>& operands, stack<char>& operations)
@@ -102,10 +121,36 @@ void NFAGenerator::perform_operation(stack<NFA>& operands, stack<char>& operatio
         case ('|'):
             operands.push(nfa_operation.oring(y, x));
             break;
-        case ('.'):
+        case ('@'):
             operands.push(nfa_operation.concatenating(y, x));
             break;
     }
+}
+
+
+void NFAGenerator::add_operand(stack<NFA>& operands, stack<char>& operations,
+                               string operand, bool duplicate)
+{
+    NFAOperations nfa_operation;
+
+    if(duplicate == true) {
+        while (operations.size() > 0 && operations.top() == '@') {
+            perform_operation(operands, operations);
+        }
+        operations.push('@');
+    }
+
+    if(operand.length() == 1) {
+        if(operand[0] == 'L')   {
+            operands.push(nfa_operation.create_NFA('$'));
+        } else {
+            operands.push(nfa_operation.create_NFA(operand[0]));
+        }
+    } else {
+            cout << "CRY^_^" << endl;
+            operands.push(nfa_operation.create_NFA(operand[0]));
+    }
+
 }
 
 NFA NFAGenerator::RE_to_NFA(string expression)
@@ -117,45 +162,88 @@ NFA NFAGenerator::RE_to_NFA(string expression)
     stack<char> operations;
     string operand = EMPTY_OPERAND;
 
+    bool consecutive_tokens = false;
+
     for (unsigned int i = 0; i < expression.length(); i++) {
 
-        if (!is_operation(expression[i])) {
-            /// TO BE EDITED: Operand collection depends on context
+        if(expression[i] == ' ') {
+            if(operand != EMPTY_OPERAND) {
+                add_operand(operands,operations,operand,consecutive_tokens);
+                operand = EMPTY_OPERAND;
+                consecutive_tokens = true;
+            }
+            continue;
+        }
+
+        if(expression[i] == '\\') {
+
+            if(operand != EMPTY_OPERAND) {
+                add_operand(operands,operations,operand,consecutive_tokens);
+                operand = EMPTY_OPERAND;
+                consecutive_tokens = true;
+            }
+
+            i++;
+            operand += expression[i];
+            add_operand(operands,operations,operand,consecutive_tokens);
+            operand = EMPTY_OPERAND;
+            consecutive_tokens = true;
+
+        } else if (!is_operation(expression[i])) {
             operand += expression[i];
         }
         else {
 
             if (operand != EMPTY_OPERAND) {
-                /// TO BE EDITED: Adding a hash map for predefined operands
-                operands.push(nfa_operation.create_NFA(operand[0]));
+                add_operand(operands,operations,operand,consecutive_tokens);
                 operand = EMPTY_OPERAND;
             }
 
+
+
             if (expression[i] == '(') {
+
+                ///EXTRA///
+                if(consecutive_tokens == true) {
+                    while (operations.size() > 0 && operations.top() == '@') {
+                        perform_operation(operands, operations);
+                    }
+                    operations.push('@');
+                }
+                consecutive_tokens = false;
+
+
 
                 operations.push(expression[i]);
             }
             else if (expression[i] == ')') {
+                consecutive_tokens = false;
+
 
                 while (operations.top() != '(') {
                     perform_operation(operands, operations);
                 }
                 operations.pop();
             }
-            else if (expression[i] == '*') {
-
+            else if (expression[i] == '*' || expression[i] == '+') {
+                consecutive_tokens = false;
                 NFA x = operands.top();
                 operands.pop();
-                operands.push(nfa_operation.kleene_closuring(x));
+                if(expression[i] == '*') {
+                    operands.push(nfa_operation.kleene_closuring(x));
+                } else {
+                    operands.push(nfa_operation.positive_closuring(x));
+                }
             }
             else {
+                consecutive_tokens = false;
                 if (operations.size() != 0) {
                     if(expression[i] == '|') {
-                        while (operations.size() > 0 && operations.top() == '.') {
+                        while (operations.size() > 0 && operations.top() == '@') {
                             perform_operation(operands, operations);
                         }
                     } else {
-                        while (operations.size() > 0) {
+                        while (operations.size() > 0 && operations.top() == '@') {
                             perform_operation(operands, operations);
                         }
                     }
@@ -166,7 +254,7 @@ NFA NFAGenerator::RE_to_NFA(string expression)
     }
 
     if (operand != EMPTY_OPERAND) {
-        operands.push(nfa_operation.create_NFA(operand[0]));
+        add_operand(operands,operations,operand,consecutive_tokens);
         operand = EMPTY_OPERAND;
     }
 

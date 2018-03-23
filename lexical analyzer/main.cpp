@@ -115,6 +115,19 @@ int main()
 //    }
 
 
+    NFAGenerator generator;
+    generator.generate_grammar("id:letter (letter|id)");
+    NFA machine = generator.generate_machine();
+    vector<State> states = (*machine.get_states());
+    for (int i = 0; i < states.size(); i++) {
+        vector<pair <State, char>> transitions = *states[i].get_transitions();
+        for (int j = 0; j < transitions.size(); j++) {
+            cout << states[i].get_state_number() << " " << transitions[j].first.get_state_number()
+                                     << " " << transitions[j].second << endl;
+        }
+    }
+
+
 //    NFAGenerator generator;
 //    generator.generate_grammar("id=a|b");
 //    generator.generate_grammar("id=a|b");
