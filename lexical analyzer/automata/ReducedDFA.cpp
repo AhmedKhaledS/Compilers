@@ -190,10 +190,12 @@ int Minimize_DFA::Myhill_Nerode_Iteration()
         }
     }
     else{
-        for (int i = 0 ; i <= Graph.size() ; i++){
+        for (int i = 0 ; i < Graph.size() ; i++){
             for(int j = 0 ; j < i ; j++){
-                if(Cells_to_be_marked[i][j] == false){
-                    Cells_to_be_marked[i][j] = check_pair_compatibility( i ,  j);
+                if(Cells_to_be_marked[i][j] == false &&
+                        check_pair_compatibility( i ,  j)){
+                    Cells_to_be_marked[i][j] = true;
+                    marked_count++;
                 }
             }
         }
@@ -209,11 +211,13 @@ bool Minimize_DFA::check_pair_compatibility(int i , int j)
     std::vector<char> Transitions_j;
 
 
-    for(int x = 0 ; x <= Graph[i].size() ; x++){
-        Transitions_i.push_back(Graph[i][x].second);
+    for(int x = 0 ; x < Graph[i].size() ; x++){
+        char in1 = Graph[i][x].second;
+        Transitions_i.push_back(in1);
     }
-    for(int y = 0 ; y <= Graph[j].size() ; y++){
-        Transitions_i.push_back(Graph[i][y].second);
+    for(int y = 0 ; y < Graph[j].size() ; y++){
+        char in2 = Graph[j][y].second;
+        Transitions_j.push_back(in2);
     }
 
 
@@ -224,15 +228,16 @@ bool Minimize_DFA::check_pair_compatibility(int i , int j)
                           Transitions_j.begin(), Transitions_j.end(),
                           std::back_inserter(Common_Transitions));
 
-
+    std::cout << "Transitions_i" << Transitions_i.size() << std::endl;
+    std::cout << "Transitions_j" << Transitions_j.size() << std::endl;
     for(char x : Common_Transitions){
-      //  DFANode temp1 = new DFANode(); /* = Next_State(i , x)*/;
-       // DFANode temp2 /* = Next_State(j , x)*/;
-       // if( Cells_to_be_marked[temp1.id][temp2.id] == true ||
-    //            Cells_to_be_marked[temp2.id][temp1.id] == true ){
+        DFANode temp1 = *get_next_node(Graph,i , x);
+        DFANode temp2 = *get_next_node(Graph,j , x);
+        if( Cells_to_be_marked[temp1.id][temp2.id] == true ||
+                Cells_to_be_marked[temp2.id][temp1.id] == true ){
 
-      //      return true;
-        //}
+            return true;
+        }
     }
     return false;
 }
@@ -240,7 +245,7 @@ bool Minimize_DFA::check_pair_compatibility(int i , int j)
 
 void Minimize_DFA::determine_Final_Unmatched_States()
 {
-    for (int i = 0 ; i <= Graph.size() ; i++){
+    for (int i = 0 ; i < Graph.size() ; i++){
         for(int j = 0 ; j < i ; j++){
             if(Cells_to_be_marked[i][j] == false){
                 std::pair<int,int> temporary ;
