@@ -36,10 +36,15 @@ NFA NFAOperations::oring(NFA x, NFA y) {
     State s_1(0);
     State s_2(nodes_count + 1);
 
+
+    s_2.set_acceptance_state(true);
+
+
     s_1.add_transition(make_pair((*result.get_states())[0], EPSILON));
     s_1.add_transition(make_pair((*result.get_states())[x.get_no_of_nodes()], EPSILON));
     (*result.get_states())[x.get_no_of_nodes() - 1].add_transition(make_pair(s_2, EPSILON));
     (*result.get_states())[nodes_count - 1].add_transition(make_pair(s_2, EPSILON));
+
 
     result.add_state(s_1, 0);
     result.add_state(s_2);
@@ -56,6 +61,7 @@ NFA NFAOperations::concatenating(NFA x, NFA y) {
 
     State s_1(0);
     State s_2(nodes_count + 1);
+    s_2.set_acceptance_state(true);
 
     s_1.add_transition(make_pair((*result.get_states())[0], EPSILON));
     (*result.get_states())[x.get_no_of_nodes() - 1].add_transition
@@ -75,10 +81,12 @@ NFA NFAOperations::kleene_closuring(NFA x) {
 
     NFA result;
 
-    copy_prev_states(&result, (*x.get_states()));
+    copy_prev_states(&result, (*x.get_states()), 1);
 
     State s_1(0);
     State s_2(nodes_count + 1);
+    s_2.set_acceptance_state(true);
+
 
     s_1.add_transition(make_pair((*result.get_states())[0], EPSILON));
     s_1.add_transition(make_pair(s_2, EPSILON));
@@ -91,17 +99,18 @@ NFA NFAOperations::kleene_closuring(NFA x) {
     return result;
 }
 
-void NFAOperations::copy_prev_states(NFA* nfa, std::vector<State> states) {
+void NFAOperations::copy_prev_states(NFA* nfa, std::vector<State> states, int offset) {
 
     for(int i = 0; i < states.size(); i++) {
 
         int pre_state_number = states[i].get_state_number();
-        states[i].set_state_number(pre_state_number + 1);
+        states[i].set_state_number(pre_state_number + offset);
+        states[i].set_acceptance_state(false);
 
         for (int j = 0; j < states[i].get_transitions()->size(); j++) {
 
             int previous_destination = (*states[i].get_transitions())[j].first.get_state_number();
-            (*states[i].get_transitions())[j].first.set_state_number(previous_destination + 1);
+            (*states[i].get_transitions())[j].first.set_state_number(previous_destination + offset);
         }
     }
 
@@ -117,6 +126,7 @@ void NFAOperations::copy_prev_states(NFA *nfa, std::vector<State> x, std::vector
 
         int pre_state_number = x[i].get_state_number();
         x[i].set_state_number(pre_state_number + 1);
+        x[i].set_acceptance_state(false);
 
         for (int j = 0; j < x[i].get_transitions()->size(); j++) {
 
@@ -129,6 +139,8 @@ void NFAOperations::copy_prev_states(NFA *nfa, std::vector<State> x, std::vector
 
         int pre_state_number = y[i].get_state_number();
         y[i].set_state_number(pre_state_number + offset + 1);
+        y[i].set_acceptance_state(false);
+
 
         for (int j = 0; j < y[i].get_transitions()->size(); j++) {
 
@@ -141,4 +153,22 @@ void NFAOperations::copy_prev_states(NFA *nfa, std::vector<State> x, std::vector
 
     (*nfa).add_state(x);
     (*nfa).add_state(y);
+}
+
+NFA NFAOperations::oring_all(vector<NFA> all) {
+
+    NFA result;
+    int count = 1;
+
+    State s_1(0);
+
+    for (int i = 0; i < all.size(); i++) {
+            copy_prev_states(&result, (*all[i].get_states()) , count);
+            s_1.add_transition(make_pair((*result.get_states())[count - 1], EPSILON));
+            count += (*all[i].get_states()).size();
+    }
+
+    result.add_state(s_1, 0);
+
+    return result;
 }

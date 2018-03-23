@@ -20,9 +20,6 @@ class NFAGenerator
 
         NFA generate_machine();
 
-
-
-
         void handle_assignment();
 
         bool is_operation(char c);
@@ -34,8 +31,9 @@ class NFAGenerator
     protected:
 
     private:
-    set <char , greater <char> > symbols;
-    vector<NFA> grammar;
+        set <char , greater <char> > symbols;
+
+        vector<NFA> grammar;
 
 };
 

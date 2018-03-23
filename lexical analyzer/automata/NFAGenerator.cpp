@@ -10,6 +10,8 @@
 #include <regex>
 #include <iostream>
 
+#include "Helper.h"
+
 #define EXPRSSION "(.)*=(.)*"
 #define KEY_WORDS "\\[(.)*\\]"
 #define PUNCS "\\{(.)*\\}"
@@ -30,10 +32,13 @@ bool is_type(string a, string regex_value) {
 
 void NFAGenerator::generate_grammar(string expression) {
 
-    string expanded_version = expression;
+    string expanded_version = "";
 
     // 1. Expand Classes
-    //expanded_version = normalize_classes(expression);
+    Helper helper;
+    expanded_version = helper.normalize_classes(expression);
+
+    cout << "HELLO: " << expanded_version << endl;
 
     // 2. Find Type
     if(is_type(expanded_version, KEY_WORDS)) {
@@ -55,7 +60,9 @@ void NFAGenerator::generate_grammar(string expression) {
             tokens.push_back(segment);
         }
 
-        grammar.push_back(RE_to_NFA(tokens[1]));
+        NFA result = RE_to_NFA(tokens[1]);
+
+        grammar.push_back(result);
 
     } else {
         cout << "DEFINITION" << endl;
@@ -66,22 +73,10 @@ void NFAGenerator::generate_grammar(string expression) {
 NFA NFAGenerator::generate_machine() {
 
     NFAOperations helper;
-
     NFA result;
-    NFA temp = grammar[0];
-
-    helper.copy_prev_states(&result, *temp.get_states());
-
-    State s_1(0);
-    s_1.add_transition(make_pair((*result.get_states())[0], EPSILON));
-    result.add_state(s_1, 0);
-
+    result = helper.oring_all(grammar);
     return result;
 }
-
-
-
-
 
 void NFAGenerator::handle_assignment()
 {
