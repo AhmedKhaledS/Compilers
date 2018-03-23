@@ -7,8 +7,12 @@
 
 #define EPSILON '$'
 
+#include "NFAGenerator.h"
+
 
 NFA NFAOperations::create_NFA(char c) {
+
+    NFAGenerator::add_symbol(c);
 
     NFA result;
 
