@@ -15,7 +15,7 @@ void Lexical_controller::run_(const string grammar_rule_file, const string src_p
     NFAGenerator generator;
     //for ()
 //    {
-        generator.generate_grammar("id=(a|b)*.a.b.b");
+        generator.generate_grammar("id:(a|b)*@a@b@b");
 
 //    }
     NFA machine = generator.generate_machine();

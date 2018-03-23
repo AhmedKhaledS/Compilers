@@ -13,9 +13,12 @@
 #define EXPRSSION "(.)*:(.)*"
 #define PUNCS "\\[(.)*\\]"
 #define KEY_WORDS "\\{(.)*\\}"
+#define EMPTY_OPERAND ""
 
 
 #define EPSILON '$'
+
+set <char> NFAGenerator::symbols;
 
 NFAGenerator::NFAGenerator()
 {
@@ -86,8 +89,10 @@ void NFAGenerator::generate_grammar(string expression) {
         cout << "-- DEFINITION" << endl;
 
         std::vector<std::string> tokens = helper.tokenaize(expanded_version, '=');
-        NFA result = RE_to_NFA(tokens[1]);
-        ///ABO 5ALED: PUSH TO MAP
+
+        result = RE_to_NFA(tokens[1]);
+        defined_grammar[tokens[0]] = &result;
+
         cout << "-- " << tokens[0] << " pushed to map as " << tokens[1] << endl;
 
     }
@@ -147,8 +152,9 @@ void NFAGenerator::add_operand(stack<NFA>& operands, stack<char>& operations,
             operands.push(nfa_operation.create_NFA(operand[0]));
         }
     } else {
-            cout << "CRY^_^" << endl;
-            operands.push(nfa_operation.create_NFA(operand[0]));
+            cout << "HASH MAP" << endl;
+            cout << "HM:" << operand << endl;
+            operands.push(*(defined_grammar[operand]));
     }
 
 }
@@ -263,4 +269,12 @@ NFA NFAGenerator::RE_to_NFA(string expression)
     }
 
     return operands.top();
+}
+
+void NFAGenerator::add_symbol(char s) {
+    symbols.insert(s);
+}
+
+set <char> NFAGenerator::get_symbols() {
+    return symbols;
 }
