@@ -10,6 +10,7 @@ using namespace std;
 
 #define NODES_SZ 1000
 
+/*
 DFATransformer::DFATransformer()
 {
     functional_id = 0;
@@ -95,4 +96,4 @@ bool DFATransformer::merge_nodes(int node1, int node2)
         return false;
     parent[parentB] = parentA;
     return true;
-}
+}*/

@@ -23,7 +23,7 @@ class DFATransformer
 
     public:
         DFATransformer();
-        std::vector< std::vector<std::pair <DFANode, char> > > transform(std::vector<Transition> nfa_graph);
+        // std::vector< std::vector<std::pair <DFANode, char> > > transform(std::vector<Transition> nfa_graph);
         DFANode* get_dfa_node(int id);
         void add_dfa_node(DFANode *node, int id);
 };

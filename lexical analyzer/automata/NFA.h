@@ -16,6 +16,7 @@ public:
     int get_no_of_nodes();
 
     void add_state(State s);
+    void add_state(State s, int index);
     void add_state(std::vector<State> s);
     std::vector<State> *get_states();
 

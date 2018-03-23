@@ -15,6 +15,13 @@ int NFA::get_no_of_nodes() {
 void NFA::add_state(State s) {
     no_of_states++;
     this->states.push_back(s);
+
+}
+
+void NFA::add_state(State s, int index) {
+    no_of_states++;
+    this->states.insert(this->states.begin()+index, s);
+
 }
 
 void NFA::add_state(std::vector<State> s) {

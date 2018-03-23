@@ -84,9 +84,15 @@ NFA NFAGenerator::RE_to_NFA(string expression)
                 operands.push(nfa_operation.kleene_closuring(x));
             }
             else {
-                if (operations.size() != 0 && expression[i] != '.') {
-                    while (operations.size() > 0 && operations.top() == '.') {
-                        perform_operation(operands, operations);
+                if (operations.size() != 0) {
+                    if(expression[i] == '|') {
+                        while (operations.size() > 0 && operations.top() == '.') {
+                            perform_operation(operands, operations);
+                        }
+                    } else {
+                        while (operations.size() > 0) {
+                            perform_operation(operands, operations);
+                        }
                     }
                 }
                 operations.push(expression[i]);

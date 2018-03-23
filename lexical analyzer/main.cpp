@@ -33,7 +33,7 @@ int main()
 //    cout << sr.get_next_char_from_src_program("dataa.lan");
 
     //DFATransformer dt;
-<<<<<<< HEAD
+
     /*TransitionTable t;
     DFANode d_node(false, 1, true, true);
 
@@ -44,23 +44,6 @@ int main()
         cout << "Found \n id= " << t.get_entry(&d_node, 'b').id;
     else
         cout << "Error \n";*/
-=======
-//    TransitionTable t;
-    vector<State> x;
-    DFANode d_node(x, false, 1, true, true);
-//
-//    DFANode entry_node(true, 2, true, true);
-//    t.add(d_node, 'b', &entry_node);
-//
-//    if (t.search(&d_node))
-//        cout << "Found \n id= " << t.get_entry(&d_node, 'b')->id;
-//    else
-//        cout << "Error \n";
->>>>>>> 368746895eb1308620b2f91392365c11cd6dd43c
-
-    DFATransformer t;
-    t.add_dfa_node(&d_node, 1);
-    cout << t.get_dfa_node(1)->id << endl;
 
 /*    Transition t_1;
     t_1.destination = 2;
@@ -81,17 +64,16 @@ int main()
         cout << x[i].value << endl;
     }
 */
-    Grammar_Reader r;
-    string test =  r.read_next_grammar_rule_line("grammar.txt", 1);
+    //Grammar_Reader r;
+    //string test =  r.read_next_grammar_rule_line("grammar.txt", 1);
     NFAGenerator generator;
-    NFA result = generator.RE_to_NFA(test);
+    NFA result = generator.RE_to_NFA("(a|b)*.a.b.c");
 
     vector<State> states = (*result.get_states());
     for (int i = 0; i < states.size(); i++) {
-        cout << "S " << states[i].get_state_number() << endl;
         vector<pair <State, char>> transitions = *states[i].get_transitions();
         for (int j = 0; j < transitions.size(); j++) {
-            cout << " T" << j << " " << transitions[j].first.get_state_number()
+            cout << states[i].get_state_number() << " " << transitions[j].first.get_state_number()
                                      << " " << transitions[j].second << endl;
         }
     }
