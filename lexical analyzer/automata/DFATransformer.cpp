@@ -32,7 +32,6 @@ void DFATransformer::add_dfa_node(DFANode *node, int id)
 void DFATransformer::transform()
 {
     dfa_graph.resize(DFA_NODES);
-    vector<char> inputs({'$', 'a', 'b'});
     vector<State> starting_nfa_state;
     starting_nfa_state.push_back(nfa_graph[0]);
     DFANode starting_nfa_node(starting_nfa_state, false, false, false, 0);
@@ -45,9 +44,11 @@ void DFATransformer::transform()
         DFANode *current_dfa_node = get_unmarked_node(&dfa_nodes);
         DFANode sss = *current_dfa_node;
         current_dfa_node->marked = true;
-        for (char input : inputs)
+        set<char> inputs = NFAGenerator::get_symbols();
+        for (set<char>::iterator  it = inputs.begin();
+             it != inputs.end(); it++)
         {
-            DFANode result_node_without_eps = normal_transition(sss, input);
+            DFANode result_node_without_eps = normal_transition(sss, *it);
             DFANode dfa_state = normal_transition(result_node_without_eps, '$');
             if (!already_inserted_dfa_node(&dfa_state))
             {
@@ -55,8 +56,8 @@ void DFATransformer::transform()
                 dfa_state.id = functional_id++;
                 dfa_nodes.push_back(dfa_state);
             }
-            if (input != EPSILON)
-                dfa_graph[current_dfa_node->id].push_back({dfa_state, input});
+            if (*it != EPSILON)
+                dfa_graph[current_dfa_node->id].push_back({dfa_state, *it});
         }
     }
 }

@@ -9,6 +9,7 @@
 #include <map>
 #include "DFANode.h"
 #include "TransitionTable.h"
+#include "NFAGenerator.h"
 
 class DFATransformer
 {

@@ -142,19 +142,19 @@ int main()
 //        }
 //    }
 
-//    Lexical_controller l;
-//    l.run_("", "");
+    Lexical_controller l;
+    l.run_("", "");
 
-    NFAGenerator generator;
-    generator.generate_grammar("letter = a-z");
-    generator.generate_grammar("id : letter");
-    NFA machine = generator.generate_machine();
-
-    set<char> symbol = NFAGenerator::get_symbols();
-
-    for (set<char>::iterator  i = symbol.begin(); i != symbol.end(); i++) {
-        cout << *i << endl;
-    }
+//    NFAGenerator generator;
+//    generator.generate_grammar("letter = a-z");
+//    generator.generate_grammar("id : letter");
+//    NFA machine = generator.generate_machine();
+//
+//    set<char> symbol = NFAGenerator::get_symbols();
+//
+//    for (set<char>::iterator  i = symbol.begin(); i != symbol.end(); i++) {
+//        cout << *i << endl;
+//    }
 
 //    vector<State> states = (*machine.get_states());
 //    for (int i = 0; i < states.size(); i++) {
