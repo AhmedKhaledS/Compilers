@@ -12,7 +12,7 @@
 
 #include "Helper.h"
 
-#define EXPRSSION "(.)*=(.)*"
+#define EXPRSSION "(.)*:(.)*"
 #define KEY_WORDS "\\[(.)*\\]"
 #define PUNCS "\\{(.)*\\}"
 
@@ -78,13 +78,18 @@ void NFAGenerator::generate_grammar(string expression) {
         cout << "EXPRSSION" << endl;
 
 
-        std::vector<std::string> tokens = helper.tokenaize(expanded_version, '=');
+        std::vector<std::string> tokens = helper.tokenaize(expanded_version, ':');
 
         NFA result = RE_to_NFA(tokens[1]);
         grammar.push_back(result);
 
     } else {
         cout << "DEFINITION" << endl;
+
+        std::vector<std::string> tokens = helper.tokenaize(expanded_version, '=');
+        NFA result = RE_to_NFA(tokens[1]);
+        ///ABO 5ALED: PUSH TO MAP
+        cout << "pushed to map" << endl;
 
     }
 }
@@ -96,7 +101,6 @@ NFA NFAGenerator::generate_machine() {
     result = helper.oring_all(grammar);
     return result;
 }
-
 
 bool NFAGenerator::is_operation(char c)
 {
@@ -141,13 +145,18 @@ NFA NFAGenerator::RE_to_NFA(string expression)
             i++;
             operand += expression[i];
         } else if (!is_operation(expression[i])) {
-            /// TO BE EDITED: Operand collection depends on context
             operand += expression[i];
         }
         else {
 
             if (operand != EMPTY_OPERAND) {
-                operands.push(nfa_operation.create_NFA(operand[0]));
+                if(operand.length() == 1) {
+                    operands.push(nfa_operation.create_NFA(operand[0]));
+                } else {
+                    cout << "CRY^_^" << endl;
+                    ///ABO 5ALED: GET FROM MAP
+                    operands.push(nfa_operation.create_NFA(operand[0]));
+                }
                 operand = EMPTY_OPERAND;
             }
 
@@ -190,7 +199,13 @@ NFA NFAGenerator::RE_to_NFA(string expression)
     }
 
     if (operand != EMPTY_OPERAND) {
-        operands.push(nfa_operation.create_NFA(operand[0]));
+        if(operand.length() == 1) {
+            operands.push(nfa_operation.create_NFA(operand[0]));
+        } else {
+            cout << "CRY^_^" << endl;
+            ///ABO 5ALED: GET FROM MAP
+            operands.push(nfa_operation.create_NFA(operand[0]));
+        }
         operand = EMPTY_OPERAND;
     }
 
