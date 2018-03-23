@@ -158,16 +158,17 @@ void NFAOperations::copy_prev_states(NFA *nfa, std::vector<State> x, std::vector
 NFA NFAOperations::oring_all(vector<NFA> all) {
 
     NFA result;
-    int count = 0;
+    int count = 1;
+
+    State s_1(0);
 
     for (int i = 0; i < all.size(); i++) {
-
-            copy_prev_states(&result, (*all[i].get_states()) , 1);
-
-            // copy_prev_states(&result, (*all[i].get_states()) , all[i-1].get_states().);
-
-
+            copy_prev_states(&result, (*all[i].get_states()) , count);
+            s_1.add_transition(make_pair((*result.get_states())[count - 1], EPSILON));
+            count += (*all[i].get_states()).size();
     }
 
-    return NFA();
+    result.add_state(s_1, 0);
+
+    return result;
 }

@@ -68,16 +68,8 @@ void NFAGenerator::generate_grammar(string expression) {
 NFA NFAGenerator::generate_machine() {
 
     NFAOperations helper;
-
     NFA result;
-    NFA temp = grammar[0];
-
-    helper.copy_prev_states(&result, *temp.get_states(), 1);
-
-    State s_1(0);
-    s_1.add_transition(make_pair((*result.get_states())[0], EPSILON));
-    result.add_state(s_1, 0);
-
+    result = helper.oring_all(grammar);
     return result;
 }
 

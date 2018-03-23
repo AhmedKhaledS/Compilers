@@ -80,9 +80,10 @@ int main()
 //    }
 
     NFAGenerator generator;
-    // generator.generate_grammar("id=a|b");
-    // NFA machine = generator.generate_machine();
-    NFA machine = generator.RE_to_NFA("a|b");
+    generator.generate_grammar("id=a|b");
+    generator.generate_grammar("id=a|b");
+    generator.generate_grammar("id=a|b");
+    NFA machine = generator.generate_machine();
     vector<State> states = (*machine.get_states());
     for (int i = 0; i < states.size(); i++) {
         vector<pair <State, char>> transitions = *states[i].get_transitions();
