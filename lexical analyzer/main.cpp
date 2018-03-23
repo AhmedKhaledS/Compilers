@@ -16,7 +16,7 @@ using namespace std;
 
 int main()
 {
-    std::cout << "Hello, World!" << std::endl;
+    //std::cout << "Hello, World!" << std::endl;
 //    vector<string> s;
 //    s.push_back("ahmed");
 //    s.push_back("Khaled");
@@ -29,10 +29,33 @@ int main()
 //    Source_program_reader sr;
 //    cout << sr.get_next_char_from_src_program("dataa.lan");
 
-    //DFATransformer dt;
+    DFATransformer dt;
 //    TransitionTable t;
+
+    Transition t1(1, 'a');
+    Transition t2(2, 'a');
+    Transition t3(3, 'a');
+    Transition t4(4, 'a');
+    Transition t5(5, 'a');
+
+    State s1(0);
+    State s2(2);
+    s1.add_transition(t1);
+    s1.add_transition(t2);
+    s2.add_transition(t3);
+    s2.add_transition(t4);
+    s2.add_transition(t5);
+
     vector<State> x;
+    x.push_back(s1);
+    //x.push_back(s2);
     DFANode d_node(x, false, 1, true, true);
+    DFANode res = dt.normal_transition(&d_node, 'a');
+    cout << "States: ";
+    for (State curr : res.dfa_state)
+    {
+        cout << curr.get_state_number() << " ";
+    }
 //
 //    DFANode entry_node(true, 2, true, true);
 //    t.add(d_node, 'b', &entry_node);
@@ -42,9 +65,9 @@ int main()
 //    else
 //        cout << "Error \n";
 
-    DFATransformer t;
-    t.add_dfa_node(&d_node, 1);
-    cout << t.get_dfa_node(1)->id << endl;
+//    DFATransformer t;
+//    t.add_dfa_node(&d_node, 1);
+//    cout << t.get_dfa_node(1)->id << endl;
 
 /*    Transition t_1;
     t_1.destination = 2;

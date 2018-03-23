@@ -43,6 +43,7 @@ vector< vector<pair <DFANode, char> > > DFATransformer::transform(vector<Transit
 //            //if (unmarked_states.find(dfa_state) != unmarked_states.end())
 //            {
 //                //unmarked_states.insert(dfa_state);
+                  //dfa_nodes.push_back(dfa_state);
 //            }
 //            //add(, input,dfa_state);
 //        }
@@ -63,14 +64,14 @@ DFANode DFATransformer::normal_transition(DFANode *dfa_state, char input)
     {
         State top = stk_states.top();
         stk_states.pop();
-        for (Transition trans : top.get_transitions())
+     //   for (vector< pair<State, char> > trans : top.get_transitions())
         {
             if (trans.get_value() == input)
             {
-                //if (visited_states.find(trans.get_destination()))
+                //if (dfa_trans.find(trans.get_destination()))
                 {
                     //res_acceptance_state |= trans.get_destination().is_acceptance_state();
-                    dfa_trans.push_back(trans.get_destination());
+                    //dfa_trans.push_back(trans.get_destination());
                     stk_states.push(trans.get_destination());
                 }
             }
