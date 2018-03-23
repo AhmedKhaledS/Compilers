@@ -8,12 +8,15 @@
 #include <string>
 #include <vector>
 #include <map>
+#include "automata/State.h"
+#include "automata/NFAGenerator.h"
+#include "automata/DFATransformer.h"
 
 class Lexical_controller
 {
     private:
         std::string grammar_rule_line;
-        //std::vector< std::vector<NFA> > nfa_graph;
+        std::vector< State > nfa_graph;
         //std::vector< std::vector<DFA> > dfa_graph;
         //std::vector< std::vector<DFA> > _minimzed_dfa_graph;
 

@@ -62,7 +62,6 @@ int main()
 //    (*v)[2].add_transition(t3);
 //    (*v)[2].add_transition(t4);
 //
-//
 //    vector<State> x;
 //    x.push_back((*v)[0]);
 //   // x.push_back(s2);
@@ -106,11 +105,6 @@ int main()
         cout << x[i].value << endl;
     }
 */
-//    //Grammar_Reader r;
-//    //string test =  r.read_next_grammar_rule_line("grammar.txt", 1);
-//    NFAGenerator generator;
-//    NFA result = generator.RE_to_NFA("(a|b)*.a.b.c");
-//
 //    vector<State> states = (*result.get_states());
 //    for (int i = 0; i < states.size(); i++) {
 //        vector<pair <State, char>> transitions = *states[i].get_transitions();
@@ -120,5 +114,21 @@ int main()
 //        }
 //    }
 
+
+//    NFAGenerator generator;
+//    generator.generate_grammar("id=(a|b)*.a.b.b");
+//    NFA machine = generator.generate_machine();
+//
+//    vector<State> states = (*machine.get_states());
+//    for (int i = 0; i < states.size(); i++) {
+//        vector<pair <State, char>> transitions = *states[i].get_transitions();
+//        for (int j = 0; j < transitions.size(); j++) {
+//            cout << states[i].get_state_number() << " " << transitions[j].first.get_state_number()
+//                                     << " " << transitions[j].second << endl;
+//        }
+//    }
+
+    Lexical_controller l;
+    l.run_("", "");
     return 0;
 }
