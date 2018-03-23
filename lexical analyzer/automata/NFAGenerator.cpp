@@ -15,7 +15,6 @@
 #define KEY_WORDS "\\{(.)*\\}"
 #define EMPTY_OPERAND ""
 
-
 #define EPSILON '$'
 
 set <char> NFAGenerator::symbols;

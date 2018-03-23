@@ -142,8 +142,8 @@ int main()
 //        }
 //    }
 
-//    Lexical_controller l;
-//    l.run_("", "");
+    Lexical_controller l;
+    l.run_("", "");
 
     NFAGenerator generator;
     generator.generate_grammar("letter = a-b | A-B");
@@ -156,6 +156,7 @@ int main()
 //    for (set<char>::iterator  i = symbol.begin(); i != symbol.end(); i++) {
 //        cout << *i << endl;
 //    }
+
 
     vector<State> states = (*machine.get_states());
     for (int i = 0; i < states.size(); i++) {
