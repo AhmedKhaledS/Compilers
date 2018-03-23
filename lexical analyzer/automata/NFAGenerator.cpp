@@ -13,7 +13,7 @@
 #define EXPRSSION "(.)*:(.)*"
 #define PUNCS "\\[(.)*\\]"
 #define KEY_WORDS "\\{(.)*\\}"
-
+#define EMPTY_OPERAND ""
 
 #define EPSILON '$'
 
