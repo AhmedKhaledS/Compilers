@@ -20,7 +20,7 @@ void Minimize_DFA::set_up_bool_matrix()
     ////////Brute Test
 //    Transition t1(1, '0');
 //    Transition t2(2, '1');
-    Graph.resize(6);
+    Graph.resize(5);
     State st(0);
     std::vector<State> v1;
     v1.push_back(st);
@@ -46,7 +46,7 @@ void Minimize_DFA::set_up_bool_matrix()
     State st3(2);
     std::vector<State> v3;
     v3.push_back(st3);
-    DFANode d2(v3,true , false, false, 2);
+    DFANode d2(v3,false , false, false, 2);
 /*
     st3.add_transition(t5);
     st3.add_transition(t6);
@@ -59,7 +59,7 @@ void Minimize_DFA::set_up_bool_matrix()
     State st4(3);
     std::vector<State> v4;
     v4.push_back(st4);
-    DFANode d3(v4, true, false, false, 3);
+    DFANode d3(v4, false, false, false, 3);
 /*
     st4.add_transition(t7);
     st4.add_transition(t8);
@@ -81,10 +81,10 @@ void Minimize_DFA::set_up_bool_matrix()
     Transition t11(5, '0');
     Transition t12(5, '1');
 */
-    State st6(5);
-    std::vector<State> v6;
-    v6.push_back(st6);
-    DFANode d5(v6, false, false, false, 5);
+//    State st6(5);
+//    std::vector<State> v6;
+//    v6.push_back(st6);
+//    DFANode d5(v6, false, false, false, 5);
 /*
     st6.add_transition(t11);
     st6.add_transition(t12);
@@ -96,25 +96,25 @@ void Minimize_DFA::set_up_bool_matrix()
 
     Graph[0].push_back({d2, '1'});
 
-    Graph[1].push_back({d0, '0'});
+    Graph[1].push_back({d1, '0'});
 
     Graph[1].push_back({d3, '1'});
 
-    Graph[2].push_back({d4, '0'});
+    Graph[2].push_back({d1, '0'});
 
-    Graph[2].push_back({d5, '1'});
+    Graph[2].push_back({d2, '1'});
 
-    Graph[3].push_back({d4, '0'});
+    Graph[3].push_back({d1, '0'});
 
-    Graph[3].push_back({d5, '1'});
+    Graph[3].push_back({d4, '1'});
 
-    Graph[4].push_back({d4, '0'});
+    Graph[4].push_back({d1, '0'});
 
-    Graph[4].push_back({d5, '1'});
+    Graph[4].push_back({d2, '1'});
 
-    Graph[5].push_back({d5, '0'});
-
-    Graph[5].push_back({d5, '1'});
+//    Graph[5].push_back({d5, '0'});
+//
+//    Graph[5].push_back({d5, '1'});
 
     int cnt = -1;
     for (std::vector< std::pair<DFANode, char> >x : Graph)
@@ -132,14 +132,14 @@ void Minimize_DFA::set_up_bool_matrix()
     m.push_back(st3);
     m.push_back(st4);
     m.push_back(st5);
-    m.push_back(st6);
+//    m.push_back(st6);
 
     State_Nodes.push_back(d0);
     State_Nodes.push_back(d1);
     State_Nodes.push_back(d2);
     State_Nodes.push_back(d3);
     State_Nodes.push_back(d4);
-    State_Nodes.push_back(d5);
+//    State_Nodes.push_back(d5);
 
 //    for(int x = 0 ; x <= Graph.size() ; x ++){
 //        DFANode x = get_dfa_node(x);
