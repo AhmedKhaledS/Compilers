@@ -5,12 +5,15 @@
 #include "file_services/FileWriter.h"
 #include "file_services/GrammarReader.h"
 #include "file_services/SourceProgramReader.h"
+#include "LexicalController.h"
 #include "SymbolTable.h"
 #include "automata/DFATransformer.h"
 #include <fstream>
 
-#include "automata/Transition.h"
-#include "automata/State.h"
+#include "automata/NFAOperations.h"
+#include "automata/NFA.h"
+#include "automata/NFAGenerator.h"
+
 
 using namespace std;
 
@@ -32,30 +35,44 @@ int main()
     DFATransformer dt;
 //    TransitionTable t;
 
-    Transition t1(1, 'a');
-    Transition t2(2, 'a');
-    Transition t3(3, 'a');
-    Transition t4(4, 'a');
-    Transition t5(5, 'a');
-
-    State s1(0);
-    State s2(2);
-    s1.add_transition(t1);
-    s1.add_transition(t2);
-    s2.add_transition(t3);
-    s2.add_transition(t4);
-    s2.add_transition(t5);
-
-    vector<State> x;
-    x.push_back(s1);
-    //x.push_back(s2);
-    DFANode d_node(x, false, 1, true, true);
-    DFANode res = dt.normal_transition(&d_node, 'a');
-    cout << "States: ";
-    for (State curr : res.dfa_state)
-    {
-        cout << curr.get_state_number() << " ";
-    }
+//    NFA n;
+//    State s0(0);
+//    State s1(1);
+//    State s2(2);
+//    State s3(3);
+//    State s4(4);
+//    State s5(5);
+//
+//    n.add_state(s0);
+//    n.add_state(s1);
+//    n.add_state(s2);
+//    n.add_state(s3);
+//    n.add_state(s4);
+//    n.add_state(s5);
+//    vector<State> *v = n.get_states();
+//    pair<State, char> t0 = {(*v)[1], 'a'};
+//    pair<State, char> t1 = {(*v)[2], 'a'};
+//    pair<State, char> t2 = {(*v)[3], 'a'};
+//    pair<State, char> t3 = {(*v)[4], 'a'};
+//    pair<State, char> t4 = {(*v)[5], 'a'};
+//
+//    (*v)[0].add_transition(t0);
+//    (*v)[0].add_transition(t1);
+//    (*v)[2].add_transition(t2);
+//    (*v)[2].add_transition(t3);
+//    (*v)[2].add_transition(t4);
+//
+//
+//    vector<State> x;
+//    x.push_back((*v)[0]);
+//   // x.push_back(s2);
+//    DFANode d_node(x, false, 1, true, true);
+//    DFANode res = dt.normal_transition(&d_node, 'a');
+//    cout << "States: ";
+//    for (State curr : res.dfa_state)
+//    {
+//        cout << curr.get_state_number() << " ";
+//    }
 //
 //    DFANode entry_node(true, 2, true, true);
 //    t.add(d_node, 'b', &entry_node);
@@ -68,6 +85,7 @@ int main()
 //    DFATransformer t;
 //    t.add_dfa_node(&d_node, 1);
 //    cout << t.get_dfa_node(1)->id << endl;
+
 
 /*    Transition t_1;
     t_1.destination = 2;
@@ -88,5 +106,19 @@ int main()
         cout << x[i].value << endl;
     }
 */
+//    //Grammar_Reader r;
+//    //string test =  r.read_next_grammar_rule_line("grammar.txt", 1);
+//    NFAGenerator generator;
+//    NFA result = generator.RE_to_NFA("(a|b)*.a.b.c");
+//
+//    vector<State> states = (*result.get_states());
+//    for (int i = 0; i < states.size(); i++) {
+//        vector<pair <State, char>> transitions = *states[i].get_transitions();
+//        for (int j = 0; j < transitions.size(); j++) {
+//            cout << states[i].get_state_number() << " " << transitions[j].first.get_state_number()
+//                                     << " " << transitions[j].second << endl;
+//        }
+//    }
+
     return 0;
 }

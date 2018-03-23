@@ -9,7 +9,7 @@
 
 using namespace std;
 
-void Lexical_controller::run(const string grammar_rule_file, const string src_program_file)
+void Lexical_controller::run_(const string grammar_rule_file, const string src_program_file)
 {
 
 }

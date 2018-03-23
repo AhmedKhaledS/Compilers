@@ -18,7 +18,7 @@ class Lexical_controller
         //std::vector< std::vector<DFA> > _minimzed_dfa_graph;
 
     public:
-        void run(const std::string grammar_rule_file, const std::string src_program_file);
+        void run_(const std::string grammar_rule_file, const std::string src_program_file);
 
 };
 #endif //LEXICAL_ANALYZER_LEXICALCONTROLLER_H

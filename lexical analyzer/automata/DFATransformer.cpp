@@ -5,10 +5,12 @@
 #include "DFATransformer.h"
 #include <stack>
 #include <set>
+#include <algorithm>
 
 using namespace std;
 
 #define NODES_SZ 1000
+
 
 DFATransformer::DFATransformer()
 {
@@ -26,7 +28,7 @@ void DFATransformer::add_dfa_node(DFANode *node, int id)
     id_to_node[id] = node;
 }
 
-vector< vector<pair <DFANode, char> > > DFATransformer::transform(vector<Transition> nfa_graph)
+vector< vector<pair <DFANode, char> > > DFATransformer::transform(vector<State> nfa_graph)
 {
 //    set<DFANode> unmarked_states;
 //    //DFANode starting_node = normal_transition(starting_state), '$');
@@ -64,15 +66,15 @@ DFANode DFATransformer::normal_transition(DFANode *dfa_state, char input)
     {
         State top = stk_states.top();
         stk_states.pop();
-     //   for (vector< pair<State, char> > trans : top.get_transitions())
+        for (pair<State, char> trans : *top.get_transitions())
         {
-            if (trans.get_value() == input)
+            if (trans.second == input)
             {
-                //if (dfa_trans.find(trans.get_destination()))
+                if (!already_inserted(dfa_trans, trans.first))
                 {
-                    //res_acceptance_state |= trans.get_destination().is_acceptance_state();
-                    //dfa_trans.push_back(trans.get_destination());
-                    stk_states.push(trans.get_destination());
+                    res_acceptance_state |= trans.first.is_acceptance_state();
+                    dfa_trans.push_back(trans.first);
+                    stk_states.push(trans.first);
                 }
             }
         }
@@ -96,4 +98,13 @@ bool DFATransformer::merge_nodes(int node1, int node2)
         return false;
     parent[parentB] = parentA;
     return true;
+}
+
+bool DFATransformer::already_inserted(vector<State> vec, State s) {
+    for (State x : vec)
+    {
+        if (x.get_state_number() == s.get_state_number())
+            return true;
+    }
+    return false;
 }
