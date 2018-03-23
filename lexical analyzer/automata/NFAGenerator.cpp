@@ -39,27 +39,27 @@ void NFAGenerator::generate_grammar(string expression) {
     Helper helper;
     expanded_version = helper.normalize_classes(expression);
 
-    cout << "HELLO: " << expanded_version << endl;
+   // cout << "HELLO: " << expanded_version << endl;
 
     // 2. Find Type
     if(is_type(expanded_version, KEY_WORDS)) {
-        cout << "--KEY_WORDS" << endl;
+        //cout << "--KEY_WORDS" << endl;
         string key_words = expanded_version.substr(1,expanded_version.length() - 2);
-        cout << "--KEY_WORDS:" << key_words << endl;
+       // cout << "--KEY_WORDS:" << key_words << endl;
         std::vector<std::string> tokens =
                 helper.tokenaize(key_words, ' ');
         for (int i = 0; i < tokens.size(); ++i) {
             if(tokens[i] == "") continue;
             tokens[i] = helper.insert_concatination(tokens[i]);
-            cout << i << "K:" << tokens[i] << endl;
+           // cout << i << "K:" << tokens[i] << endl;
             NFA result = RE_to_NFA(tokens[i]);
             grammar.push_back(result);
         }
 
     } else if(is_type(expanded_version, PUNCS)) {
-        cout << "--PUNCS" << endl;
+        //cout << "--PUNCS" << endl;
         string puncs_1 = expanded_version.substr(1,expanded_version.length() - 2);
-        cout << "--PUNCS#" << puncs_1 << endl;
+        //cout << "--PUNCS#" << puncs_1 << endl;
 
 
 
@@ -68,7 +68,7 @@ void NFAGenerator::generate_grammar(string expression) {
         for (int i = 0; i < tokens.size(); ++i) {
             if(tokens[i] == "") continue;
             // tokens[i] = helper.insert_concatination(tokens[i]);
-            cout << i << "P#" << tokens[i] << "#" << endl;
+//            cout << i << "P#" << tokens[i] << "#" << endl;
             NFA result = RE_to_NFA(tokens[i]);
             grammar.push_back(result);
         }
@@ -76,7 +76,7 @@ void NFAGenerator::generate_grammar(string expression) {
 
     } else if (is_type(expanded_version, EXPRSSION)) {
 
-        cout << "EXPRSSION" << endl;
+//        cout << "EXPRSSION" << endl;
 
 
         std::vector<std::string> tokens = helper.tokenaize(expanded_version, ':');
@@ -85,15 +85,16 @@ void NFAGenerator::generate_grammar(string expression) {
         grammar.push_back(result);
 
     } else {
-        cout << "-- DEFINITION" << endl;
+//        cout << "-- DEFINITION" << endl;
 
         std::vector<std::string> tokens = helper.tokenaize(expanded_version, '=');
-
+        cout << tokens.size() << endl;
+        cout << "_-------------------------- " << tokens[0] << endl;
         NFA result = RE_to_NFA(tokens[1]);
         nfa_pool.push_back(result);
         defined_grammar[tokens[0]] = nfa_pool[nfa_pool.size()-1];
 
-        cout << "-- " << tokens[0] << " pushed to map as " << tokens[1] << endl;
+//        cout << "-- " << tokens[0] << " pushed to map as " << tokens[1] << endl;
     }
 }
 
@@ -151,8 +152,8 @@ void NFAGenerator::add_operand(stack<NFA>& operands, stack<char>& operations,
             operands.push(nfa_operation.create_NFA(operand[0]));
         }
     } else {
-            cout << "HASH MAP" << endl;
-            cout << "HM:" << operand << endl;
+//            cout << "HASH MAP" << endl;
+//            cout << "HM:" << operand << endl;
             operands.push(defined_grammar[operand]);
     }
 

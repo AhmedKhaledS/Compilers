@@ -11,6 +11,7 @@
 #include "automata/State.h"
 #include "automata/NFAGenerator.h"
 #include "automata/DFATransformer.h"
+#include "file_services/GrammarReader.h"
 
 class Lexical_controller
 {
