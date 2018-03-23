@@ -7,10 +7,81 @@
 
 #define EMPTY_OPERAND ""
 
+#include <regex>
+#include <iostream>
+
+#define EXPRSSION "(.)*=(.)*"
+#define KEY_WORDS "\\[(.)*\\]"
+#define PUNCS "\\{(.)*\\}"
+
+#define EPSILON '$'
+
 NFAGenerator::NFAGenerator()
 {
 
 }
+
+bool is_type(string a, string regex_value) {
+
+    regex b(regex_value);
+
+    return  regex_match(a, b);
+}
+
+void NFAGenerator::generate_grammar(string expression) {
+
+    string expanded_version = expression;
+
+    // 1. Expand Classes
+    //expanded_version = normalize_classes(expression);
+
+    // 2. Find Type
+    if(is_type(expanded_version, KEY_WORDS)) {
+        cout << "KEY_WORDS" << endl;
+
+    } else if(is_type(expanded_version, PUNCS)) {
+        cout << "PUNCS" << endl;
+
+    } else if (is_type(expanded_version, EXPRSSION)) {
+
+        cout << "EXPRSSION" << endl;
+
+        std::stringstream test(expanded_version);
+        std::string segment;
+        std::vector<std::string> tokens;
+
+        while(std::getline(test, segment, '='))
+        {
+            tokens.push_back(segment);
+        }
+
+        grammar.push_back(RE_to_NFA(tokens[1]));
+
+    } else {
+        cout << "DEFINITION" << endl;
+
+    }
+}
+
+NFA NFAGenerator::generate_machine() {
+
+    NFAOperations helper;
+
+    NFA result;
+    NFA temp = grammar[0];
+
+    helper.copy_prev_states(&result, *temp.get_states());
+
+    State s_1(0);
+    s_1.add_transition(make_pair((*result.get_states())[0], EPSILON));
+    result.add_state(s_1, 0);
+
+    return result;
+}
+
+
+
+
 
 void NFAGenerator::handle_assignment()
 {
