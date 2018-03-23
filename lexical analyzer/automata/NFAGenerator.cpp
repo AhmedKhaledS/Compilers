@@ -90,11 +90,11 @@ void NFAGenerator::generate_grammar(string expression) {
 
         std::vector<std::string> tokens = helper.tokenaize(expanded_version, '=');
 
-        result = RE_to_NFA(tokens[1]);
-        defined_grammar[tokens[0]] = &result;
+        NFA result = RE_to_NFA(tokens[1]);
+        nfa_pool.push_back(result);
+        defined_grammar[tokens[0]] = nfa_pool[nfa_pool.size()-1];
 
         cout << "-- " << tokens[0] << " pushed to map as " << tokens[1] << endl;
-
     }
 }
 
@@ -154,7 +154,7 @@ void NFAGenerator::add_operand(stack<NFA>& operands, stack<char>& operations,
     } else {
             cout << "HASH MAP" << endl;
             cout << "HM:" << operand << endl;
-            operands.push(*(defined_grammar[operand]));
+            operands.push(defined_grammar[operand]);
     }
 
 }

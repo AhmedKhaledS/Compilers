@@ -146,24 +146,25 @@ int main()
 //    l.run_("", "");
 
     NFAGenerator generator;
-    generator.generate_grammar("letter = a-z");
-    generator.generate_grammar("id : letter");
+    generator.generate_grammar("letter = a-b | A-B");
+    generator.generate_grammar("digit = 1-2");
+    generator.generate_grammar("id: letter(digit|letter)");
     NFA machine = generator.generate_machine();
 
-    set<char> symbol = NFAGenerator::get_symbols();
-
-    for (set<char>::iterator  i = symbol.begin(); i != symbol.end(); i++) {
-        cout << *i << endl;
-    }
-
-//    vector<State> states = (*machine.get_states());
-//    for (int i = 0; i < states.size(); i++) {
-//        vector<pair <State, char>> transitions = *states[i].get_transitions();
-//        for (int j = 0; j < transitions.size(); j++) {
-//            cout << states[i].get_state_number() << " " << transitions[j].first.get_state_number()
-//                 << " " << transitions[j].second << endl;
-//        }
+//    set<char> symbol = NFAGenerator::get_symbols();
+//
+//    for (set<char>::iterator  i = symbol.begin(); i != symbol.end(); i++) {
+//        cout << *i << endl;
 //    }
+
+    vector<State> states = (*machine.get_states());
+    for (int i = 0; i < states.size(); i++) {
+        vector<pair <State, char>> transitions = *states[i].get_transitions();
+        for (int j = 0; j < transitions.size(); j++) {
+            cout << states[i].get_state_number() << " " << transitions[j].first.get_state_number()
+                 << " " << transitions[j].second << endl;
+        }
+    }
 
 
     return 0;

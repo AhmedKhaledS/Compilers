@@ -32,16 +32,15 @@ class NFAGenerator
         static set <char> get_symbols();
 
 
-    NFA RE_to_NFA(string expression);
+        NFA RE_to_NFA(string expression);
 
     protected:
 
     private:
-        NFA result;
         static set <char> symbols;
         vector<NFA> grammar;
-        std::map<string, NFA*> defined_grammar;
-
+        std::map<string, NFA> defined_grammar;
+        vector<NFA> nfa_pool;
 };
 
 
