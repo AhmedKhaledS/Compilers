@@ -18,11 +18,13 @@ public:
     void add_state(State s);
     void add_state(State s, int index);
     void add_state(std::vector<State> s);
+
     std::vector<State> *get_states();
 
 private:
 
     int no_of_states;
+
     std::vector<State> states;
 };
 

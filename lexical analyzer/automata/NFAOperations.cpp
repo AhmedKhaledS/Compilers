@@ -35,6 +35,8 @@ NFA NFAOperations::oring(NFA x, NFA y) {
 
     State s_1(0);
     State s_2(nodes_count + 1);
+    s_2.set_acceptance_state(true);
+
 
     s_1.add_transition(make_pair((*result.get_states())[0], EPSILON));
     s_1.add_transition(make_pair((*result.get_states())[x.get_no_of_nodes()], EPSILON));
@@ -56,6 +58,7 @@ NFA NFAOperations::concatenating(NFA x, NFA y) {
 
     State s_1(0);
     State s_2(nodes_count + 1);
+    s_2.set_acceptance_state(true);
 
     s_1.add_transition(make_pair((*result.get_states())[0], EPSILON));
     (*result.get_states())[x.get_no_of_nodes() - 1].add_transition
@@ -79,6 +82,8 @@ NFA NFAOperations::kleene_closuring(NFA x) {
 
     State s_1(0);
     State s_2(nodes_count + 1);
+    s_2.set_acceptance_state(true);
+
 
     s_1.add_transition(make_pair((*result.get_states())[0], EPSILON));
     s_1.add_transition(make_pair(s_2, EPSILON));
@@ -97,6 +102,7 @@ void NFAOperations::copy_prev_states(NFA* nfa, std::vector<State> states) {
 
         int pre_state_number = states[i].get_state_number();
         states[i].set_state_number(pre_state_number + 1);
+        states[i].set_acceptance_state(false);
 
         for (int j = 0; j < states[i].get_transitions()->size(); j++) {
 
@@ -117,6 +123,7 @@ void NFAOperations::copy_prev_states(NFA *nfa, std::vector<State> x, std::vector
 
         int pre_state_number = x[i].get_state_number();
         x[i].set_state_number(pre_state_number + 1);
+        x[i].set_acceptance_state(false);
 
         for (int j = 0; j < x[i].get_transitions()->size(); j++) {
 
@@ -129,6 +136,8 @@ void NFAOperations::copy_prev_states(NFA *nfa, std::vector<State> x, std::vector
 
         int pre_state_number = y[i].get_state_number();
         y[i].set_state_number(pre_state_number + offset + 1);
+        y[i].set_acceptance_state(false);
+
 
         for (int j = 0; j < y[i].get_transitions()->size(); j++) {
 

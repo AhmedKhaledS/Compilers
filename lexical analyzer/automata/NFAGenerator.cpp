@@ -55,7 +55,9 @@ void NFAGenerator::generate_grammar(string expression) {
             tokens.push_back(segment);
         }
 
-        grammar.push_back(RE_to_NFA(tokens[1]));
+        NFA result = RE_to_NFA(tokens[1]);
+
+        grammar.push_back(result);
 
     } else {
         cout << "DEFINITION" << endl;
@@ -78,10 +80,6 @@ NFA NFAGenerator::generate_machine() {
 
     return result;
 }
-
-
-
-
 
 void NFAGenerator::handle_assignment()
 {
