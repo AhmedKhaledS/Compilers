@@ -5,16 +5,15 @@
 #include "NFAGenerator.h"
 #include "NFAOperations.h"
 
-#define EMPTY_OPERAND ""
-
 #include <regex>
-#include <iostream>
 
+#include <iostream>
 #include "Helper.h"
 
 #define EXPRSSION "(.)*:(.)*"
 #define PUNCS "\\[(.)*\\]"
 #define KEY_WORDS "\\{(.)*\\}"
+
 
 #define EPSILON '$'
 
