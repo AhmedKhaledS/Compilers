@@ -6,6 +6,7 @@
 #include <iostream>
 #include "ReducedDFA.h"
 #include "DFATransformer.h"
+#include "Utilities.h"
 
 Minimize_DFA::Minimize_DFA(/*std::vector<std::vector<std::pair<DFANode,char>>> dfa_graph*/)
 {
@@ -45,7 +46,7 @@ void Minimize_DFA::set_up_bool_matrix()
     State st3(2);
     std::vector<State> v3;
     v3.push_back(st3);
-    DFANode d2(v3, false, false, false, 2);
+    DFANode d2(v3,true , false, false, 2);
 /*
     st3.add_transition(t5);
     st3.add_transition(t6);
@@ -58,7 +59,7 @@ void Minimize_DFA::set_up_bool_matrix()
     State st4(3);
     std::vector<State> v4;
     v4.push_back(st4);
-    DFANode d3(v4, false, false, false, 3);
+    DFANode d3(v4, true, false, false, 3);
 /*
     st4.add_transition(t7);
     st4.add_transition(t8);
@@ -70,7 +71,7 @@ void Minimize_DFA::set_up_bool_matrix()
     State st5(4);
     std::vector<State> v5;
     v5.push_back(st5);
-    DFANode d4(v5, false, false, false, 4);
+    DFANode d4(v5, true, false, false, 4);
 /*
     st5.add_transition(t9);
     st5.add_transition(t10);
@@ -178,9 +179,9 @@ void Minimize_DFA::Myhill_Nerode()
 int Minimize_DFA::Myhill_Nerode_Iteration()
 {
     if(marked_count == 0){
-        for (int i = 0 ; i <= Graph.size() ; i++){
+        for (int i = 0 ; i < Graph.size() ; i++){
             for(int j = 0 ; j < i ; j++){
-                if(Cells_to_be_marked[i][j] == false ||
+                if(Cells_to_be_marked[i][j] == false &&
                     (int)State_Nodes[i].acceptance_state + (int)State_Nodes[j].acceptance_state == 1){
                     Cells_to_be_marked[i][j] = true;
                     marked_count++;
