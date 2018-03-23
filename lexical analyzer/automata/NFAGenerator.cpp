@@ -10,6 +10,8 @@
 #include <regex>
 #include <iostream>
 
+#include "Helper.h"
+
 #define EXPRSSION "(.)*=(.)*"
 #define KEY_WORDS "\\[(.)*\\]"
 #define PUNCS "\\{(.)*\\}"
@@ -30,10 +32,13 @@ bool is_type(string a, string regex_value) {
 
 void NFAGenerator::generate_grammar(string expression) {
 
-    string expanded_version = expression;
+    string expanded_version = "";
 
     // 1. Expand Classes
-    //expanded_version = normalize_classes(expression);
+    Helper helper;
+    expanded_version = helper.normalize_classes(expression);
+
+    cout << "HELLO: " << expanded_version << endl;
 
     // 2. Find Type
     if(is_type(expanded_version, KEY_WORDS)) {
