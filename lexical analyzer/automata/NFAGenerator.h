@@ -24,7 +24,10 @@ class NFAGenerator
 
         void perform_operation(stack<NFA>& operands, stack<char>& operations);
 
-        NFA RE_to_NFA(string expression);
+        void add_operand(stack<NFA>& operands, stack<char>& operations, string operand, bool duplicate);
+
+
+    NFA RE_to_NFA(string expression);
 
     protected:
 

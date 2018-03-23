@@ -80,7 +80,7 @@ int main()
 //    }
 
     NFAGenerator generator;
-    generator.generate_grammar("id:digit|digit");
+    generator.generate_grammar("id:letter (letter|id)");
     NFA machine = generator.generate_machine();
     vector<State> states = (*machine.get_states());
     for (int i = 0; i < states.size(); i++) {
@@ -90,7 +90,5 @@ int main()
                                      << " " << transitions[j].second << endl;
         }
     }
-
-
     return 0;
 }

@@ -85,7 +85,7 @@ vector<string> Helper::tokenaize(string s, char delim) {
 
     while(std::getline(test, segment, delim))
     {
-        tokens.push_back(segment);
+        tokens.push_back(trim(segment));
     }
 
     return tokens;
@@ -100,4 +100,15 @@ string Helper::remove_escape_char(string s) {
         result += s[i];
     }
     return result;
+}
+
+string Helper::trim(const string& str)
+{
+    size_t first = str.find_first_not_of(' ');
+    if (string::npos == first)
+    {
+        return str;
+    }
+    size_t last = str.find_last_not_of(' ');
+    return str.substr(first, (last - first + 1));
 }

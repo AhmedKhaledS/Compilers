@@ -25,6 +25,9 @@ class Helper {
 
         string remove_escape_char(string s);
 
+        string trim(const string& str);
+
+
 };
 
 
