@@ -5,13 +5,12 @@
 #include "NFAGenerator.h"
 #include "NFAOperations.h"
 
-#define EMPTY_OPERAND ""
-
 #include <regex>
-#include <iostream>
 
+#include <iostream>
 #include "Helper.h"
 
+#define EMPTY_OPERAND ""
 #define EXPRSSION "(.)*=(.)*"
 #define KEY_WORDS "\\[(.)*\\]"
 #define PUNCS "\\{(.)*\\}"

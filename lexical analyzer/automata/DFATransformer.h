@@ -34,5 +34,7 @@ class DFATransformer
         void add_dfa_node(DFANode *node, int id);
         std::vector<DFANode>* get_dfa_nodes();
         void set_nfa_graph(std::vector<State> nfa);
+        std::vector< std::vector< std::pair<DFANode, char> > > *get_dfa_graph();
+        int get_dfa_graph_size();
 };
 #endif //LEXICAL_ANALYZER_DFATRANSFORMER_H
