@@ -15,7 +15,7 @@ string Grammar_Reader::read_next_grammar_rule_line(const string file_name, const
         read(file_name);
 
     if (line_num > file_stream.size() || line_num <= 0)
-        return NULL;
+        return "~";
 
     // Line number is 1-based.
     return file_stream[line_num - 1];

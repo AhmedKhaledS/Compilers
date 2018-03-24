@@ -6,29 +6,26 @@
 #define COMPILERS_NFA_H
 
 #include "State.h"
-#include "Transition.h"
 
 class NFA {
 
-    public:
-        NFA();
+public:
 
-        void add_state(State s);
+    NFA();
 
-        NFA create_NFA(char c);
+    int get_no_of_nodes();
 
-        NFA oring(NFA x, NFA y);
+    void add_state(State s);
+    void add_state(State s, int index);
+    void add_state(std::vector<State> s);
 
-        NFA concatenating(NFA x, NFA y);
+    std::vector<State> *get_states();
 
-        NFA kleene_closuring(NFA x);
+private:
 
-        int get_no_of_nodes();
-        std::vector<State> get_states();
+    int no_of_states;
 
-    private:
-        int no_of_states;
-        std::vector<State> states;
+    std::vector<State> states;
 };
 
 

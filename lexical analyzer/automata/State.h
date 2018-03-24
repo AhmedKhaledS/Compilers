@@ -5,31 +5,36 @@
 #ifndef COMPILERS_STATE_H
 #define COMPILERS_STATE_H
 
-#include "Transition.h"
 #include <vector>
 
-class State
-{
+using namespace std;
 
-    public:
+class State {
 
-        State(int state_number);
+public:
 
-        void add_transition(Transition T);
-        std::vector<Transition> get_transitions();
+    State(int state_number);
 
-        int get_state_number();
+    void set_state_number(int state_number);
 
-        void set_accepted();
-        bool is_acceptance_state();
+    int get_state_number();
 
-    private:
+    void set_acceptance_state(bool state);
 
-        int state_number;
-        bool acceptance_state;
-        std::vector<Transition> transitions;
+    bool is_acceptance_state();
+
+    void add_transition(pair <State, char> transition);
+
+    vector<pair <State, char>> *get_transitions();
+
+private:
+
+    int state_number;
+
+    bool acceptance_state;
+
+    vector<pair <State, char>> transitions;
 
 };
-
 
 #endif //COMPILERS_STATE_H

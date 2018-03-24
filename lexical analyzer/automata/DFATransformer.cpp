@@ -5,10 +5,13 @@
 #include "DFATransformer.h"
 #include <stack>
 #include <set>
+#include <algorithm>
 
 using namespace std;
 
 #define NODES_SZ 1000
+#define DFA_NODES 300
+#define EPSILON '$'
 
 DFATransformer::DFATransformer()
 {
@@ -26,57 +29,69 @@ void DFATransformer::add_dfa_node(DFANode *node, int id)
     id_to_node[id] = node;
 }
 
-vector< vector<pair <DFANode, char> > > DFATransformer::transform(vector<Transition> nfa_graph)
+void DFATransformer::transform()
 {
-//    set<DFANode> unmarked_states;
-//    //DFANode starting_node = normal_transition(starting_state), '$');
-//    //unmarked_states.insert(starting_node);
-//    stack<DFANode> marked_dfa_states;
-//    /// (Important) unmarked_dfa_states.push(starting_node);
-//    while (!unmarked_dfa_states.empty())
-//    {
-//        DFANode current = unmarked_dfa_states.top();
-//        unmarked_dfa_states.pop();
-//        //for (every input)
-//        {
-//            //DFANode dfa_state = normal_transition(normal_transition(current, nfa_state.), '$');
-//            //if (unmarked_states.find(dfa_state) != unmarked_states.end())
-//            {
-//                //unmarked_states.insert(dfa_state);
-//            }
-//            //add(, input,dfa_state);
-//        }
-//    }
+    dfa_graph.resize(DFA_NODES);
+    vector<State> starting_nfa_state;
+    starting_nfa_state.push_back(nfa_graph[0]);
+    DFANode starting_nfa_node(starting_nfa_state, false, false, false, 0);
+    DFANode starting_dfa_node = normal_transition(starting_nfa_node, '$');
+    starting_dfa_node.id = functional_id++;
+    dfa_nodes.push_back(starting_dfa_node);
+
+    while (exist_unmarked_state(&dfa_nodes))
+    {
+        DFANode *current_dfa_node = get_unmarked_node(&dfa_nodes);
+        DFANode sss = *current_dfa_node;
+        current_dfa_node->marked = true;
+        set<char> inputs = NFAGenerator::get_symbols();
+        for (set<char>::iterator  it = inputs.begin();
+             it != inputs.end(); it++)
+        {
+            DFANode result_node_without_eps = normal_transition(sss, *it);
+            DFANode dfa_state = normal_transition(result_node_without_eps, '$');
+            if (!already_inserted_dfa_node(&dfa_state))
+            {
+                dfa_state.marked = false;
+                dfa_state.id = functional_id++;
+                dfa_nodes.push_back(dfa_state);
+            }
+            if (*it != EPSILON)
+                dfa_graph[current_dfa_node->id].push_back({dfa_state, *it});
+        }
+    }
 }
 
-DFANode DFATransformer::normal_transition(DFANode *dfa_state, char input)
+DFANode DFATransformer::normal_transition(DFANode dfa_state, char input)
 {
     vector<State> dfa_trans;
     stack<State> stk_states;
     bool res_acceptance_state = false;
-    for (State curr : dfa_state->dfa_state)
+    for (State curr : dfa_state.dfa_state)
     {
-        stk_states.push(curr), dfa_trans.push_back(curr);
+        stk_states.push(curr);
+        if (input == '$')
+            dfa_trans.push_back(curr);
         res_acceptance_state |= curr.is_acceptance_state();
     }
     while (!stk_states.empty())
     {
         State top = stk_states.top();
         stk_states.pop();
-        for (Transition trans : top.get_transitions())
+        for (pair<State, char> trans : *top.get_transitions())
         {
-            if (trans.get_value() == input)
+            if (trans.second == input)
             {
-                //if (visited_states.find(trans.get_destination()))
+                if (!already_inserted(dfa_trans, trans.first))
                 {
-                    //res_acceptance_state |= trans.get_destination().is_acceptance_state();
-                    dfa_trans.push_back(trans.get_destination());
-                    stk_states.push(trans.get_destination());
+                    res_acceptance_state |= trans.first.is_acceptance_state();
+                    dfa_trans.push_back(nfa_graph[trans.first.get_state_number()]);
+                    stk_states.push(nfa_graph[trans.first.get_state_number()]);
                 }
             }
         }
     }
-    DFANode new_dfa_node(dfa_trans, res_acceptance_state, false, false, functional_id++);
+    DFANode new_dfa_node(dfa_trans, res_acceptance_state, false, false, -1);
     return new_dfa_node;
 }
 
@@ -96,3 +111,73 @@ bool DFATransformer::merge_nodes(int node1, int node2)
     parent[parentB] = parentA;
     return true;
 }
+
+bool DFATransformer::already_inserted(vector<State> vec, State s) {
+    for (State x : vec)
+    {
+        if (x.get_state_number() == s.get_state_number())
+            return true;
+    }
+    return false;
+}
+
+void DFATransformer::set_nfa_graph(std::vector<State> nfa)
+{
+    this->nfa_graph = nfa;
+}
+
+bool DFATransformer::exist_unmarked_state(std::vector<DFANode> *dfa_combined_nodes)
+{
+    for (DFANode x : *dfa_combined_nodes)
+    {
+        if (!x.marked)
+            return true;
+    }
+    return false;
+}
+
+DFANode *DFATransformer::get_unmarked_node(std::vector<DFANode> *dfa_combined_nodes)
+{
+    for (int i = 0; i < (*dfa_combined_nodes).size(); ++i)
+    {
+        if (!(*dfa_combined_nodes)[i].marked)
+            return &((*dfa_combined_nodes)[i]);
+    }
+}
+
+bool DFATransformer::already_inserted_dfa_node(DFANode *dfa_node)
+{
+    set<int> st2;
+    for (State y : dfa_node->dfa_state)
+    {
+        st2.insert(y.get_state_number());
+    }
+    for (DFANode x : dfa_nodes)
+    {
+        set<int> st1;
+        for (State y : x.dfa_state)
+        {
+            st1.insert(y.get_state_number());
+        }
+        if (st1 == st2)
+        {
+            dfa_node->id = x.id;
+            return true;
+        }
+    }
+    return false;
+}
+
+std::vector<DFANode> *DFATransformer::get_dfa_nodes() {
+    return &dfa_nodes;
+}
+
+std::vector< std::vector< std::pair<DFANode, char> > > * DFATransformer::get_dfa_graph()
+{
+    return &dfa_graph;
+}
+
+int DFATransformer::get_dfa_graph_size() {
+    return functional_id;
+};
+
