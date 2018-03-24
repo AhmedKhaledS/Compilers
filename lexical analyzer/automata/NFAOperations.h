@@ -5,6 +5,7 @@
 #ifndef COMPILERS_NFAOPERATIONS_H
 #define COMPILERS_NFAOPERATIONS_H
 
+#include <string>
 #include "NFA.h"
 
 
@@ -20,10 +21,10 @@ class NFAOperations {
         NFA kleene_closuring(NFA x);
         NFA positive_closuring(NFA x);
         NFA oring_all(vector<NFA> all);
+        NFA solver(string expression);
 
         void copy_prev_states(NFA *nfa, std::vector<State> x, int offset, bool clear);
         void copy_prev_states(NFA *nfa, std::vector<State> x, std::vector<State> y, int offset);
-
 
 };
 

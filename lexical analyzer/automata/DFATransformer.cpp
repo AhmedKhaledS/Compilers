@@ -12,7 +12,7 @@ using namespace std;
 
 #define NODES_SZ 1000
 #define DFA_NODES 300
-#define EPSILON '$'
+#define EPSILON "$"
 
 DFATransformer::DFATransformer()
 {
@@ -21,9 +21,9 @@ DFATransformer::DFATransformer()
 //    transitions.resize(NODES_SZ);
 //    for (int i = 0; i < nfa_graph.size(); ++i)
 //    {
-//        for (pair<State, char> x : *nfa_graph[i].get_transitions())
+//        for (pair<State, string> x : *nfa_graph[i].get_transitions())
 //        {
-//            transitions[i][x.second] = x.first;
+//            transitions[i][x.second].push_back(x.first);
 //        }
 //    }
 }
@@ -44,10 +44,10 @@ void DFATransformer::transform()
     vector<State> starting_nfa_state;
     starting_nfa_state.push_back(nfa_graph[0]);
     DFANode starting_nfa_node(starting_nfa_state, false, false, false, 0);
-    DFANode starting_dfa_node = normal_transition(starting_nfa_node, '$');
+    DFANode starting_dfa_node = normal_transition(starting_nfa_node, EPSILON);
     starting_dfa_node.id = functional_id++;
     dfa_nodes.push_back(starting_dfa_node);
-    set<char> inputs = NFAGenerator::get_symbols();
+    set<string> inputs = NFAGenerator::get_symbols();
 
 
     while (exist_unmarked_state(&dfa_nodes))
@@ -55,11 +55,11 @@ void DFATransformer::transform()
         DFANode *current_dfa_node = get_unmarked_node(&dfa_nodes);
         DFANode sss = *current_dfa_node;
         current_dfa_node->marked = true;
-        for (set<char>::iterator it = inputs.begin();
+        for (set<string>::iterator it = inputs.begin();
              it != inputs.end(); it++)
         {
             DFANode result_node_without_eps = normal_transition(sss, *it);
-            DFANode dfa_state = normal_transition(result_node_without_eps, '$');
+            DFANode dfa_state = normal_transition(result_node_without_eps, EPSILON);
             if (!already_inserted_dfa_node(&dfa_state))
             {
                 dfa_state.marked = false;
@@ -72,7 +72,7 @@ void DFATransformer::transform()
     }
 }
 
-DFANode DFATransformer::normal_transition(DFANode dfa_state, char input)
+DFANode DFATransformer::normal_transition(DFANode dfa_state, string input)
 {
     vector<State> dfa_trans;
     stack<State> stk_states;
@@ -84,7 +84,7 @@ DFANode DFATransformer::normal_transition(DFANode dfa_state, char input)
     for (State curr : dfa_state.dfa_state)
     {
         stk_states.push(curr);
-        if (input == '$')
+        if (input == EPSILON)
             dfa_trans.push_back(curr);
         res_acceptance_state |= curr.is_acceptance_state();
     }
@@ -92,7 +92,7 @@ DFANode DFATransformer::normal_transition(DFANode dfa_state, char input)
     {
         State top = stk_states.top();
         stk_states.pop();
-        for (pair<State, char> trans : *top.get_transitions())
+        for (pair<State, string> trans : *top.get_transitions())
         {
             if (trans.second == input)
             {
@@ -186,7 +186,7 @@ std::vector<DFANode> *DFATransformer::get_dfa_nodes() {
     return &dfa_nodes;
 }
 
-std::vector< std::vector< std::pair<DFANode, char> > > * DFATransformer::get_dfa_graph()
+vector< vector< pair<DFANode, string> > > *DFATransformer::get_dfa_graph()
 {
     return &dfa_graph;
 }

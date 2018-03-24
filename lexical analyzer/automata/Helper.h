@@ -27,6 +27,9 @@ class Helper {
 
         string trim(const string& str);
 
+        bool is_all_or(string expression);
+
+        bool is_operation(char c);
 
 };
 
