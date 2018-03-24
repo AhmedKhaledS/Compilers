@@ -112,3 +112,17 @@ string Helper::trim(const string& str)
     size_t last = str.find_last_not_of(' ');
     return str.substr(first, (last - first + 1));
 }
+
+bool Helper::is_all_or(string expression) {
+    for (int i = 0; i < expression.length(); ++i) {
+        if(is_operation(expression[i]))
+            return false;
+    }
+    return true;
+}
+
+bool Helper::is_operation(char c) {
+
+    return c == '(' || c == ')' || c == '@' || c == '*' || c == '+';
+
+}

@@ -88,9 +88,15 @@ void NFAGenerator::generate_grammar(string expression) {
 //        cout << "-- DEFINITION" << endl;
 
         std::vector<std::string> tokens = helper.tokenaize(expanded_version, '=');
-        cout << tokens.size() << endl;
-        cout << "_-------------------------- " << tokens[0] << endl;
-        NFA result = RE_to_NFA(tokens[1]);
+        //cout << tokens.size() << endl;
+        //cout << "_-------------------------- " << tokens[0] << endl;
+        NFA result;
+        if(helper.is_all_or(tokens[1]) && tokens[1].length() > 1) {
+            NFAOperations nfa_operations;
+            result = nfa_operations.solver(tokens[1]);
+        } else {
+            result = RE_to_NFA(tokens[1]);
+        }
         nfa_pool.push_back(result);
         defined_grammar[tokens[0]] = nfa_pool[nfa_pool.size()-1];
 
