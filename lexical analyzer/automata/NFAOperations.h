@@ -24,6 +24,7 @@ class NFAOperations {
 
         void copy_prev_states(NFA *nfa, std::vector<State> x, int offset, bool clear);
         void copy_prev_states(NFA *nfa, std::vector<State> x, std::vector<State> y, int offset);
+        void copy_prev_states(NFA *nfa, std::vector<State> x, std::vector<State> y, int offset1,int offset2);
 
 };
 

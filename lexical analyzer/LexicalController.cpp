@@ -35,7 +35,8 @@ void Lexical_controller::run_(const string grammar_rule_file, const string src_p
         vector<pair <State, string>> transitions = *states[i].get_transitions();
         for (int j = 0; j < transitions.size(); j++) {
             cout << states[i].get_state_number() << " " << transitions[j].first.get_state_number()
-                 << " " << transitions[j].second << endl;
+                 << " " << transitions[j].second
+                 << " " << states[i].is_acceptance_state() << endl;
         }
     }
     DFATransformer transformer;
