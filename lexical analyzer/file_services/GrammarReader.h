@@ -13,7 +13,7 @@ class Grammar_Reader: public File_Reader
     public:
         Grammar_Reader();
         std::string read_next_grammar_rule_line(const std::string file_name, const int line_num) override;
-        char get_next_char_from_src_program(const std::string file_name) override;
+        char get_next_char_from_src_program() override;
 };
 
 #endif //LEXICAL_ANALYZER_GRAMMARREADER_H

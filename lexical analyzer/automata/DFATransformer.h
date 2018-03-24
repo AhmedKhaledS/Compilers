@@ -27,6 +27,7 @@ class DFATransformer
         bool exist_unmarked_state(std::vector<DFANode> *dfa_combined_nodes);
         bool already_inserted_dfa_node(DFANode *dfa_node);
         DFANode *get_unmarked_node(std::vector<DFANode> *dfa_combined_nodes);
+        DFANode *starting_dfa_state;
 //        std::vector< std::map<char, std::vector<State> > > transitions;
 
 public:
@@ -39,5 +40,6 @@ public:
         void set_nfa_graph(std::vector<State> nfa);
         std::vector< std::vector< std::pair<DFANode, std::string> > > *get_dfa_graph();
         int get_dfa_graph_size();
+        DFANode* get_starting_dfa_state();
 };
 #endif //LEXICAL_ANALYZER_DFATRANSFORMER_H

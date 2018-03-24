@@ -20,5 +20,5 @@ string Grammar_Reader::read_next_grammar_rule_line(const string file_name, const
     // Line number is 1-based.
     return file_stream[line_num - 1];
 }
-char Grammar_Reader::get_next_char_from_src_program(const std::string file_name)
+char Grammar_Reader::get_next_char_from_src_program()
 {}
