@@ -17,7 +17,7 @@
 
 #define EPSILON '$'
 
-set <char> NFAGenerator::symbols;
+set <string> NFAGenerator::symbols;
 
 NFAGenerator::NFAGenerator()
 {
@@ -27,17 +27,17 @@ NFAGenerator::NFAGenerator()
 bool is_type(string a, string regex_value) {
 
     regex b(regex_value);
-
     return  regex_match(a, b);
+
 }
 
 void NFAGenerator::generate_grammar(string expression) {
 
-    string expanded_version = "";
+    Helper helper;
+    string expanded_version = expression;
 
     // 1. Expand Classes
-    Helper helper;
-    expanded_version = helper.normalize_classes(expression);
+    //expanded_version = helper.normalize_classes(expression);
 
    // cout << "HELLO: " << expanded_version << endl;
 
@@ -89,14 +89,8 @@ void NFAGenerator::generate_grammar(string expression) {
 
         std::vector<std::string> tokens = helper.tokenaize(expanded_version, '=');
         //cout << tokens.size() << endl;
-        //cout << "_-------------------------- " << tokens[0] << endl;
-        NFA result;
-        if(helper.is_all_or(tokens[1]) && tokens[1].length() > 1) {
-            NFAOperations nfa_operations;
-            result = nfa_operations.solver(tokens[1]);
-        } else {
-            result = RE_to_NFA(tokens[1]);
-        }
+
+        NFA result = RE_to_NFA(tokens[1]);
         nfa_pool.push_back(result);
         defined_grammar[tokens[0]] = nfa_pool[nfa_pool.size()-1];
 
@@ -153,14 +147,18 @@ void NFAGenerator::add_operand(stack<NFA>& operands, stack<char>& operations,
 
     if(operand.length() == 1) {
         if(operand[0] == 'L')   {
-            operands.push(nfa_operation.create_NFA('$'));
+            operands.push(nfa_operation.create_NFA("$"));
         } else {
-            operands.push(nfa_operation.create_NFA(operand[0]));
+            string temp = "";
+            temp += operand[0];
+            operands.push(nfa_operation.create_NFA(temp));
         }
     } else {
-//            cout << "HASH MAP" << endl;
-//            cout << "HM:" << operand << endl;
+        if ( defined_grammar.find(operand) == defined_grammar.end() ) {
+            operands.push(nfa_operation.create_NFA(operand));
+        } else {
             operands.push(defined_grammar[operand]);
+        }
     }
 
 }
@@ -277,10 +275,10 @@ NFA NFAGenerator::RE_to_NFA(string expression)
     return operands.top();
 }
 
-void NFAGenerator::add_symbol(char s) {
+void NFAGenerator::add_symbol(string s) {
     symbols.insert(s);
 }
 
-set <char> NFAGenerator::get_symbols() {
+set <string> NFAGenerator::get_symbols() {
     return symbols;
 }

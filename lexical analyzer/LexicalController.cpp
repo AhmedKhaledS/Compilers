@@ -29,7 +29,7 @@ void Lexical_controller::run_(const string grammar_rule_file, const string src_p
     vector<State> states = (*machine.get_states());
     cout << "NFA machine: \n";
     for (int i = 0; i < states.size(); i++) {
-        vector<pair <State, char>> transitions = *states[i].get_transitions();
+        vector<pair <State, string>> transitions = *states[i].get_transitions();
         for (int j = 0; j < transitions.size(); j++) {
             cout << states[i].get_state_number() << " " << transitions[j].first.get_state_number()
                  << " " << transitions[j].second << endl;

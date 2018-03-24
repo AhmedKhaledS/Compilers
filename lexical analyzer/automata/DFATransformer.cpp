@@ -13,6 +13,7 @@ using namespace std;
 #define DFA_NODES 300
 #define EPSILON '$'
 
+/*
 DFATransformer::DFATransformer()
 {
     functional_id = 0;
@@ -180,4 +181,4 @@ std::vector< std::vector< std::pair<DFANode, char> > > * DFATransformer::get_dfa
 int DFATransformer::get_dfa_graph_size() {
     return functional_id;
 };
-
+*/
