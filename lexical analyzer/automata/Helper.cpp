@@ -70,7 +70,7 @@ string Helper::insert_concatination(string expression) {
     result += expression[0];
 
     for (int i = 1; i < expression.length(); ++i) {
-        result += "|";
+        result += "@";
         result += expression[i];
     }
 

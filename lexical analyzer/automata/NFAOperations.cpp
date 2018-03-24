@@ -62,17 +62,17 @@ NFA NFAOperations::concatenating(NFA x, NFA y) {
 
     copy_prev_states(&result, (*x.get_states()), (*y.get_states()), x.get_no_of_nodes());
 
-    State s_1(0);
-    State s_2(nodes_count + 1);
-    s_2.set_acceptance_state(true);
+    //State s_1(0);
+    //State s_2(nodes_count + 1);
+    //s_2.set_acceptance_state(true);
 
-    s_1.add_transition(make_pair((*result.get_states())[0], EPSILON));
+    //s_1.add_transition(make_pair((*result.get_states())[0], EPSILON));
     (*result.get_states())[x.get_no_of_nodes() - 1].add_transition
             (make_pair((*result.get_states())[x.get_no_of_nodes()], EPSILON));
-    (*result.get_states())[nodes_count - 1].add_transition(make_pair(s_2, EPSILON));
+    //(*result.get_states())[nodes_count - 1].add_transition(make_pair(s_2, EPSILON));
 
-    result.add_state(s_1, 0);
-    result.add_state(s_2);
+    //result.add_state(s_1, 0);
+    //result.add_state(s_2);
 
     return result;
 }
