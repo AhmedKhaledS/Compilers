@@ -6,6 +6,7 @@
 #define COMPILERS_STATE_H
 
 #include <vector>
+#include <string>
 
 using namespace std;
 
@@ -25,9 +26,9 @@ public:
 
     bool is_acceptance_state();
 
-    void add_transition(pair <State, char> transition);
+    void add_transition(pair <State, string> transition);
 
-    vector<pair <State, char>> *get_transitions();
+    vector<pair <State, string>> *get_transitions();
 
 private:
 
@@ -35,7 +36,7 @@ private:
 
     bool acceptance_state;
 
-    vector<pair <State, char>> transitions;
+    vector<pair <State, string>> transitions;
 
 };
 

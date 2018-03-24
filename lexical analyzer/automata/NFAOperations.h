@@ -14,14 +14,13 @@ class NFAOperations {
     public:
 
         NFA create_NFA();
-        NFA create_NFA(char c);
+        NFA create_NFA(string c);
 
         NFA oring(NFA x, NFA y);
         NFA concatenating(NFA x, NFA y);
         NFA kleene_closuring(NFA x);
         NFA positive_closuring(NFA x);
         NFA oring_all(vector<NFA> all);
-        NFA solver(string expression);
 
         void copy_prev_states(NFA *nfa, std::vector<State> x, int offset, bool clear);
         void copy_prev_states(NFA *nfa, std::vector<State> x, std::vector<State> y, int offset);

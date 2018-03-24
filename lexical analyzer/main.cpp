@@ -32,7 +32,7 @@ int main()
 //    Source_program_reader sr;
 //    cout << sr.get_next_char_from_src_program("dataa.lan");
 
-    DFATransformer dt;
+    // DFATransformer dt;
 //    TransitionTable t;
 
 //    NFA n;

@@ -5,12 +5,12 @@
 #include "NFAOperations.h"
 #include <iostream>
 
-#define EPSILON '$'
+#define EPSILON "$"
 
 #include "NFAGenerator.h"
 
 
-NFA NFAOperations::create_NFA(char c) {
+NFA NFAOperations::create_NFA(string c) {
 
     NFAGenerator::add_symbol(c);
 
@@ -186,39 +186,3 @@ NFA NFAOperations::oring_all(vector<NFA> all) {
     return result;
 }
 
-
-NFA NFAOperations::solver(string expression) {
-
-    vector<NFA> all;
-
-    for (int i = 0; i < expression.length(); i++) {
-        if(expression[i] != '|' && expression[i] != ' ') {
-            cout << expression[i] << endl;
-            all.push_back(create_NFA(expression[i]));
-        }
-    }
-
-    NFA result;
-
-
-    int count = 1;
-    for (int i = 0; i < all.size(); i++) {
-        count += (*all[i].get_states()).size();
-    }
-
-    State s_1(0);
-    State s_2(count + 1);
-
-    count = 1;
-    for (int i = 0; i < all.size(); i++) {
-        copy_prev_states(&result, (*all[i].get_states()) , count, true);
-        s_1.add_transition(make_pair((*result.get_states())[count - 1], EPSILON));
-        count += (*all[i].get_states()).size();
-        (*result.get_states())[count - 2].add_transition(make_pair(s_2, EPSILON));
-    }
-
-    result.add_state(s_1, 0);
-    result.add_state(s_2);
-
-    return result;
-}
