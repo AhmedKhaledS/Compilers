@@ -14,7 +14,7 @@ using namespace std;
 #define DFA_NODES 300
 #define EPSILON "$"
 
-/*
+
 DFATransformer::DFATransformer()
 {
     functional_id = 0;
@@ -56,11 +56,14 @@ void DFATransformer::transform()
         DFANode *current_dfa_node = get_unmarked_node(&dfa_nodes);
         DFANode sss = *current_dfa_node;
         current_dfa_node->marked = true;
+        int node_id = current_dfa_node->id;
         for (set<string>::iterator it = inputs.begin();
              it != inputs.end(); it++)
         {
             DFANode result_node_without_eps = normal_transition(sss, *it);
             DFANode dfa_state = normal_transition(result_node_without_eps, EPSILON);
+//            if (current_dfa_node->id == 0)
+//                int debug = -1;
             if (!already_inserted_dfa_node(&dfa_state))
             {
                 dfa_state.marked = false;
@@ -68,7 +71,7 @@ void DFATransformer::transform()
                 dfa_nodes.push_back(dfa_state);
             }
             if (*it != EPSILON)
-                dfa_graph[current_dfa_node->id].push_back({dfa_state, *it});
+                dfa_graph[node_id].push_back({dfa_state, *it});
         }
     }
 }
@@ -195,4 +198,4 @@ vector< vector< pair<DFANode, string> > > *DFATransformer::get_dfa_graph()
 int DFATransformer::get_dfa_graph_size() {
     return functional_id;
 };
-*/
+
