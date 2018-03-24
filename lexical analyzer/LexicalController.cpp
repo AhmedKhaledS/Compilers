@@ -27,14 +27,14 @@ void Lexical_controller::run_(const string grammar_rule_file, const string src_p
 
     // Contains NFA-states
     vector<State> states = (*machine.get_states());
-//    cout << "NFA machine: \n";
-//    for (int i = 0; i < states.size(); i++) {
-//        vector<pair <State, char>> transitions = *states[i].get_transitions();
-//        for (int j = 0; j < transitions.size(); j++) {
-//            cout << states[i].get_state_number() << " " << transitions[j].first.get_state_number()
-//                 << " " << transitions[j].second << endl;
-//        }
-//    }
+    cout << "NFA machine: \n";
+    for (int i = 0; i < states.size(); i++) {
+        vector<pair <State, char>> transitions = *states[i].get_transitions();
+        for (int j = 0; j < transitions.size(); j++) {
+            cout << states[i].get_state_number() << " " << transitions[j].first.get_state_number()
+                 << " " << transitions[j].second << endl;
+        }
+    }
     printf("REACHED\n");
     DFATransformer transformer;
     transformer.set_nfa_graph(states);

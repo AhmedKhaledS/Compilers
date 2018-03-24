@@ -35,3 +35,7 @@ void State::add_transition(pair <State, char> transition) {
 vector<pair <State, char>> *State::get_transitions() {
     return &this->transitions;
 }
+
+State::State() {
+
+}

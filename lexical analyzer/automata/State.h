@@ -14,6 +14,8 @@ class State {
 public:
 
     State(int state_number);
+    State();
+
 
     void set_state_number(int state_number);
 

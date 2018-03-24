@@ -6,6 +6,7 @@
 #include <stack>
 #include <set>
 #include <algorithm>
+#include <iostream>
 
 using namespace std;
 
@@ -17,6 +18,14 @@ DFATransformer::DFATransformer()
 {
     functional_id = 0;
     parent = vector<int>(NODES_SZ, -1);
+//    transitions.resize(NODES_SZ);
+//    for (int i = 0; i < nfa_graph.size(); ++i)
+//    {
+//        for (pair<State, char> x : *nfa_graph[i].get_transitions())
+//        {
+//            transitions[i][x.second] = x.first;
+//        }
+//    }
 }
 
 DFANode* DFATransformer::get_dfa_node(int id)
@@ -38,14 +47,15 @@ void DFATransformer::transform()
     DFANode starting_dfa_node = normal_transition(starting_nfa_node, '$');
     starting_dfa_node.id = functional_id++;
     dfa_nodes.push_back(starting_dfa_node);
+    set<char> inputs = NFAGenerator::get_symbols();
+
 
     while (exist_unmarked_state(&dfa_nodes))
     {
         DFANode *current_dfa_node = get_unmarked_node(&dfa_nodes);
         DFANode sss = *current_dfa_node;
         current_dfa_node->marked = true;
-        set<char> inputs = NFAGenerator::get_symbols();
-        for (set<char>::iterator  it = inputs.begin();
+        for (set<char>::iterator it = inputs.begin();
              it != inputs.end(); it++)
         {
             DFANode result_node_without_eps = normal_transition(sss, *it);
@@ -67,6 +77,10 @@ DFANode DFATransformer::normal_transition(DFANode dfa_state, char input)
     vector<State> dfa_trans;
     stack<State> stk_states;
     bool res_acceptance_state = false;
+
+    /////////////////////////////////
+    ////////////////////////////////
+
     for (State curr : dfa_state.dfa_state)
     {
         stk_states.push(curr);
@@ -82,7 +96,7 @@ DFANode DFATransformer::normal_transition(DFANode dfa_state, char input)
         {
             if (trans.second == input)
             {
-                if (!already_inserted(dfa_trans, trans.first))
+                if (!already_inserted(&dfa_trans, trans.first))
                 {
                     res_acceptance_state |= trans.first.is_acceptance_state();
                     dfa_trans.push_back(nfa_graph[trans.first.get_state_number()]);
@@ -112,8 +126,8 @@ bool DFATransformer::merge_nodes(int node1, int node2)
     return true;
 }
 
-bool DFATransformer::already_inserted(vector<State> vec, State s) {
-    for (State x : vec)
+bool DFATransformer::already_inserted(vector<State> *vec, State s) {
+    for (State x : *vec)
     {
         if (x.get_state_number() == s.get_state_number())
             return true;

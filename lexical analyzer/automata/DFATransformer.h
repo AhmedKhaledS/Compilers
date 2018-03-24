@@ -23,11 +23,13 @@ class DFATransformer
         std::vector< std::vector< std::pair<DFANode, char> > > dfa_graph;
         int find_parent(int node);
         bool merge_nodes(int node1, int node2);
-        bool already_inserted(std::vector<State> vec, State s);
+        bool already_inserted(std::vector<State> *vec, State s);
         bool exist_unmarked_state(std::vector<DFANode> *dfa_combined_nodes);
         bool already_inserted_dfa_node(DFANode *dfa_node);
         DFANode *get_unmarked_node(std::vector<DFANode> *dfa_combined_nodes);
-    public:
+        std::vector< std::map<char, State> > transitions;
+
+public:
         DFATransformer();
         DFANode normal_transition(DFANode dfa_state, char input);
         void transform();
