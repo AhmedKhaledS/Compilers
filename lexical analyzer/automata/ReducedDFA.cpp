@@ -5,12 +5,13 @@
 #include <algorithm>
 #include <iostream>
 #include "ReducedDFA.h"
-#include "DFATransformer.h"
 #include "Utilities.h"
 
-Minimize_DFA::Minimize_DFA(/*std::vector<std::vector<std::pair<DFANode,char>>> dfa_graph*/)
-{
+
+
+Minimize_DFA::Minimize_DFA(DFANode Start, DFANode start_node1) : start_node(start_node1) {
     //Graph = dfa_graph;
+     start_node = Start;
     set_up_bool_matrix();
 }
 
@@ -20,11 +21,12 @@ void Minimize_DFA::set_up_bool_matrix()
     ////////Brute Test
 //    Transition t1(1, '0');
 //    Transition t2(2, '1');
-    Graph.resize(5);
+    Graph.resize(6);
     State st(0);
     std::vector<State> v1;
     v1.push_back(st);
     DFANode d0(v1, false, false, false, 0);
+    start_node = d0;
 //    st.add_transition(t1);
 //    st.add_transition(t2);
 
@@ -46,7 +48,7 @@ void Minimize_DFA::set_up_bool_matrix()
     State st3(2);
     std::vector<State> v3;
     v3.push_back(st3);
-    DFANode d2(v3,false , false, false, 2);
+    DFANode d2(v3,true , false, false, 2);
 /*
     st3.add_transition(t5);
     st3.add_transition(t6);
@@ -59,7 +61,7 @@ void Minimize_DFA::set_up_bool_matrix()
     State st4(3);
     std::vector<State> v4;
     v4.push_back(st4);
-    DFANode d3(v4, false, false, false, 3);
+    DFANode d3(v4, true , false, false, 3);
 /*
     st4.add_transition(t7);
     st4.add_transition(t8);
@@ -81,10 +83,10 @@ void Minimize_DFA::set_up_bool_matrix()
     Transition t11(5, '0');
     Transition t12(5, '1');
 */
-//    State st6(5);
-//    std::vector<State> v6;
-//    v6.push_back(st6);
-//    DFANode d5(v6, false, false, false, 5);
+    State st6(5);
+    std::vector<State> v6;
+    v6.push_back(st6);
+    DFANode d5(v6, false, false, false, 5);
 /*
     st6.add_transition(t11);
     st6.add_transition(t12);
@@ -96,25 +98,25 @@ void Minimize_DFA::set_up_bool_matrix()
 
     Graph[0].push_back({d2, '1'});
 
-    Graph[1].push_back({d1, '0'});
+    Graph[1].push_back({d0, '0'});
 
     Graph[1].push_back({d3, '1'});
 
-    Graph[2].push_back({d1, '0'});
+    Graph[2].push_back({d4, '0'});
 
-    Graph[2].push_back({d2, '1'});
+    Graph[2].push_back({d5, '1'});
 
-    Graph[3].push_back({d1, '0'});
+    Graph[3].push_back({d4, '0'});
 
-    Graph[3].push_back({d4, '1'});
+    Graph[3].push_back({d5, '1'});
 
-    Graph[4].push_back({d1, '0'});
+    Graph[4].push_back({d4, '0'});
 
-    Graph[4].push_back({d2, '1'});
+    Graph[4].push_back({d5, '1'});
 
-//    Graph[5].push_back({d5, '0'});
-//
-//    Graph[5].push_back({d5, '1'});
+    Graph[5].push_back({d5, '0'});
+
+    Graph[5].push_back({d5, '1'});
 
     int cnt = -1;
     for (std::vector< std::pair<DFANode, char> >x : Graph)
@@ -132,14 +134,14 @@ void Minimize_DFA::set_up_bool_matrix()
     m.push_back(st3);
     m.push_back(st4);
     m.push_back(st5);
-//    m.push_back(st6);
+    m.push_back(st6);
 
     State_Nodes.push_back(d0);
     State_Nodes.push_back(d1);
     State_Nodes.push_back(d2);
     State_Nodes.push_back(d3);
     State_Nodes.push_back(d4);
-//    State_Nodes.push_back(d5);
+    State_Nodes.push_back(d5);
 
 //    for(int x = 0 ; x <= Graph.size() ; x ++){
 //        DFANode x = get_dfa_node(x);
@@ -257,16 +259,106 @@ void Minimize_DFA::determine_Final_Unmatched_States()
     }
 }
 
-std::vector<std::vector<DFANode>> Minimize_DFA::Calculate_Minimum_DFA()
+std::vector<std::vector<std::pair<DFANode,char>>> Minimize_DFA::Calculate_Minimum_DFA()
 {
     Myhill_Nerode();
     return merge_final_states();
 
 }
 
-std::vector<std::vector<DFANode>> Minimize_DFA::merge_final_states()
+std::vector<std::vector<std::pair<DFANode,char>>> Minimize_DFA::merge_final_states()
 {
 
+    std::vector<int> parent_Vector ;
+    parent_Vector.resize(State_Nodes.size());
+    Reduced_Graph.resize(Graph.size());
+
+    for(int x = 0 ; x < State_Nodes.size() ; x++ ){
+        parent_Vector[x] = x;
+    }
+
+            for(int h : parent_Vector){
+                std::cout <<"Parent " <<h << std::endl;
+            }
+
+
+    for(int x = 0 ; x < Unmatched_States.size() ; x++){
+        int first = Unmatched_States[x].first;
+        int second = Unmatched_States[x].second;
+        if(!mergeNodes(Graph,first,second,&parent_Vector)){
+            printf("Already have the same parent !");
+        }
+    }
+
+
+            for(int h : parent_Vector){
+                std::cout <<"Parent " <<h << std::endl;
+            }
+    for(int x = 0 ; x < Graph.size(); x++){
+        std::vector<std::pair<DFANode,char>> temporary = Graph[x];
+        Reduced_Graph[parent_Vector[x]].insert(Reduced_Graph[parent_Vector[x]].end()
+                , temporary.begin(), temporary.end());
+    }
+
+    for(int x = 0 ; x < Reduced_Graph.size() ; x++){
+        for(int y = 0 ; y < Reduced_Graph[x].size() ; y++){
+            int parent_id_current = parent_Vector[Reduced_Graph[x][y].first.id];
+            DFANode temp = parent_id_current == start_node.id ?
+                           start_node :
+                           *get_dfa_node(Graph,parent_id_current);
+            if(Reduced_Graph[x][y].first.id == start_node.id)
+                start_node = temp;
+            Reduced_Graph[x][y].first = temp;
+        }
+    }
+
+
+    trim_redundant_states();
+
+
+
     printf("Test Finished!");
+
+}
+
+
+
+void Minimize_DFA::trim_redundant_states()
+{
+    for(int x = 0 ; x < Reduced_Graph.size() ; x++){
+        while(trim_redundant_states_single_node(x) != 0);
+    }
+}
+
+int Minimize_DFA::trim_redundant_states_single_node(int index)
+{
+    int duplicates_found;
+    std::vector<char> set_duplicates;
+    std::vector<char> set_all_possible_inputs;
+    for(int x = 0 ; x < Reduced_Graph[index].size() ; x++){
+        if(std::find(set_all_possible_inputs.begin(),
+                     set_all_possible_inputs.end(),
+                     Reduced_Graph[index][x].second) != set_all_possible_inputs.end()) {
+
+            set_duplicates.push_back(Reduced_Graph[index][x].second);
+
+        } else {
+
+            set_all_possible_inputs.push_back(Reduced_Graph[index][x].second);
+        }
+    }
+
+    duplicates_found = set_duplicates.size();
+
+    for(char x : set_duplicates){
+        for(int m = 0 ; m < Reduced_Graph[index].size() ; m++){
+             if(Reduced_Graph[index][m].second == x){
+                Reduced_Graph[index].erase(Reduced_Graph[index].begin()+ m );
+                 break;
+             }
+        }
+    }
+
+    return duplicates_found;
 
 }

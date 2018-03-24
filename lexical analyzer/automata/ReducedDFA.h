@@ -14,21 +14,25 @@ class Minimize_DFA
 {
     private:
     int marked_count = 0 ;
-    std::vector<std::vector<bool>> Cells_to_be_marked;
+    DFANode start_node;
     std::vector<std::vector<std::pair<DFANode,char>>> Graph ;
-    std::vector<DFANode> State_Nodes;
+    std::vector<std::vector<std::pair<DFANode,char>>> Reduced_Graph ;
+    std::vector<std::vector<bool>> Cells_to_be_marked;
     std::vector<std::pair<int,int>> Unmatched_States;
+    std::vector<DFANode> State_Nodes;
     void set_up_bool_matrix();
     void Myhill_Nerode();
     int Myhill_Nerode_Iteration();
     bool check_pair_compatibility(int i , int j);
     void determine_Final_Unmatched_States();
-    std::vector<std::vector<DFANode>> merge_final_states();
+    std::vector<std::vector<std::pair<DFANode,char>>> merge_final_states();
+    void trim_redundant_states();
+    int trim_redundant_states_single_node(int index);
 
     public:
 
-    Minimize_DFA(/*std::vector<std::vector<std::pair<DFANode,char>>> dfa_graph*/);
-    std::vector<std::vector<DFANode>> Calculate_Minimum_DFA();
+    Minimize_DFA(DFANode Start, DFANode start_node1);
+    std::vector<std::vector<std::pair<DFANode,char>>> Calculate_Minimum_DFA();
 };
 
 #endif //LEXICAL_ANALYZER_REDUCEDDFA_H
