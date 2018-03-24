@@ -3,6 +3,7 @@
 //
 
 #include "LexicalController.h"
+#include "automata/Tokenizer.h"
 
 #include <string>
 #include <vector>
@@ -45,12 +46,14 @@ void Lexical_controller::run_(const string grammar_rule_file, const string src_p
 
 
     // Reading source programs::
+    Tokenizer tokenizer;
+    tokenizer.set_dfa_graph(transformer.get_dfa_graph());
     Source_program_reader src_prog_reader;
     src_prog_reader.set_src_file_name(src_program_file);
     char c;
     while ((c = src_prog_reader.get_next_char_from_src_program()) != '~')
     {
-
+       // tokenize(c);
     }
 
 

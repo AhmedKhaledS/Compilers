@@ -18,15 +18,9 @@ using namespace std;
 DFATransformer::DFATransformer()
 {
     functional_id = 0;
-    parent = vector<int>(NODES_SZ, -1);
-//    transitions.resize(NODES_SZ);
-//    for (int i = 0; i < nfa_graph.size(); ++i)
-//    {
-//        for (pair<State, string> x : *nfa_graph[i].get_transitions())
-//        {
-//            transitions[i][x.second].push_back(x.first);
-//        }
-//    }
+    //vector<State> x;
+
+   // starting_dfa_state = DFANode(x, false, false, false, -1);
 }
 
 DFANode* DFATransformer::get_dfa_node(int id)
@@ -46,7 +40,7 @@ void DFATransformer::transform()
     starting_nfa_state.push_back(nfa_graph[0]);
     DFANode starting_nfa_node(starting_nfa_state, false, false, false, 0);
     DFANode starting_dfa_node = normal_transition(starting_nfa_node, EPSILON);
-    *starting_dfa_state = starting_dfa_node;
+    //starting_dfa_state = starting_dfa_node;
     starting_dfa_node.id = functional_id++;
     dfa_nodes.push_back(starting_dfa_node);
     set<string> inputs = NFAGenerator::get_symbols();
@@ -107,23 +101,6 @@ DFANode DFATransformer::normal_transition(DFANode dfa_state, string input)
     }
     DFANode new_dfa_node(dfa_trans, res_acceptance_state, false, false, -1);
     return new_dfa_node;
-}
-
-int DFATransformer::find_parent(int node)
-{
-    if(parent[node] == -1)
-        return node;
-    return parent[node] = find_parent(parent[node]);
-}
-
-bool DFATransformer::merge_nodes(int node1, int node2)
-{
-    int parentA = find_parent(node1);
-    int parentB = find_parent(node2);
-    if(parentA == parentB)
-        return false;
-    parent[parentB] = parentA;
-    return true;
 }
 
 bool DFATransformer::already_inserted(vector<State> *vec, State s) {
@@ -196,6 +173,7 @@ int DFATransformer::get_dfa_graph_size() {
 }
 
 DFANode *DFATransformer::get_starting_dfa_state() {
-    return this->starting_dfa_state;
+    return nullptr;
+   // return &this->starting_dfa_state;
 };
 
