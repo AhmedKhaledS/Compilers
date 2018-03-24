@@ -144,7 +144,9 @@ void Minimize_DFA::set_up_bool_matrix()
     State_Nodes.push_back(d5);
 
 //    for(int x = 0 ; x <= Graph.size() ; x ++){
-//        DFANode x = get_dfa_node(x);
+//        DFANode received_node  =  x == start_node.id ?
+//              start_node :
+//              *get_dfa_node(Graph, x );
 //        State_Nodes.push_back(x);
 //    }
     ////////Brute Test
