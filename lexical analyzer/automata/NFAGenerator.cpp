@@ -17,7 +17,7 @@
 
 #define EPSILON '$'
 
-set <string> NFAGenerator::symbols;
+vector <string> NFAGenerator::symbols;
 
 NFAGenerator::NFAGenerator()
 {
@@ -276,9 +276,14 @@ NFA NFAGenerator::RE_to_NFA(string expression)
 }
 
 void NFAGenerator::add_symbol(string s) {
-    symbols.insert(s);
+    symbols.push_back(s);
 }
 
-set <string> NFAGenerator::get_symbols() {
+vector <string> NFAGenerator::get_symbols() {
     return symbols;
+}
+
+bool NFAGenerator::search(string s)
+{
+    return (find(symbols.begin(),symbols.end(), s) != symbols.end());
 }

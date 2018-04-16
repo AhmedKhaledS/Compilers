@@ -15,7 +15,8 @@ using namespace std;
 #define EPSILON "$"
 
 
-DFATransformer::DFATransformer()
+DFATransformer::DFATransformer(DFANode s_state)
+    : starting_dfa_state(s_state)
 {
     functional_id = 0;
     //vector<State> x;
@@ -40,10 +41,10 @@ void DFATransformer::transform()
     starting_nfa_state.push_back(nfa_graph[0]);
     DFANode starting_nfa_node(starting_nfa_state, false, false, false, 0);
     DFANode starting_dfa_node = normal_transition(starting_nfa_node, EPSILON);
-    //starting_dfa_state = starting_dfa_node;
     starting_dfa_node.id = functional_id++;
+    starting_dfa_state = starting_dfa_node;
     dfa_nodes.push_back(starting_dfa_node);
-    set<string> inputs = NFAGenerator::get_symbols();
+    vector<string> inputs = NFAGenerator::get_symbols();
 
 
     while (exist_unmarked_state(&dfa_nodes))
@@ -52,19 +53,67 @@ void DFATransformer::transform()
         DFANode sss = *current_dfa_node;
         current_dfa_node->marked = true;
         int node_id = current_dfa_node->id;
-        for (set<string>::iterator it = inputs.begin();
-             it != inputs.end(); it++)
+        for (string x : inputs)
         {
-            DFANode result_node_without_eps = normal_transition(sss, *it);
-            DFANode dfa_state = normal_transition(result_node_without_eps, EPSILON);
-            if (!already_inserted_dfa_node(&dfa_state))
-            {
-                dfa_state.marked = false;
-                dfa_state.id = functional_id++;
-                dfa_nodes.push_back(dfa_state);
-            }
-            if (*it != EPSILON)
-                dfa_graph[node_id].push_back({dfa_state, *it});
+//            if ((*it)[(*it).length() - 1] == '~')
+//            {
+//                string tmp = (*it).substr(0, (*it).length() - 1);
+//                DFANode result_node_without_eps = normal_transition(sss, tmp);
+//                DFANode dfa_state = normal_transition(result_node_without_eps, EPSILON);
+//                if (!already_inserted_dfa_node(&dfa_state))
+//                {
+//                    dfa_state.marked = false;
+//                    dfa_state.id = functional_id++;
+//                    dfa_nodes.push_back(dfa_state);
+//                }
+//                if (dfa_state.dfa_state.size() == 0 && (*it).length() == 1)
+//                {
+//                    if (isalpha((*it)[0]))
+//                    {
+//                        if (inputs.find("a-z") != inputs.end())
+//                            continue;
+//                    }
+//                }
+//                if (*it != EPSILON && !(dfa_state.id == node_id && dfa_state.dfa_state.size() == 0))
+//                    dfa_graph[node_id].push_back({dfa_state, *it});
+//            }
+//            else
+//            {
+                DFANode result_node_without_eps = normal_transition(sss, x);
+                DFANode dfa_state = normal_transition(result_node_without_eps, EPSILON);
+                if (!already_inserted_dfa_node(&dfa_state))
+                {
+                    dfa_state.marked = false;
+                    dfa_state.id = functional_id++;
+                    dfa_nodes.push_back(dfa_state);
+                }
+                if (dfa_state.dfa_state.size() == 0 && (x).length() == 1)
+                {
+                    if (isalpha((x)[0]))
+                    {
+                        if (find(inputs.begin(), inputs.end(), "a-z") != inputs.end())
+                            continue;
+                    }
+                }
+                if (x != EPSILON && !(dfa_state.id == node_id && dfa_state.dfa_state.size() == 0))
+                    dfa_graph[node_id].push_back({dfa_state, x});
+//            }
+//            if (!already_inserted_dfa_node(&dfa_state))
+//            {
+//                dfa_state.marked = false;
+//                dfa_state.id = functional_id++;
+//                dfa_nodes.push_back(dfa_state);
+//            }
+//            if (dfa_state.dfa_state.size() == 0 && (*it).length() == 1)
+//            {
+//                if (isalpha((*it)[0]))
+//                {
+//                    if (inputs.find("a-z") != inputs.end())
+//                        continue;
+//                }
+//            }
+//            if (*it != EPSILON && !(dfa_state.id == node_id && dfa_state.dfa_state.size() == 0))
+//                dfa_graph[node_id].push_back({dfa_state, *it});
         }
     }
 }
@@ -173,7 +222,6 @@ int DFATransformer::get_dfa_graph_size() {
 }
 
 DFANode *DFATransformer::get_starting_dfa_state() {
-    return nullptr;
-   // return &this->starting_dfa_state;
+    return &this->starting_dfa_state;
 };
 

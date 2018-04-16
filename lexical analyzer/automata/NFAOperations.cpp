@@ -12,8 +12,13 @@
 
 NFA NFAOperations::create_NFA(string c) {
 
-    NFAGenerator::add_symbol(c);
-
+//    if (c.length() == 1)
+//        NFAGenerator::add_symbol(c + "~");
+//    else
+    if (!NFAGenerator::search(c))
+    {
+        NFAGenerator::add_symbol(c);
+    }
     NFA result;
 
     State state_0(0);

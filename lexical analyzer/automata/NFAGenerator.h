@@ -29,15 +29,15 @@ class NFAGenerator
 
         static void add_symbol(string s);
 
-        static set <string> get_symbols();
-
+        static vector <string> get_symbols();
+        static bool search(string s);
 
         NFA RE_to_NFA(string expression);
 
     protected:
 
     private:
-        static set <string> symbols;
+        static vector <string> symbols;
         vector<NFA> grammar;
         std::map<string, NFA> defined_grammar;
         vector<NFA> nfa_pool;

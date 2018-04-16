@@ -25,11 +25,11 @@ class DFATransformer
         bool exist_unmarked_state(std::vector<DFANode> *dfa_combined_nodes);
         bool already_inserted_dfa_node(DFANode *dfa_node);
         DFANode *get_unmarked_node(std::vector<DFANode> *dfa_combined_nodes);
-        DFANode *starting_dfa_state;
+        DFANode starting_dfa_state;
 //        std::vector< std::map<char, std::vector<State> > > transitions;
 
 public:
-        DFATransformer();
+        DFATransformer(DFANode s_state);
         DFANode normal_transition(DFANode dfa_state, std::string input);
         void transform();
         DFANode* get_dfa_node(int id);
