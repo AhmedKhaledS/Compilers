@@ -8,8 +8,8 @@
 #include <vector>
 #include <map>
 #include "DFANode.h"
-#include "TransitionTable.h"
 #include "NFAGenerator.h"
+#include "EdgeLabel.h"
 
 class DFATransformer
 {
@@ -20,7 +20,7 @@ class DFATransformer
         std::vector<int> parent;
         std::vector<State> nfa_graph;
         std::vector<DFANode> dfa_nodes;
-        std::vector< std::vector< std::pair<DFANode, string> > > dfa_graph;
+        std::vector< std::vector< std::pair<DFANode, EdgeLabel> > > dfa_graph;
         bool already_inserted(std::vector<State> *vec, State s);
         bool exist_unmarked_state(std::vector<DFANode> *dfa_combined_nodes);
         bool already_inserted_dfa_node(DFANode *dfa_node);
@@ -36,7 +36,7 @@ public:
         void add_dfa_node(DFANode *node, int id);
         std::vector<DFANode>* get_dfa_nodes();
         void set_nfa_graph(std::vector<State> nfa);
-        std::vector< std::vector< std::pair<DFANode, std::string> > > *get_dfa_graph();
+        std::vector< std::vector< std::pair<DFANode, EdgeLabel> > > *get_dfa_graph();
         int get_dfa_graph_size();
         DFANode* get_starting_dfa_state();
 };

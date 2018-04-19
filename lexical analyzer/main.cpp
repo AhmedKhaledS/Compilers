@@ -143,7 +143,7 @@ int main()
 //    }
 
     Lexical_controller l;
-    l.run_("test.txt", "test_2.txt");
+    l.run_("test.txt", "test_1.txt");
 
 //    NFAGenerator generator;
 //    generator.generate_grammar("letter = a-b | A-B");

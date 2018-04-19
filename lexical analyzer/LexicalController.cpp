@@ -65,12 +65,24 @@ void Lexical_controller::run_(const string grammar_rule_file, const string src_p
     }
 
     cout << "New DFA graph: \n";
-    vector< vector< pair<DFANode, string> > > *transformed_graph = transformer.get_dfa_graph();
+    vector< vector< pair<DFANode, EdgeLabel> > > *transformed_graph = transformer.get_dfa_graph();
     for (int i = 0; i < transformer.get_dfa_graph_size(); i++)
     {
-        for (pair<DFANode, string> x : (*transformed_graph)[i])
+        for (pair<DFANode, EdgeLabel> x : (*transformed_graph)[i])
         {
-            cout << "State: " << i << "  goes to state: " << x.first.id << " under input: " << x.second << endl;
+            cout << "State: " << i << "  goes to state: " << x.first.id << " under input: ";
+            string label = x.second.get_input();
+            set<string> disc_set = x.second.get_discarded_char();
+            if (!disc_set.empty())
+                label += "-{";
+            for (auto it = disc_set.begin(); it != disc_set.end(); ++it)
+            {
+                label += *it;
+                label += ", ";
+            }
+            if (!disc_set.empty())
+                label += "}";
+            cout << label << endl;
         }
     }
 
@@ -98,9 +110,9 @@ void Lexical_controller::run_(const string grammar_rule_file, const string src_p
         for (int j = 0; j < current_rule.length(); j++)
         {
             bool found = false;
-            for (pair<DFANode, string> x : (*transformer.get_dfa_graph())[(current_state).id])
+            for (pair<DFANode, EdgeLabel> x : (*transformer.get_dfa_graph())[(current_state).id])
             {
-                string expanded_string = helper.normalize_classes(x.second);
+                string expanded_string = helper.normalize_classes(x.second.get_input());
                 if (expanded_string.find(current_rule[j]) !=  string::npos)
                 {
                     found = true;

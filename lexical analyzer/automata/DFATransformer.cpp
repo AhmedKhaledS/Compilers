@@ -55,65 +55,32 @@ void DFATransformer::transform()
         int node_id = current_dfa_node->id;
         for (string x : inputs)
         {
-//            if ((*it)[(*it).length() - 1] == '~')
-//            {
-//                string tmp = (*it).substr(0, (*it).length() - 1);
-//                DFANode result_node_without_eps = normal_transition(sss, tmp);
-//                DFANode dfa_state = normal_transition(result_node_without_eps, EPSILON);
-//                if (!already_inserted_dfa_node(&dfa_state))
+            DFANode result_node_without_eps = normal_transition(sss, x);
+            DFANode dfa_state = normal_transition(result_node_without_eps, EPSILON);
+            EdgeLabel e(x);
+            if (!already_inserted_dfa_node(&dfa_state))
+            {
+                dfa_state.marked = false;
+                dfa_state.id = functional_id++;
+                dfa_nodes.push_back(dfa_state);
+            }
+            if (x == "a-z")
+            {
+                for (auto transition : dfa_graph[node_id])
+                    e.discard_char(transition.second.get_input());
+            }
+            if (dfa_state.dfa_state.size() == 0 || x == EPSILON) continue;
+            dfa_graph[node_id].push_back({dfa_state, e});
+//                if (dfa_state.dfa_state.size() == 0 && (x).length() == 1)
 //                {
-//                    dfa_state.marked = false;
-//                    dfa_state.id = functional_id++;
-//                    dfa_nodes.push_back(dfa_state);
-//                }
-//                if (dfa_state.dfa_state.size() == 0 && (*it).length() == 1)
-//                {
-//                    if (isalpha((*it)[0]))
+//                    if (isalpha((x)[0]))
 //                    {
-//                        if (inputs.find("a-z") != inputs.end())
+//                        if (find(inputs.begin(), inputs.end(), "a-z") != inputs.end())
 //                            continue;
 //                    }
 //                }
-//                if (*it != EPSILON && !(dfa_state.id == node_id && dfa_state.dfa_state.size() == 0))
-//                    dfa_graph[node_id].push_back({dfa_state, *it});
-//            }
-//            else
-//            {
-                DFANode result_node_without_eps = normal_transition(sss, x);
-                DFANode dfa_state = normal_transition(result_node_without_eps, EPSILON);
-                if (!already_inserted_dfa_node(&dfa_state))
-                {
-                    dfa_state.marked = false;
-                    dfa_state.id = functional_id++;
-                    dfa_nodes.push_back(dfa_state);
-                }
-                if (dfa_state.dfa_state.size() == 0 && (x).length() == 1)
-                {
-                    if (isalpha((x)[0]))
-                    {
-                        if (find(inputs.begin(), inputs.end(), "a-z") != inputs.end())
-                            continue;
-                    }
-                }
-                if (x != EPSILON && !(dfa_state.id == node_id && dfa_state.dfa_state.size() == 0))
-                    dfa_graph[node_id].push_back({dfa_state, x});
-//            }
-//            if (!already_inserted_dfa_node(&dfa_state))
-//            {
-//                dfa_state.marked = false;
-//                dfa_state.id = functional_id++;
-//                dfa_nodes.push_back(dfa_state);
-//            }
-//            if (dfa_state.dfa_state.size() == 0 && (*it).length() == 1)
-//            {
-//                if (isalpha((*it)[0]))
-//                {
-//                    if (inputs.find("a-z") != inputs.end())
-//                        continue;
-//                }
-//            }
-//            if (*it != EPSILON && !(dfa_state.id == node_id && dfa_state.dfa_state.size() == 0))
-//                dfa_graph[node_id].push_back({dfa_state, *it});
+//                if (x != EPSILON && !(dfa_state.id == node_id && dfa_state.dfa_state.size() == 0))
+//                    dfa_graph[node_id].push_back({dfa_state, x});
         }
     }
 }
@@ -212,7 +179,7 @@ std::vector<DFANode> *DFATransformer::get_dfa_nodes() {
     return &dfa_nodes;
 }
 
-vector< vector< pair<DFANode, string> > > *DFATransformer::get_dfa_graph()
+vector< vector< pair<DFANode, EdgeLabel> > > *DFATransformer::get_dfa_graph()
 {
     return &dfa_graph;
 }
