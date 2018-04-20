@@ -23,7 +23,7 @@ class Minimize_DFA
     void set_up_bool_matrix();
     void Myhill_Nerode();
     int Myhill_Nerode_Iteration();
-    bool check_pair_compatibility(int i , int j);
+    bool is_one_a_terminal_state(int i, int j);
     void determine_Final_Unmatched_States();
     std::vector<std::vector<std::pair<DFANode,char>>> merge_final_states();
     void trim_redundant_states();

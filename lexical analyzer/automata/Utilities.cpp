@@ -44,14 +44,38 @@ int findParent(int node,std::vector<int> parent)
 bool mergeNodes(std::vector<std::vector<std::pair<DFANode,char>>> graph,
                 int a ,
                 int b ,
-                std::vector<int> *parent)
+                std::vector<int> *parent ,
+                std::vector<int> *times_previously_merged )
 {
     int parentA = findParent(a,*parent);
     int parentB = findParent(b,*parent);
     if(parentA == parentB)return false;
-    if (get_dfa_node(graph,parentA)->acceptance_state)
-        (*parent)[parentB] = parentA;
-    else
-        (*parent)[parentA] = parentB;
+    if (get_dfa_node(graph,parentA)->acceptance_state){
+        if(get_dfa_node(graph,parentB) -> acceptance_state){
+
+            if(times_previously_merged[a] > times_previously_merged[b])
+                (*parent)[parentB] = parentA;
+            else
+                (*parent)[parentA] = parentB;
+
+        }else{
+
+            (*parent)[parentB] = parentA;
+        }
+    } else {
+        if(get_dfa_node(graph,parentB) -> acceptance_state){
+            (*parent)[parentA] = parentB;
+        }else{
+
+            if((*times_previously_merged)[b] > (*times_previously_merged)[a])
+                (*parent)[parentA] = parentB;
+            else
+                (*parent)[parentB] = parentA;
+
+        }
+    }
+
+    (*times_previously_merged)[a] ++;
+    (*times_previously_merged)[b] ++;
     return true;
 }

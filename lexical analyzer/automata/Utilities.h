@@ -20,7 +20,8 @@ int findParent(int node , std::vector<int> parent);
 bool mergeNodes(std::vector<std::vector<std::pair<DFANode,char>>> graph,
                 int a ,
                 int b ,
-                std::vector<int> *parent);
+                std::vector<int> *parent,
+                std::vector<int> *times_previously_merged);
 
 
 #endif //LEXICAL_ANALYZER_UTILITIES_H

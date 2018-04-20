@@ -197,7 +197,7 @@ int Minimize_DFA::Myhill_Nerode_Iteration()
         for (int i = 0 ; i < Graph.size() ; i++){
             for(int j = 0 ; j < i ; j++){
                 if(Cells_to_be_marked[i][j] == false &&
-                        check_pair_compatibility( i ,  j)){
+                        is_one_a_terminal_state(i, j)){
                     Cells_to_be_marked[i][j] = true;
                     marked_count++;
                 }
@@ -208,7 +208,7 @@ int Minimize_DFA::Myhill_Nerode_Iteration()
 }
 
 
-bool Minimize_DFA::check_pair_compatibility(int i , int j)
+bool Minimize_DFA::is_one_a_terminal_state(int i, int j)
 {
     std::vector<char> Common_Transitions;
     std::vector<char> Transitions_i;
@@ -270,37 +270,45 @@ std::vector<std::vector<std::pair<DFANode,char>>> Minimize_DFA::Calculate_Minimu
 
 std::vector<std::vector<std::pair<DFANode,char>>> Minimize_DFA::merge_final_states()
 {
-
+    //times previously merged is a second criterion that we employ to choose the dominant parent after
+    // the criterion of which one is a final state  .
     std::vector<int> parent_Vector ;
+    std::vector<int> times_previously_merged ;
     parent_Vector.resize(State_Nodes.size());
+    times_previously_merged.resize(State_Nodes.size());
     Reduced_Graph.resize(Graph.size());
 
     for(int x = 0 ; x < State_Nodes.size() ; x++ ){
         parent_Vector[x] = x;
+        times_previously_merged[x] = 0;
     }
 
-            for(int h : parent_Vector){
-                std::cout <<"Parent " <<h << std::endl;
-            }
+    for(int h : parent_Vector){
+        std::cout <<"Parent " <<h << std::endl;
+    }
 
 
     for(int x = 0 ; x < Unmatched_States.size() ; x++){
         int first = Unmatched_States[x].first;
         int second = Unmatched_States[x].second;
-        if(!mergeNodes(Graph,first,second,&parent_Vector)){
+        if(!mergeNodes(Graph,first,second,&parent_Vector,&times_previously_merged)){
             printf("Already have the same parent !");
         }
     }
 
 
-            for(int h : parent_Vector){
-                std::cout <<"Parent " <<h << std::endl;
-            }
+    for(int h : parent_Vector){
+        std::cout <<"Parent " <<h << std::endl;
+    }
+
+
     for(int x = 0 ; x < Graph.size(); x++){
         std::vector<std::pair<DFANode,char>> temporary = Graph[x];
         Reduced_Graph[parent_Vector[x]].insert(Reduced_Graph[parent_Vector[x]].end()
                 , temporary.begin(), temporary.end());
     }
+
+    //re-assigns the starting node after merge is completed
 
     for(int x = 0 ; x < Reduced_Graph.size() ; x++){
         for(int y = 0 ; y < Reduced_Graph[x].size() ; y++){
