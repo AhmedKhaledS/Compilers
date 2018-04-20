@@ -180,8 +180,9 @@ NFA NFAGenerator::RE_to_NFA(string expression)
             if(operand != EMPTY_OPERAND) {
                 add_operand(operands,operations,operand,consecutive_tokens);
                 operand = EMPTY_OPERAND;
-                consecutive_tokens = true;
+
             }
+            consecutive_tokens = true;
             continue;
         }
 
@@ -236,7 +237,7 @@ NFA NFAGenerator::RE_to_NFA(string expression)
                 operations.pop();
             }
             else if (expression[i] == '*' || expression[i] == '+') {
-                consecutive_tokens = false;
+                // consecutive_tokens = false;
                 NFA x = operands.top();
                 operands.pop();
                 if(expression[i] == '*') {

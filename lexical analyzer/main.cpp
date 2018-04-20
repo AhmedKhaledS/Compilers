@@ -146,9 +146,17 @@ int main()
     l.run_("test.txt", "test_1.txt");
 
 //    NFAGenerator generator;
-//    generator.generate_grammar("letter = a-b | A-B");
-//    generator.generate_grammar("digit = 1-2");
-//    generator.generate_grammar("id: letter(digit|letter)");
+    //generator.generate_grammar("digit = 0-9");
+    //generator.generate_grammar("digits = digit+");
+
+
+
+
+//    generator.generate_grammar("addop: \\+ |-");
+//    generator.generate_grammar("digit = 0-9");
+//    generator.generate_grammar("digits = digit+");
+//    generator.generate_grammar("id: letter (letter|digit)*");
+    //generator.generate_grammar("num: (digit+ |(digit+ . digits)) (\\L|E digits)");
 //    NFA machine = generator.generate_machine();
 
 //    set<char> symbol = NFAGenerator::get_symbols();
@@ -160,7 +168,7 @@ int main()
 
 //    vector<State> states = (*machine.get_states());
 //    for (int i = 0; i < states.size(); i++) {
-//        vector<pair <State, char>> transitions = *states[i].get_transitions();
+//        vector<pair <State, string>> transitions = *states[i].get_transitions();
 //        for (int j = 0; j < transitions.size(); j++) {
 //            cout << states[i].get_state_number() << " " << transitions[j].first.get_state_number()
 //                 << " " << transitions[j].second << endl;
