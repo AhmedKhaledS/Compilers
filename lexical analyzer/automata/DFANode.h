@@ -20,8 +20,10 @@ class DFANode
         bool registered_in_transition_table;
         /* Every DFANode has a unique integer id. */
         int id;
+        std::string acceptance_state_name;
 
-        DFANode(std::vector<State> dfa_state_, bool acc_state, bool marked, bool reg_in_t_table, int id);
+
+    DFANode(std::vector<State> dfa_state_, bool acc_state, bool marked, bool reg_in_t_table, int id, string acc);
 };
 
 

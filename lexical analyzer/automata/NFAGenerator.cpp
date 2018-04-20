@@ -50,9 +50,16 @@ void NFAGenerator::generate_grammar(string expression) {
                 helper.tokenaize(key_words, ' ');
         for (int i = 0; i < tokens.size(); ++i) {
             if(tokens[i] == "") continue;
-            tokens[i] = helper.insert_concatination(tokens[i]);
-           // cout << i << "K:" << tokens[i] << endl;
-            NFA result = RE_to_NFA(tokens[i]);
+        string name = tokens[i];
+        tokens[i] = helper.insert_concatination(tokens[i]);
+       // cout << i << "K:" << tokens[i] << endl;
+        NFA result = RE_to_NFA(tokens[i]);
+        vector<State> states = (*result.get_states());
+        for (int i = 0; i < states.size(); i++) {
+            if(states[i].is_acceptance_state() == 1) {
+                (*result.get_states())[i].set_acceptance_state_name(name);
+            }
+        }
             grammar.push_back(result);
         }
 
@@ -62,14 +69,20 @@ void NFAGenerator::generate_grammar(string expression) {
         //cout << "--PUNCS#" << puncs_1 << endl;
 
 
-
         std::vector<std::string> tokens =
                 helper.tokenaize(puncs_1, ' ');
         for (int i = 0; i < tokens.size(); ++i) {
             if(tokens[i] == "") continue;
+            string name = tokens[i];
             // tokens[i] = helper.insert_concatination(tokens[i]);
 //            cout << i << "P#" << tokens[i] << "#" << endl;
             NFA result = RE_to_NFA(tokens[i]);
+            vector<State> states = (*result.get_states());
+            for (int i = 0; i < states.size(); i++) {
+                if(states[i].is_acceptance_state() == 1) {
+                    (*result.get_states())[i].set_acceptance_state_name(name);
+                }
+            }
             grammar.push_back(result);
         }
 
@@ -89,7 +102,6 @@ void NFAGenerator::generate_grammar(string expression) {
                 (*result.get_states())[i].set_acceptance_state_name(tokens[0]);
             }
         }
-
         grammar.push_back(result);
 
     } else {

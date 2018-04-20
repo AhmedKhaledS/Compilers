@@ -41,7 +41,7 @@ void DFATransformer::transform()
     dfa_graph.resize(DFA_NODES);
     vector<State> starting_nfa_state;
     starting_nfa_state.push_back(nfa_graph[0]);
-    DFANode starting_nfa_node(starting_nfa_state, false, false, false, 0);
+    DFANode starting_nfa_node(starting_nfa_state, false, false, false, 0, "");
     DFANode starting_dfa_node = normal_transition(starting_nfa_node, EPSILON);
     starting_dfa_node.id = functional_id++;
     starting_dfa_state = starting_dfa_node;
@@ -59,7 +59,6 @@ void DFATransformer::transform()
         {
             DFANode result_node_without_eps = normal_transition(sss, x);
             DFANode dfa_state = normal_transition(result_node_without_eps, EPSILON);
-
             EdgeLabel e(x);
             if (!already_inserted_dfa_node(&dfa_state))
             {
@@ -82,6 +81,7 @@ DFANode DFATransformer::normal_transition(DFANode dfa_state, string input)
 {
     vector<State> dfa_trans;
     stack<State> stk_states;
+    string acc_state_name = "";
     bool res_acceptance_state = false;
     if (dfa_state.id == 0)
         int debug = -1;
@@ -119,7 +119,15 @@ DFANode DFATransformer::normal_transition(DFANode dfa_state, string input)
             }
         }
     }
-    DFANode new_dfa_node(dfa_trans, res_acceptance_state, false, false, -1);
+    for (auto curr : dfa_trans)
+    {
+        if (curr.is_acceptance_state())
+        {
+            acc_state_name = curr.get_acceptance_state_name();
+            break;
+        }
+    }
+    DFANode new_dfa_node(dfa_trans, res_acceptance_state, false, false, -1, acc_state_name);
     return new_dfa_node;
 }
 
