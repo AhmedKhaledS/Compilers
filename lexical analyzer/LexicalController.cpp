@@ -47,7 +47,8 @@ void Lexical_controller::run_(const string grammar_rule_file, const string src_p
 
     vector<State> st_nfa_node;
     st_nfa_node.push_back(states[0]);
-    DFATransformer transformer(DFANode(st_nfa_node, states[0].is_acceptance_state(), false, false, -1, states[0].get_acceptance_state_name()));
+    DFATransformer transformer(DFANode(st_nfa_node, states[0].is_acceptance_state(),
+                                       false, false, -1, states[0].get_acceptance_state_name()));
     transformer.set_nfa_graph(states);
     transformer.transform();
 
@@ -71,7 +72,7 @@ void Lexical_controller::run_(const string grammar_rule_file, const string src_p
         for (pair<DFANode, EdgeLabel> x : (*transformed_graph)[i])
         {
 //            cout << "State: " << i << "  goes to state: " << x.first.id << " under input: ";
-            cout << "" << i << " " << x.first.id << " ";
+            cout << i << " " << x.first.id << " ";
             string label = x.second.get_input();
             set<string> disc_set = x.second.get_discarded_char();
             if (!disc_set.empty())
@@ -89,9 +90,8 @@ void Lexical_controller::run_(const string grammar_rule_file, const string src_p
 
 
     // Reading source programs::
-    //Revise starting state of DFA Node.
-    //Tokenizer tokenizer(*transformer.get_starting_dfa_state(), transformer, *transformer.get_dfa_graph());
-    //tokenizer.set_dfa_graph(transformer.get_dfa_graph());
+    // Revise starting state of DFA Node.
+    Tokenizer tokenizer(transformer.get_starting_dfa_state(), &transformer, transformer.get_dfa_graph());
     Source_program_reader src_prog_reader;
     src_prog_reader.set_src_file_name(src_program_file);
     Grammar_Reader src_reader;
@@ -103,67 +103,14 @@ void Lexical_controller::run_(const string grammar_rule_file, const string src_p
         string current_rule = src_reader.read_next_grammar_rule_line(src_program_file, i);
 
         for(int ii = 0; ii < current_rule.length(); ii++)
-            if(current_rule[ii] == ' ') current_rule.erase(ii,1);
+        {
+            while (current_rule[ii] == ' ')
+                current_rule.erase(ii,1);
+
+        }
         if (current_rule == "~") {
             break;
         }
-        Helper helper;
-        string lexeme = "";
-        for (int j = 0; j < current_rule.length(); j++)
-        {
-            bool found = false;
-            for (pair<DFANode, EdgeLabel> x : (*transformer.get_dfa_graph())[(current_state).id])
-            {
-                string expanded_string = helper.normalize_classes(x.second.get_input());
-                // Erase all characters found in the discarded set.
-                set<string> dis_chars = x.second.get_discarded_char();
-                for (auto it = dis_chars.begin(); it != dis_chars.end(); ++it)
-                {
-                    if (isalpha((*it)[0]))
-                        expanded_string.erase(remove( expanded_string.begin(), expanded_string.end(),
-                                                      (*it)[0] ), expanded_string.end() ) ;
-                }
-                if (expanded_string.find(current_rule[j]) !=  string::npos)
-                {
-                    found = true;
-                    DFANode reached_node = x.first;
-                    current_state = x.first;
-                    stk_node.push(reached_node);
-                    lexeme.push_back(current_rule[j]);
-                    break;
-                }
-            }
-
-            if (!found || (j == current_rule.size() - 1 && !stk_node.empty()))
-            {
-                if (!found)
-                    --j;
-                while (!stk_node.empty())
-                {
-                    if (stk_node.top().acceptance_state)
-                    {
-                        string accepted_state_name = stk_node.top().acceptance_state_name;
-                        current_state = starting_state;
-                        while (!stk_node.empty()) {
-                            stk_node.pop();
-                        }
-                        cout << "Current lexeme: "<< lexeme << " type: " << accepted_state_name << endl;
-                        lexeme = "";
-                    }
-                    else
-                    {
-                        lexeme.pop_back();
-                        stk_node.pop();
-                        --j;
-                    }
-                }
-            }
-
-            if(j==-1) {
-                lexeme = "";
-                current_state = starting_state;
-                j = 0;
-            }
-        }
+        tokenizer.tokenize(current_rule, &current_state);
     }
 }

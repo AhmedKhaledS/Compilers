@@ -15,16 +15,16 @@
 class Tokenizer
 {
     private:
-        std::vector< std::vector< std::pair<DFANode, string> > > dfa_graph;
+        std::vector< std::vector< std::pair<DFANode, EdgeLabel> > > *dfa_graph;
         std::string character_pool;
         std::vector<std::string> tokens;
         stack<DFANode> stk_node;
         DFANode *starting_state;
         DFANode *current_state;
-        DFATransformer tr;
+        DFATransformer *tr;
     public:
-        Tokenizer(DFANode st_state, DFATransformer dfa_trans, std::vector< std::vector< std::pair<DFANode, string> > > dfa);
-        void tokenize(string input_line);
+        Tokenizer(DFANode *st_state, DFATransformer *dfa_trans, std::vector< std::vector< std::pair<DFANode, EdgeLabel> > > *dfa);
+        void tokenize(string input_line, DFANode *current_state);
         void set_starting_state(DFANode *st_state);
        // void set_dfa_graph(std::vector< std::vector< std::pair<DFANode, string> > > *dfa);
 };

@@ -69,8 +69,7 @@ void NFAGenerator::generate_grammar(string expression) {
         //cout << "--PUNCS#" << puncs_1 << endl;
 
 
-        std::vector<std::string> tokens =
-                helper.tokenaize(puncs_1, ' ');
+        std::vector<std::string> tokens = helper.tokenaize(puncs_1, ' ');
         for (int i = 0; i < tokens.size(); ++i) {
             if(tokens[i] == "") continue;
             string name = tokens[i];
@@ -80,9 +79,14 @@ void NFAGenerator::generate_grammar(string expression) {
             vector<State> states = (*result.get_states());
             for (int i = 0; i < states.size(); i++) {
                 if(states[i].is_acceptance_state() == 1) {
+                    if(name[0] == '\\') {
+                        name = name.substr(1, name.size() - 1);
+                    (*result.get_states())[i].set_acceptance_state_name(name);
+                } else {
                     (*result.get_states())[i].set_acceptance_state_name(name);
                 }
             }
+        }
             grammar.push_back(result);
         }
 

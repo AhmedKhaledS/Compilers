@@ -66,13 +66,86 @@ void DFATransformer::transform()
                 dfa_state.id = functional_id++;
                 dfa_nodes.push_back(dfa_state);
             }
-            if (x == "a-z")
-            {
-                for (auto transition : dfa_graph[node_id])
-                    e.discard_char(transition.second.get_input());
-            }
+//            if (x == "a-z")
+//            {
+//                for (auto transition : dfa_graph[node_id])
+//                {
+//                    if (transition.second.get_input().size() == 1
+//                        && isalpha(transition.second.get_input()[0])
+//                         && islower(transition.second.get_input()[0]))
+//                        e.discard_char(transition.second.get_input());
+//                }
+//            }
+//            if (x == "A-Z")
+//            {
+//                for (auto transition : dfa_graph[node_id])
+//                {
+//                    if (transition.second.get_input().size() == 1
+//                        && isalpha(transition.second.get_input()[0])
+//                        && isupper(transition.second.get_input()[0]))
+//                        e.discard_char(transition.second.get_input());
+//                }
+//            }
             if (x == EPSILON) continue;
             dfa_graph[node_id].push_back({dfa_state, e});
+        }
+        set<string> upper_case_chars;
+        set<string> lower_case_chars;
+        for (auto transition : dfa_graph[node_id])
+        {
+            if (transition.second.get_input().length() == 1 && isalpha(transition.second.get_input()[0]))
+            {
+                if (isupper(transition.second.get_input()[0]))
+                {
+                    string tmp = "";
+                    tmp.push_back(transition.second.get_input()[0]);
+                    upper_case_chars.insert(tmp);
+                }
+                else
+                {
+                    string tmp = "";
+                    tmp.push_back(transition.second.get_input()[0]);
+                    lower_case_chars.insert(tmp);
+                }
+
+            }
+        }
+        for (int i = 0; i < dfa_graph[node_id].size(); i++)
+        {
+            string current_input = dfa_graph[node_id][i].second.get_input();
+            Helper h;
+            string expanded_string = h.normalize_classes(current_input);
+            regex b("(.)-(.)");
+            if(regex_match(current_input, b))
+            {
+                if (isalpha(current_input[0]))
+                {
+                    if (isupper(current_input[0]))
+                    {
+                        EdgeLabel e(dfa_graph[node_id][i].second.get_input());
+                        for (auto it = upper_case_chars.begin(); it != upper_case_chars.end(); ++it)
+                        {
+                            string expanded_string = h.normalize_classes(current_input);
+                            bool inside_region = expanded_string.find(*it) !=  string::npos;
+                            if (inside_region)
+                                e.discard_char(*it);
+                        }
+                        dfa_graph[node_id][i].second = e;
+                    }
+                    else
+                    {
+                        EdgeLabel e(dfa_graph[node_id][i].second.get_input());
+                        for (auto it = lower_case_chars.begin(); it != lower_case_chars.end(); ++it)
+                        {
+                            string expanded_string = h.normalize_classes(current_input);
+                            bool inside_region = expanded_string.find(*it) !=  string::npos;
+                            if (inside_region)
+                                e.discard_char(*it);
+                        }
+                        dfa_graph[node_id][i].second = e;
+                    }
+                }
+            }
         }
     }
 }
@@ -83,9 +156,6 @@ DFANode DFATransformer::normal_transition(DFANode dfa_state, string input)
     stack<State> stk_states;
     string acc_state_name = "";
     bool res_acceptance_state = false;
-    if (dfa_state.id == 0)
-        int debug = -1;
-
     for (State curr : dfa_state.dfa_state)
     {
         stk_states.push(curr);
