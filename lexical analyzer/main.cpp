@@ -145,18 +145,19 @@ int main()
     Lexical_controller l;
     l.run_("test.txt", "test_1.txt");
 
-//    NFAGenerator generator;
-    //generator.generate_grammar("digit = 0-9");
-    //generator.generate_grammar("digits = digit+");
-
-
-
-
-//    generator.generate_grammar("addop: \\+ |-");
 //    generator.generate_grammar("digit = 0-9");
+//    generator.generate_grammar("digits: digit+");
+
+
+
+//    NFAGenerator generator;
+//
+////    generator.generate_grammar("addop: \\+ |-");
+//    generator.generate_grammar("digit = 0-9");
+//    generator.generate_grammar("letter = a-z|A-Z");
 //    generator.generate_grammar("digits = digit+");
 //    generator.generate_grammar("id: letter (letter|digit)*");
-    //generator.generate_grammar("num: (digit+ |(digit+ . digits)) (\\L|E digits)");
+//    //generator.generate_grammar("num: (digit+ |(digit+ . digits)) (\\L|E digits)");
 //    NFA machine = generator.generate_machine();
 
 //    set<char> symbol = NFAGenerator::get_symbols();
@@ -170,8 +171,11 @@ int main()
 //    for (int i = 0; i < states.size(); i++) {
 //        vector<pair <State, string>> transitions = *states[i].get_transitions();
 //        for (int j = 0; j < transitions.size(); j++) {
-//            cout << states[i].get_state_number() << " " << transitions[j].first.get_state_number()
-//                 << " " << transitions[j].second << endl;
+//            cout << states[i].get_state_number() << " "
+//                 << transitions[j].first.get_state_number() << " "
+//                 << transitions[j].second << " "
+//                 << (*machine.get_states())[i+1].is_acceptance_state() << " "
+//                 << (*machine.get_states())[i+1].get_acceptance_state_name() << endl;
 //        }
 //    }
 

@@ -26,6 +26,10 @@ public:
 
     bool is_acceptance_state();
 
+    void set_acceptance_state_name(string state_name);
+
+    string get_acceptance_state_name();
+
     void add_transition(pair <State, string> transition);
 
     vector<pair <State, string>> *get_transitions();
@@ -35,6 +39,8 @@ private:
     int state_number;
 
     bool acceptance_state;
+
+    string acceptance_state_name;
 
     vector<pair <State, string>> transitions;
 

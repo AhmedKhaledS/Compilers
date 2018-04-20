@@ -82,6 +82,14 @@ void NFAGenerator::generate_grammar(string expression) {
         std::vector<std::string> tokens = helper.tokenaize(expanded_version, ':');
 
         NFA result = RE_to_NFA(tokens[1]);
+
+        vector<State> states = (*result.get_states());
+        for (int i = 0; i < states.size(); i++) {
+            if(states[i].is_acceptance_state() == 1) {
+                (*result.get_states())[i].set_acceptance_state_name(tokens[0]);
+            }
+        }
+
         grammar.push_back(result);
 
     } else {
