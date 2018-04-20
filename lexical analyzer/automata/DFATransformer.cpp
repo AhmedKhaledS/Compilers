@@ -3,10 +3,12 @@
 //
 
 #include "DFATransformer.h"
+#include "Helper.h"
 #include <stack>
 #include <set>
 #include <algorithm>
 #include <iostream>
+#include <regex>
 
 using namespace std;
 
@@ -57,6 +59,7 @@ void DFATransformer::transform()
         {
             DFANode result_node_without_eps = normal_transition(sss, x);
             DFANode dfa_state = normal_transition(result_node_without_eps, EPSILON);
+
             EdgeLabel e(x);
             if (!already_inserted_dfa_node(&dfa_state))
             {
@@ -69,18 +72,8 @@ void DFATransformer::transform()
                 for (auto transition : dfa_graph[node_id])
                     e.discard_char(transition.second.get_input());
             }
-            if (dfa_state.dfa_state.size() == 0 || x == EPSILON) continue;
+            if (x == EPSILON) continue;
             dfa_graph[node_id].push_back({dfa_state, e});
-//                if (dfa_state.dfa_state.size() == 0 && (x).length() == 1)
-//                {
-//                    if (isalpha((x)[0]))
-//                    {
-//                        if (find(inputs.begin(), inputs.end(), "a-z") != inputs.end())
-//                            continue;
-//                    }
-//                }
-//                if (x != EPSILON && !(dfa_state.id == node_id && dfa_state.dfa_state.size() == 0))
-//                    dfa_graph[node_id].push_back({dfa_state, x});
         }
     }
 }
@@ -90,12 +83,15 @@ DFANode DFATransformer::normal_transition(DFANode dfa_state, string input)
     vector<State> dfa_trans;
     stack<State> stk_states;
     bool res_acceptance_state = false;
+    if (dfa_state.id == 0)
+        int debug = -1;
 
     for (State curr : dfa_state.dfa_state)
     {
         stk_states.push(curr);
-        if (input == EPSILON)
+        if (input == EPSILON) {
             dfa_trans.push_back(curr);
+        }
         res_acceptance_state |= curr.is_acceptance_state();
     }
     while (!stk_states.empty())
@@ -104,7 +100,15 @@ DFANode DFATransformer::normal_transition(DFANode dfa_state, string input)
         stk_states.pop();
         for (pair<State, string> trans : *top.get_transitions())
         {
-            if (trans.second == input)
+            // Here goes the check of character inside a region.
+            bool inside_region = false;
+            Helper h;
+            regex b("(.)-(.)");
+            if(regex_match(trans.second, b)) {
+                string expanded_string = h.normalize_classes(trans.second);
+                inside_region = expanded_string.find(input) !=  string::npos;
+            }
+            if (trans.second == input || inside_region)
             {
                 if (!already_inserted(&dfa_trans, trans.first))
                 {

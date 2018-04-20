@@ -70,7 +70,8 @@ void Lexical_controller::run_(const string grammar_rule_file, const string src_p
     {
         for (pair<DFANode, EdgeLabel> x : (*transformed_graph)[i])
         {
-            cout << "State: " << i << "  goes to state: " << x.first.id << " under input: ";
+//            cout << "State: " << i << "  goes to state: " << x.first.id << " under input: ";
+            cout << "" << i << " " << x.first.id << " ";
             string label = x.second.get_input();
             set<string> disc_set = x.second.get_discarded_char();
             if (!disc_set.empty())
@@ -78,7 +79,7 @@ void Lexical_controller::run_(const string grammar_rule_file, const string src_p
             for (auto it = disc_set.begin(); it != disc_set.end(); ++it)
             {
                 label += *it;
-                label += ", ";
+                label += ",";
             }
             if (!disc_set.empty())
                 label += "}";
@@ -100,8 +101,8 @@ void Lexical_controller::run_(const string grammar_rule_file, const string src_p
     for (int i = 1; i <= MAX_NO_OF_LINES; ++i)
     {
         string current_rule = src_reader.read_next_grammar_rule_line(src_program_file, i);
-        std::string::iterator end_pos = std::remove(current_rule.begin(), current_rule.end(), ' ');
-        current_rule.erase(end_pos, current_rule.end());
+       // std::string::iterator end_pos = std::remove(current_rule.begin(), current_rule.end(), ' ');
+       // current_rule.erase(end_pos, current_rule.end());
         if (current_rule == "~") {
             break;
         }
@@ -113,6 +114,12 @@ void Lexical_controller::run_(const string grammar_rule_file, const string src_p
             for (pair<DFANode, EdgeLabel> x : (*transformer.get_dfa_graph())[(current_state).id])
             {
                 string expanded_string = helper.normalize_classes(x.second.get_input());
+                // Erase all characters found in the discarded set.
+                set<string> dis_chars = x.second.get_discarded_char();
+                for (auto it = dis_chars.begin(); it != dis_chars.end(); ++it)
+                {
+                    expanded_string.erase(expanded_string.find((*it)[0]));
+                }
                 if (expanded_string.find(current_rule[j]) !=  string::npos)
                 {
                     found = true;
@@ -153,26 +160,6 @@ void Lexical_controller::run_(const string grammar_rule_file, const string src_p
                 current_state = starting_state;
                 j = 0;
             }
-
-
         }
-
     }
-
-
-
-
-
-
-
-
-
-//    cout << "States: ";
-//    for (State curr : res.dfa_state)
-//    {
-//        cout << curr.get_state_number() << " " << "acceptance: " << curr.is_acceptance_state() << endl;
-//    }
-//    cout << "\nacceptance state: " << res.acceptance_state << endl;
-
-
 }

@@ -143,7 +143,7 @@ int main()
 //    }
 
     Lexical_controller l;
-    l.run_("test.txt", "test_1.txt");
+    l.run_("test_simple.txt", "test_1_simple.txt");
 
 //    generator.generate_grammar("digit = 0-9");
 //    generator.generate_grammar("digits: digit+");
