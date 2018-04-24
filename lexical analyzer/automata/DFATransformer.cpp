@@ -66,26 +66,6 @@ void DFATransformer::transform()
                 dfa_state.id = functional_id++;
                 dfa_nodes.push_back(dfa_state);
             }
-//            if (x == "a-z")
-//            {
-//                for (auto transition : dfa_graph[node_id])
-//                {
-//                    if (transition.second.get_input().size() == 1
-//                        && isalpha(transition.second.get_input()[0])
-//                         && islower(transition.second.get_input()[0]))
-//                        e.discard_char(transition.second.get_input());
-//                }
-//            }
-//            if (x == "A-Z")
-//            {
-//                for (auto transition : dfa_graph[node_id])
-//                {
-//                    if (transition.second.get_input().size() == 1
-//                        && isalpha(transition.second.get_input()[0])
-//                        && isupper(transition.second.get_input()[0]))
-//                        e.discard_char(transition.second.get_input());
-//                }
-//            }
             if (x == EPSILON) continue;
             dfa_graph[node_id].push_back({dfa_state, e});
         }

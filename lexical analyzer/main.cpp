@@ -42,7 +42,9 @@ using namespace std;
 int main()
 {
     Lexical_controller l;
+
     l.run_("test.txt", "test_1.txt");
 
 return 0;
+
 }
