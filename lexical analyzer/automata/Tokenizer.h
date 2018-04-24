@@ -29,6 +29,7 @@ public:
     void tokenize(string input_line, DFANode *current_state, vector<string> &cached);
     void set_starting_state(DFANode *st_state);
     // void set_dfa_graph(std::vector< std::vector< std::pair<DFANode, string> > > *dfa);
+
 };
 
 #endif //LEXICAL_ANALYZER_TOKENIZER_H
