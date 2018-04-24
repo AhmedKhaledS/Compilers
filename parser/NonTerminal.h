@@ -7,6 +7,7 @@
 
 #include <string>
 #include <vector>
+#include <set>
 
 using namespace std;
 
@@ -15,10 +16,14 @@ class NonTerminal {
 
     public:
 
+        NonTerminal();
+
+        NonTerminal(string non_terminal_name);
+
         string non_terminal;
         vector<vector<pair<NonTerminal, string>>> productions;
-        vector<string> first;
-        vector<string> follow;
+        set<string> first;
+        set<string> follow;
         vector<pair<vector<pair<NonTerminal,string>>, NonTerminal>> follow_helper;
 
 };
