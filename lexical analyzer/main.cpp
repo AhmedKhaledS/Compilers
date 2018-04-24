@@ -20,6 +20,10 @@ using namespace std;
 int main()
 {
     Lexical_controller l;
-    l.run_("test_simple.txt", "test_1_simple.txt");
+    l.run_("test.txt", "test_1.txt");
+//    for (int i = 0; i < l.cached_tokens.size(); i++)
+//    {
+//        cout << l.next_token() << endl;
+//    }
     return 0;
 }

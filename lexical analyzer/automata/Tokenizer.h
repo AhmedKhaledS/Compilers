@@ -11,6 +11,7 @@
 #include <stack>
 #include "DFATransformer.h"
 #include "Helper.h"
+#include <fstream>
 
 class Tokenizer
 {
@@ -22,9 +23,10 @@ class Tokenizer
         DFANode *starting_state;
         DFANode *current_state;
         DFATransformer *tr;
+        std::ofstream lexical_output_file;
     public:
         Tokenizer(DFANode *st_state, DFATransformer *dfa_trans, std::vector< std::vector< std::pair<DFANode, EdgeLabel> > > *dfa);
-        void tokenize(string input_line, DFANode *current_state);
+        void tokenize(string input_line, DFANode *current_state, vector<string> &cached);
         void set_starting_state(DFANode *st_state);
        // void set_dfa_graph(std::vector< std::vector< std::pair<DFANode, string> > > *dfa);
 };

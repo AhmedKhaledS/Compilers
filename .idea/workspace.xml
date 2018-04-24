@@ -12,10 +12,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8f4febb0-aa4f-4c7f-8bea-310a10d5b0cb" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/parser/ParserController.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/parser/ParserController.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lexical analyzer/automata/DFATransformer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/lexical analyzer/automata/DFATransformer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lexical analyzer/LexicalController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/lexical analyzer/LexicalController.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lexical analyzer/LexicalController.h" beforeDir="false" afterPath="$PROJECT_DIR$/lexical analyzer/LexicalController.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lexical analyzer/automata/Tokenizer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/lexical analyzer/automata/Tokenizer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lexical analyzer/automata/Tokenizer.h" beforeDir="false" afterPath="$PROJECT_DIR$/lexical analyzer/automata/Tokenizer.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lexical analyzer/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/lexical analyzer/main.cpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
@@ -30,13 +30,22 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="DFATransformer.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lexical analyzer/automata/DFATransformer.cpp">
+      <file leaf-file-name="LexicalController.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lexical analyzer/LexicalController.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1926">
-              <caret line="107" column="88" selection-start-line="107" selection-start-column="88" selection-end-line="107" selection-end-column="88" />
+            <state relative-caret-position="288">
+              <caret line="22" column="29" selection-start-line="22" selection-start-column="29" selection-end-line="22" selection-end-column="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LexicalController.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lexical analyzer/LexicalController.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="412">
+              <caret line="124" column="17" selection-start-line="124" selection-start-column="17" selection-end-line="124" selection-end-column="17" />
               <folding>
-                <element signature="e#40#67#0" expanded="true" />
+                <element signature="e#40#70#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -45,73 +54,17 @@
       <file leaf-file-name="main.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lexical analyzer/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="432">
-              <caret line="24" column="1" selection-start-line="24" selection-start-column="1" selection-end-line="24" selection-end-column="1" />
+            <state relative-caret-position="180">
+              <caret line="24" column="1" lean-forward="true" selection-start-line="24" selection-start-column="1" selection-end-line="24" selection-end-column="1" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ParserController.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/parser/ParserController.cpp">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file leaf-file-name="ParserController.h" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/parser/ParserController.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
-              <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DFATransformer.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lexical analyzer/automata/DFATransformer.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
-              <caret line="23" column="24" selection-start-line="23" selection-start-column="24" selection-end-line="23" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NFAGenerator.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lexical analyzer/automata/NFAGenerator.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1296">
-              <caret line="72" column="42" selection-start-line="72" selection-start-column="42" selection-end-line="72" selection-end-column="42" />
-              <folding>
-                <element signature="e#40#65#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LexicalController.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lexical analyzer/LexicalController.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1836">
-              <caret line="102" column="90" selection-start-line="102" selection-start-column="90" selection-end-line="102" selection-end-column="90" />
-              <folding>
-                <element signature="e#40#70#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EdgeLabel.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lexical analyzer/automata/EdgeLabel.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="12" column="25" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="25" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Tokenizer.cpp" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Tokenizer.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lexical analyzer/automata/Tokenizer.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="25" selection-start-line="25" selection-end-line="25" />
+            <state relative-caret-position="496">
+              <caret line="87" column="65" selection-start-line="87" selection-start-column="65" selection-end-line="87" selection-end-column="65" />
               <folding>
                 <element signature="e#40#59#0" expanded="true" />
               </folding>
@@ -119,11 +72,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DFANode.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lexical analyzer/automata/DFANode.h">
+      <file leaf-file-name="Tokenizer.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lexical analyzer/automata/Tokenizer.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="16" column="42" selection-start-line="16" selection-start-column="42" selection-end-line="16" selection-end-column="42" />
+            <state relative-caret-position="360">
+              <caret line="25" column="41" lean-forward="true" selection-start-line="25" selection-start-column="41" selection-end-line="25" selection-end-column="41" />
+              <folding>
+                <element signature="e#115#135#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -147,14 +103,15 @@
         <option value="$PROJECT_DIR$/lexical analyzer/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/lexical analyzer/automata/DFATransformer.h" />
         <option value="$PROJECT_DIR$/lexical analyzer/automata/DFANode.cpp" />
-        <option value="$PROJECT_DIR$/lexical analyzer/automata/Tokenizer.h" />
         <option value="$PROJECT_DIR$/lexical analyzer/automata/NFAGenerator.cpp" />
         <option value="$PROJECT_DIR$/lexical analyzer/automata/DFANode.h" />
-        <option value="$PROJECT_DIR$/lexical analyzer/automata/Tokenizer.cpp" />
-        <option value="$PROJECT_DIR$/lexical analyzer/LexicalController.cpp" />
         <option value="$PROJECT_DIR$/lexical analyzer/automata/DFATransformer.cpp" />
-        <option value="$PROJECT_DIR$/lexical analyzer/main.cpp" />
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/lexical analyzer/automata/Tokenizer.h" />
+        <option value="$PROJECT_DIR$/lexical analyzer/main.cpp" />
+        <option value="$PROJECT_DIR$/lexical analyzer/LexicalController.h" />
+        <option value="$PROJECT_DIR$/lexical analyzer/LexicalController.cpp" />
+        <option value="$PROJECT_DIR$/lexical analyzer/automata/Tokenizer.cpp" />
       </list>
     </option>
   </component>
@@ -189,6 +146,17 @@
             <path>
               <item name="lexical_analyzer" type="b2602c69:ProjectViewProjectNode" />
               <item name="Compilers" type="462c0819:PsiDirectoryNode" />
+              <item name="lexical analyzer" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="lexical_analyzer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Compilers" type="462c0819:PsiDirectoryNode" />
+              <item name="lexical analyzer" type="462c0819:PsiDirectoryNode" />
+              <item name="automata" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="lexical_analyzer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Compilers" type="462c0819:PsiDirectoryNode" />
               <item name="parser" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -215,7 +183,7 @@
     </option>
   </component>
   <component name="RunManager" selected="Application.Compilers">
-    <configuration name="Build All" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Compilers" RUN_TARGET_NAME="lexical_analyzer" EXPLICIT_BUILD_TARGET_NAME="all" />
+    <configuration name="Build All" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Compilers" RUN_TARGET_NAME="Compilers" EXPLICIT_BUILD_TARGET_NAME="all" />
     <configuration name="Compilers" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Compilers" TARGET_NAME="Compilers" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Compilers" RUN_TARGET_NAME="Compilers" />
     <list>
       <item itemvalue="Application.Build All" />
@@ -239,23 +207,24 @@
       <workItem from="1524588473498" duration="53000" />
       <workItem from="1524588529882" duration="39000" />
       <workItem from="1524588598407" duration="22000" />
-      <workItem from="1524588623794" duration="285000" />
+      <workItem from="1524588623794" duration="1670000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="31468000" />
+    <option name="totallyTimeSpent" value="32853000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="64" y="-11" width="1857" height="1092" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18867925" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18867925" />
       <window_info anchor="bottom" id="TODO" order="7" />
+      <window_info anchor="bottom" id="Messages" order="0" weight="0.8606557" />
       <window_info anchor="bottom" id="CMake" order="11" sideWeight="0.49973047" weight="0.30020493" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5018868" side_tool="true" weight="0.34836066" />
       <window_info anchor="bottom" id="Version Control" order="10" />
-      <window_info anchor="bottom" id="Run" order="3" sideWeight="0.49973047" weight="0.37704918" />
+      <window_info active="true" anchor="bottom" id="Run" order="3" sideWeight="0.49973047" visible="true" weight="0.37704918" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.28483605" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -264,7 +233,6 @@
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="Messages" order="0" weight="0.8606557" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="2" />
@@ -301,16 +269,21 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/lexical analyzer/automata/Tokenizer.cpp</url>
-          <line>21</line>
-          <option name="timeStamp" value="29" />
+          <line>86</line>
+          <option name="timeStamp" value="34" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/lexical analyzer/LexicalController.cpp</url>
-          <line>100</line>
-          <option name="timeStamp" value="31" />
+          <line>118</line>
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/lexical analyzer/LexicalController.cpp</url>
+          <line>105</line>
+          <option name="timeStamp" value="38" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="32" />
+      <option name="time" value="39" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="CMakeRunConfiguration">
@@ -334,13 +307,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/lexical analyzer/automata/DFANode.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="16" column="42" selection-start-line="16" selection-start-column="42" selection-end-line="16" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lexical analyzer/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="432">
@@ -636,13 +602,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lexical analyzer/automata/Tokenizer.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="25" column="14" selection-start-line="25" selection-start-column="14" selection-end-line="25" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lexical analyzer/automata/DFANode.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
@@ -684,33 +643,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lexical analyzer/automata/Tokenizer.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="25" selection-start-line="25" selection-end-line="25" />
-          <folding>
-            <element signature="e#40#59#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lexical analyzer/LexicalController.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1836">
-          <caret line="102" column="90" selection-start-line="102" selection-start-column="90" selection-end-line="102" selection-end-column="90" />
-          <folding>
-            <element signature="e#40#70#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lexical analyzer/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="24" column="1" selection-start-line="24" selection-start-column="1" selection-end-line="24" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/parser/ParserController.cpp">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -718,6 +650,50 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
           <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lexical analyzer/automata/Tokenizer.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="25" column="41" lean-forward="true" selection-start-line="25" selection-start-column="41" selection-end-line="25" selection-end-column="41" />
+          <folding>
+            <element signature="e#115#135#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lexical analyzer/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="24" column="1" lean-forward="true" selection-start-line="24" selection-start-column="1" selection-end-line="24" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lexical analyzer/LexicalController.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="22" column="29" selection-start-line="22" selection-start-column="29" selection-end-line="22" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lexical analyzer/LexicalController.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="412">
+          <caret line="124" column="17" selection-start-line="124" selection-start-column="17" selection-end-line="124" selection-end-column="17" />
+          <folding>
+            <element signature="e#40#70#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lexical analyzer/automata/Tokenizer.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="496">
+          <caret line="87" column="65" selection-start-line="87" selection-start-column="65" selection-end-line="87" selection-end-column="65" />
+          <folding>
+            <element signature="e#40#59#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
