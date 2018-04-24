@@ -5,8 +5,9 @@
 
 
 #include "Utilities.h"
+#include "EdgeLabel.h"
 
-DFANode* get_dfa_node(std::vector<std::vector<std::pair<DFANode,char>>> graph ,
+DFANode* get_dfa_node(std::vector<std::vector<std::pair<DFANode,EdgeLabel>>> graph ,
                       int index )
 {
     DFANode* receiver ;
@@ -21,13 +22,13 @@ DFANode* get_dfa_node(std::vector<std::vector<std::pair<DFANode,char>>> graph ,
 }
 
 
-DFANode* get_next_node(std::vector<std::vector<std::pair<DFANode,char>>> graph ,
+DFANode* get_next_node(std::vector<std::vector<std::pair<DFANode,EdgeLabel>>> graph ,
                        int current_index ,
-                       char input)
+                       EdgeLabel input)
 {
     DFANode* receiver ;
     for(int j = 0 ; j < graph[current_index].size() ; j++){
-        if(graph[current_index][j].second == input){
+        if(graph[current_index][j].second.get_input() == input.get_input()){
             receiver = &graph[current_index][j].first;
             return receiver;
         }

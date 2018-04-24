@@ -6,6 +6,7 @@
 #define COMPILERS_STATE_H
 
 #include <vector>
+#include <string>
 
 using namespace std;
 
@@ -14,6 +15,8 @@ class State {
 public:
 
     State(int state_number);
+    State();
+
 
     void set_state_number(int state_number);
 
@@ -23,9 +26,13 @@ public:
 
     bool is_acceptance_state();
 
-    void add_transition(pair <State, char> transition);
+    void set_acceptance_state_name(string state_name);
 
-    vector<pair <State, char>> *get_transitions();
+    string get_acceptance_state_name();
+
+    void add_transition(pair <State, string> transition);
+
+    vector<pair <State, string>> *get_transitions();
 
 private:
 
@@ -33,7 +40,9 @@ private:
 
     bool acceptance_state;
 
-    vector<pair <State, char>> transitions;
+    string acceptance_state_name;
+
+    vector<pair <State, string>> transitions;
 
 };
 

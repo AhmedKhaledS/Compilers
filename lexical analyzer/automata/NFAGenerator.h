@@ -27,17 +27,17 @@ class NFAGenerator
 
         void add_operand(stack<NFA>& operands, stack<char>& operations, string operand, bool duplicate);
 
-        static void add_symbol(char s);
+        static void add_symbol(string s);
 
-        static set <char> get_symbols();
-
+        static vector <string> get_symbols();
+        static bool search(string s);
 
         NFA RE_to_NFA(string expression);
 
     protected:
 
     private:
-        static set <char> symbols;
+        static vector <string> symbols;
         vector<NFA> grammar;
         std::map<string, NFA> defined_grammar;
         vector<NFA> nfa_pool;

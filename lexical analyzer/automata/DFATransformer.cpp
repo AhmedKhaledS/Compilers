@@ -3,20 +3,27 @@
 //
 
 #include "DFATransformer.h"
+#include "Helper.h"
 #include <stack>
 #include <set>
 #include <algorithm>
+#include <iostream>
+#include <regex>
 
 using namespace std;
 
 #define NODES_SZ 1000
 #define DFA_NODES 300
-#define EPSILON '$'
+#define EPSILON "$"
 
-DFATransformer::DFATransformer()
+
+DFATransformer::DFATransformer(DFANode s_state)
+    : starting_dfa_state(s_state)
 {
     functional_id = 0;
-    parent = vector<int>(NODES_SZ, -1);
+    //vector<State> x;
+
+   // starting_dfa_state = DFANode(x, false, false, false, -1);
 }
 
 DFANode* DFATransformer::get_dfa_node(int id)
@@ -34,55 +41,146 @@ void DFATransformer::transform()
     dfa_graph.resize(DFA_NODES);
     vector<State> starting_nfa_state;
     starting_nfa_state.push_back(nfa_graph[0]);
-    DFANode starting_nfa_node(starting_nfa_state, false, false, false, 0);
-    DFANode starting_dfa_node = normal_transition(starting_nfa_node, '$');
+    DFANode starting_nfa_node(starting_nfa_state, false, false, false, 0, "");
+    DFANode starting_dfa_node = normal_transition(starting_nfa_node, EPSILON);
     starting_dfa_node.id = functional_id++;
+    starting_dfa_state = starting_dfa_node;
     dfa_nodes.push_back(starting_dfa_node);
+    vector<string> inputs = NFAGenerator::get_symbols();
+
 
     while (exist_unmarked_state(&dfa_nodes))
     {
         DFANode *current_dfa_node = get_unmarked_node(&dfa_nodes);
         DFANode sss = *current_dfa_node;
         current_dfa_node->marked = true;
-        set<char> inputs = NFAGenerator::get_symbols();
-        for (set<char>::iterator  it = inputs.begin();
-             it != inputs.end(); it++)
+        int node_id = current_dfa_node->id;
+        for (string x : inputs)
         {
-            DFANode result_node_without_eps = normal_transition(sss, *it);
-            DFANode dfa_state = normal_transition(result_node_without_eps, '$');
+            DFANode result_node_without_eps = normal_transition(sss, x);
+            DFANode dfa_state = normal_transition(result_node_without_eps, EPSILON);
+            EdgeLabel e(x);
             if (!already_inserted_dfa_node(&dfa_state))
             {
                 dfa_state.marked = false;
                 dfa_state.id = functional_id++;
                 dfa_nodes.push_back(dfa_state);
             }
-            if (*it != EPSILON)
-                dfa_graph[current_dfa_node->id].push_back({dfa_state, *it});
+//            if (x == "a-z")
+//            {
+//                for (auto transition : dfa_graph[node_id])
+//                {
+//                    if (transition.second.get_input().size() == 1
+//                        && isalpha(transition.second.get_input()[0])
+//                         && islower(transition.second.get_input()[0]))
+//                        e.discard_char(transition.second.get_input());
+//                }
+//            }
+//            if (x == "A-Z")
+//            {
+//                for (auto transition : dfa_graph[node_id])
+//                {
+//                    if (transition.second.get_input().size() == 1
+//                        && isalpha(transition.second.get_input()[0])
+//                        && isupper(transition.second.get_input()[0]))
+//                        e.discard_char(transition.second.get_input());
+//                }
+//            }
+            if (x == EPSILON) continue;
+            dfa_graph[node_id].push_back({dfa_state, e});
+        }
+        set<string> upper_case_chars;
+        set<string> lower_case_chars;
+        for (auto transition : dfa_graph[node_id])
+        {
+            if (transition.second.get_input().length() == 1 && isalpha(transition.second.get_input()[0]))
+            {
+                if (isupper(transition.second.get_input()[0]))
+                {
+                    string tmp = "";
+                    tmp.push_back(transition.second.get_input()[0]);
+                    upper_case_chars.insert(tmp);
+                }
+                else
+                {
+                    string tmp = "";
+                    tmp.push_back(transition.second.get_input()[0]);
+                    lower_case_chars.insert(tmp);
+                }
+
+            }
+        }
+        for (int i = 0; i < dfa_graph[node_id].size(); i++)
+        {
+            string current_input = dfa_graph[node_id][i].second.get_input();
+            Helper h;
+            string expanded_string = h.normalize_classes(current_input);
+            regex b("(.)-(.)");
+            if(regex_match(current_input, b))
+            {
+                if (isalpha(current_input[0]))
+                {
+                    if (isupper(current_input[0]))
+                    {
+                        EdgeLabel e(dfa_graph[node_id][i].second.get_input());
+                        for (auto it = upper_case_chars.begin(); it != upper_case_chars.end(); ++it)
+                        {
+                            string expanded_string = h.normalize_classes(current_input);
+                            bool inside_region = expanded_string.find(*it) !=  string::npos;
+                            if (inside_region)
+                                e.discard_char(*it);
+                        }
+                        dfa_graph[node_id][i].second = e;
+                    }
+                    else
+                    {
+                        EdgeLabel e(dfa_graph[node_id][i].second.get_input());
+                        for (auto it = lower_case_chars.begin(); it != lower_case_chars.end(); ++it)
+                        {
+                            string expanded_string = h.normalize_classes(current_input);
+                            bool inside_region = expanded_string.find(*it) !=  string::npos;
+                            if (inside_region)
+                                e.discard_char(*it);
+                        }
+                        dfa_graph[node_id][i].second = e;
+                    }
+                }
+            }
         }
     }
 }
 
-DFANode DFATransformer::normal_transition(DFANode dfa_state, char input)
+DFANode DFATransformer::normal_transition(DFANode dfa_state, string input)
 {
     vector<State> dfa_trans;
     stack<State> stk_states;
+    string acc_state_name = "";
     bool res_acceptance_state = false;
     for (State curr : dfa_state.dfa_state)
     {
         stk_states.push(curr);
-        if (input == '$')
+        if (input == EPSILON) {
             dfa_trans.push_back(curr);
+        }
         res_acceptance_state |= curr.is_acceptance_state();
     }
     while (!stk_states.empty())
     {
         State top = stk_states.top();
         stk_states.pop();
-        for (pair<State, char> trans : *top.get_transitions())
+        for (pair<State, string> trans : *top.get_transitions())
         {
-            if (trans.second == input)
+            // Here goes the check of character inside a region.
+            bool inside_region = false;
+            Helper h;
+            regex b("(.)-(.)");
+            if(regex_match(trans.second, b)) {
+                string expanded_string = h.normalize_classes(trans.second);
+                inside_region = expanded_string.find(input) !=  string::npos;
+            }
+            if (trans.second == input || inside_region)
             {
-                if (!already_inserted(dfa_trans, trans.first))
+                if (!already_inserted(&dfa_trans, trans.first))
                 {
                     res_acceptance_state |= trans.first.is_acceptance_state();
                     dfa_trans.push_back(nfa_graph[trans.first.get_state_number()]);
@@ -91,29 +189,20 @@ DFANode DFATransformer::normal_transition(DFANode dfa_state, char input)
             }
         }
     }
-    DFANode new_dfa_node(dfa_trans, res_acceptance_state, false, false, -1);
+    for (auto curr : dfa_trans)
+    {
+        if (curr.is_acceptance_state())
+        {
+            acc_state_name = curr.get_acceptance_state_name();
+            break;
+        }
+    }
+    DFANode new_dfa_node(dfa_trans, res_acceptance_state, false, false, -1, acc_state_name);
     return new_dfa_node;
 }
 
-int DFATransformer::find_parent(int node)
-{
-    if(parent[node] == -1)
-        return node;
-    return parent[node] = find_parent(parent[node]);
-}
-
-bool DFATransformer::merge_nodes(int node1, int node2)
-{
-    int parentA = find_parent(node1);
-    int parentB = find_parent(node2);
-    if(parentA == parentB)
-        return false;
-    parent[parentB] = parentA;
-    return true;
-}
-
-bool DFATransformer::already_inserted(vector<State> vec, State s) {
-    for (State x : vec)
+bool DFATransformer::already_inserted(vector<State> *vec, State s) {
+    for (State x : *vec)
     {
         if (x.get_state_number() == s.get_state_number())
             return true;
@@ -172,12 +261,16 @@ std::vector<DFANode> *DFATransformer::get_dfa_nodes() {
     return &dfa_nodes;
 }
 
-std::vector< std::vector< std::pair<DFANode, char> > > * DFATransformer::get_dfa_graph()
+vector< vector< pair<DFANode, EdgeLabel> > > *DFATransformer::get_dfa_graph()
 {
     return &dfa_graph;
 }
 
 int DFATransformer::get_dfa_graph_size() {
     return functional_id;
+}
+
+DFANode *DFATransformer::get_starting_dfa_state() {
+    return &this->starting_dfa_state;
 };
 
