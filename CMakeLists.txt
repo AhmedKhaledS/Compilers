@@ -44,4 +44,4 @@ add_executable(Compilers
         "lexical analyzer/main.cpp"
         "lexical analyzer/SymbolTable.cpp"
         "lexical analyzer/SymbolTable.h"
-        README.md parser/ParserController.cpp parser/ParserController.h)
+        README.md parser/ParserController.cpp parser/ParserController.h parser/ParserTable.h parser/ParserTable.cpp parser/ParserStack.h parser/ParserStack.cpp parser/TestParseTableStack.cpp)
