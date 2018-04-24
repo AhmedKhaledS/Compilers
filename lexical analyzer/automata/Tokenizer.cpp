@@ -9,14 +9,15 @@
 using namespace std;
 
 Tokenizer::Tokenizer(DFANode *st_state, DFATransformer *dfa_trans, vector< vector< pair<DFANode, EdgeLabel> > > *dfa)
-    : tr(dfa_trans), dfa_graph(dfa)
+        : tr(dfa_trans), dfa_graph(dfa)
 {
+    lexical_output_file.open("tokens.l", std::ios_base::out);
     starting_state = st_state;
     current_state = st_state;
     stk_node.push(*starting_state);
 }
 
-void Tokenizer::tokenize(string input_line, DFANode *current_state)
+void Tokenizer::tokenize(string input_line, DFANode *current_state, vector<string> &cached)
 {
     Helper helper;
     string lexeme = "";
@@ -32,7 +33,9 @@ void Tokenizer::tokenize(string input_line, DFANode *current_state)
             while (!stk_node.empty()) {
                 stk_node.pop();
             }
-            cout << "Current lexeme: "<< lexeme << " type: " << accepted_state_name << "\n";
+//            cout << "Current lexeme: "<< lexeme << " type: " << accepted_state_name << "\n";
+            lexical_output_file << accepted_state_name << "\n";
+            cached.push_back(accepted_state_name);
             lexeme = "";
             continue;
         }
@@ -54,7 +57,7 @@ void Tokenizer::tokenize(string input_line, DFANode *current_state)
             {
                 if (isalpha((*it)[0]))
                     expanded_string.erase(remove(expanded_string.begin(), expanded_string.end(),
-                                                  (*it)[0]), expanded_string.end()) ;
+                                                 (*it)[0]), expanded_string.end()) ;
             }
             if (expanded_string.find(input_line[j]) !=  string::npos)
             {
@@ -80,7 +83,9 @@ void Tokenizer::tokenize(string input_line, DFANode *current_state)
                     while (!stk_node.empty()) {
                         stk_node.pop();
                     }
-                    cout << "Current lexeme: "<< lexeme << " type: " << accepted_state_name << "\n";
+//                    cout << "Current lexeme: "<< lexeme << " type: " << accepted_state_name << "\n";
+                    lexical_output_file << accepted_state_name << "\n";
+                    cached.push_back(accepted_state_name);
                     lexeme = "";
                 }
                 else

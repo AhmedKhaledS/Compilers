@@ -18,11 +18,11 @@ class Lexical_controller
     private:
         std::string grammar_rule_line;
         std::vector< State > nfa_graph;
-        //std::vector< std::vector<DFA> > dfa_graph;
-        //std::vector< std::vector<DFA> > _minimzed_dfa_graph;
-
+        int token_count;
     public:
+        Lexical_controller();vector<string> cached_tokens;
         void run_(const std::string grammar_rule_file, const std::string src_program_file);
+        string next_token();
 
 };
 #endif //LEXICAL_ANALYZER_LEXICALCONTROLLER_H

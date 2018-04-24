@@ -14,6 +14,11 @@
 
 using namespace std;
 
+Lexical_controller::Lexical_controller()
+{
+    token_count = 0;
+}
+
 void Lexical_controller::run_(const string grammar_rule_file, const string src_program_file)
 {
 
@@ -32,8 +37,8 @@ void Lexical_controller::run_(const string grammar_rule_file, const string src_p
 
     // Contains NFA-states
     vector<State> states = (*machine.get_states());
-    cout << "NFA machine: \n";
-    for (int i = 0; i < states.size(); i++)
+//    cout << "NFA machine: \n";
+    /*for (int i = 0; i < states.size(); i++)
     {
         vector<pair <State, string>> transitions = *states[i].get_transitions();
         for (int j = 0; j < transitions.size(); j++)
@@ -42,7 +47,7 @@ void Lexical_controller::run_(const string grammar_rule_file, const string src_p
                  << " " << transitions[j].second
                  << " " << states[i].is_acceptance_state() << endl;
         }
-    }
+    }*/
 
 
     vector<State> st_nfa_node;
@@ -54,7 +59,7 @@ void Lexical_controller::run_(const string grammar_rule_file, const string src_p
 
     vector<DFANode> tmp = *transformer.get_dfa_nodes();
 
-    cout << "After running NFA-to-DFA transformation, these nodes are mapped to :\n";
+    /*cout << "After running NFA-to-DFA transformation, these nodes are mapped to :\n";
     for (DFANode x : tmp)
     {
         cout << "New Dfa node id: " << x.id << "  consists of states: ";
@@ -63,9 +68,9 @@ void Lexical_controller::run_(const string grammar_rule_file, const string src_p
         }
         cout <<  " acceptance state: " << x.acceptance_state << " state name: " << x.acceptance_state_name << endl;
         cout << endl;
-    }
+    }*/
 
-    cout << "New DFA graph: \n";
+    /*cout << "New DFA graph: \n";
     vector< vector< pair<DFANode, EdgeLabel> > > *transformed_graph = transformer.get_dfa_graph();
     for (int i = 0; i < transformer.get_dfa_graph_size(); i++)
     {
@@ -86,7 +91,7 @@ void Lexical_controller::run_(const string grammar_rule_file, const string src_p
                 label += "}";
             cout << label << endl;
         }
-    }
+    }*/
 
     // Minimizing dfa
     DFANode starting_state = *transformer.get_starting_dfa_state();
@@ -116,6 +121,14 @@ void Lexical_controller::run_(const string grammar_rule_file, const string src_p
         if (current_rule == "~") {
             break;
         }
-        tokenizer.tokenize(current_rule, &current_state);
+        tokenizer.tokenize(current_rule, &current_state, cached_tokens);
     }
 }
+
+string Lexical_controller::next_token()
+{
+    if (cached_tokens.size() == token_count)
+        return "";
+    return cached_tokens[token_count++];
+}
+
