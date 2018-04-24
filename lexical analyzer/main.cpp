@@ -20,6 +20,6 @@ using namespace std;
 int main()
 {
     Lexical_controller l;
-    l.run_("test.txt", "test_1.txt");
+    l.run_("test_simple.txt", "test_1_simple.txt");
     return 0;
 }
