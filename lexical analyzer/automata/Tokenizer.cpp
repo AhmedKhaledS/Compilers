@@ -9,7 +9,7 @@
 using namespace std;
 
 Tokenizer::Tokenizer(DFANode *st_state, DFATransformer *dfa_trans, vector< vector< pair<DFANode, EdgeLabel> > > *dfa)
-    : tr(dfa_trans), dfa_graph(dfa)
+        : tr(dfa_trans), dfa_graph(dfa)
 {
     lexical_output_file.open("tokens.l", std::ios_base::out);
     starting_state = st_state;
@@ -57,7 +57,7 @@ void Tokenizer::tokenize(string input_line, DFANode *current_state, vector<strin
             {
                 if (isalpha((*it)[0]))
                     expanded_string.erase(remove(expanded_string.begin(), expanded_string.end(),
-                                                  (*it)[0]), expanded_string.end()) ;
+                                                 (*it)[0]), expanded_string.end()) ;
             }
             if (expanded_string.find(input_line[j]) !=  string::npos)
             {

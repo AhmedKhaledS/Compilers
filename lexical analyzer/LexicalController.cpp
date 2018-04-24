@@ -126,3 +126,4 @@ string Lexical_controller::next_token()
         return "";
     return cached_tokens[token_count++];
 }
+

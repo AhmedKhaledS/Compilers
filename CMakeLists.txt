@@ -1,11 +1,7 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.9)
 project(Compilers)
 
 set(CMAKE_CXX_STANDARD 11)
-
-include_directories("lexical analyzer")
-include_directories("lexical analyzer/automata")
-include_directories("lexical analyzer/file_services")
 
 add_executable(Compilers
         "lexical analyzer/automata/DFANode.cpp"
@@ -41,7 +37,8 @@ add_executable(Compilers
         "lexical analyzer/ErrorHandler.h"
         "lexical analyzer/LexicalController.cpp"
         "lexical analyzer/LexicalController.h"
-        "lexical analyzer/main.cpp"
+        "main.cpp"
         "lexical analyzer/SymbolTable.cpp"
         "lexical analyzer/SymbolTable.h"
-        README.md parser/ParserController.cpp parser/ParserController.h)
+        parser/ParserController.cpp
+        parser/ParserController.h parser/NonTerminal.cpp parser/NonTerminal.h)
