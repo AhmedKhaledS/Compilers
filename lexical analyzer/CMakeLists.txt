@@ -3,7 +3,7 @@ project(lexical_analyzer)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCEFILES main.cpp file_services/FileReader.cpp  file_services/FileWriter.cpp file_services/SourceProgramReader.cpp
+set(SOURCEFILES ../main.cpp file_services/FileReader.cpp  file_services/FileWriter.cpp file_services/SourceProgramReader.cpp
                 LexicalController.cpp SymbolTable.cpp ErrorHandler.cpp automata/State.cpp automata/NFAGenerator.cpp
                 automata/NFA.cpp automata/DFATransformer.cpp automata/ReducedDFA.cpp file_services/GrammarReader.cpp
         automata/Helper.cpp automata/DFANode.cpp automata/NFAOperations.cpp automata/Tokenizer.cpp automata/EdgeLabel.cpp automata/EdgeLabel.h)
