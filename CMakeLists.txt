@@ -42,7 +42,6 @@ add_executable(Compilers
         "lexical_analyzer/SymbolTable.cpp"
         "lexical_analyzer/SymbolTable.h"
         parser/ParserController.cpp
-        parser/ParserController.h parser/NonTerminal.cpp parser/NonTerminal.h
-        parser/ParserStack.cpp parser/ParserStack.h
-        parser/ParserTable.cpp parser/ParserTable.h )
+        parser/ParserController.h parser/NonTerminal.cpp parser/NonTerminal.h parser/Utility.cpp parser/Utility.h
+        parser/ParserStack.h parser/ParserStack.cpp parser/ParserTable.h parser/ParserTable.cpp)
 
