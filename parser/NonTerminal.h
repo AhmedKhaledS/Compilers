@@ -16,6 +16,10 @@ class NonTerminal {
 
     public:
 
+        NonTerminal();
+
+        NonTerminal(string non_terminal_name);
+
         string non_terminal;
         vector<vector<pair<NonTerminal, string>>> productions;
         set<string> first;
