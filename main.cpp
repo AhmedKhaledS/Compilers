@@ -28,8 +28,7 @@ int main()
 
      ParserController p;
      p.run_parser();
-
-    NonTerminal *a = new NonTerminal();
+     NonTerminal *a = new NonTerminal();
     NonTerminal *b = new NonTerminal();
     NonTerminal *c = new NonTerminal();
     NonTerminal *d = new NonTerminal();
@@ -47,14 +46,24 @@ int main()
 //
 //    b.first.insert("id");
 //
-//    vector<pair <NonTerminal, string> > tmp;
+//    vector<pair<NonTerminal, string> > tmp4;
+//    tmp4.push_back({tt, "("});
+//    d.productions.push_back(tmp4);
+//
+//    vector<pair<NonTerminal, string> > tmp;
+//    tmp.push_back({b, ""});
 //    tmp.push_back({c, ""});
-//    tmp.push_back({d, ""});
+//    a.productions.push_back(tmp);
+//    vector<pair<NonTerminal, string> > tmp1;
+//    tmp1.push_back({d, ""});
+//    a.productions.push_back(tmp1);
 //
-//    b.follow_helper.push_back({tmp, a});
-//    Utility::compute_follow_terminals(&b, b.follow);
+//    vector<pair<NonTerminal, string> > tmp0;
+//    tmp0.push_back({tt, "\\L"});
+//    a.productions.push_back(tmp0);
 //
-//    for (auto it = b.follow.begin(); it != b.follow.end(); ++it)
+//    Utility::compute_first_terminals(&a, a.first);
+//    for (auto it = a.first.begin(); it != a.first.end(); ++it)
 //        cout << *it << " ";
     NonTerminal tt;
     tt.non_terminal = "";
