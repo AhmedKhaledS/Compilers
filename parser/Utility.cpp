@@ -31,7 +31,6 @@ void Utility::compute_first_terminals(NonTerminal *non_terminal, set<string> &fi
             }
             else
             {
-                //set<string> first_set_aux;
                 compute_first_terminals(&current_rule[j].first, current_rule[j].first.first);
                 first_set.insert(current_rule[j].first.first.begin(), current_rule[j].first.first.end());
                 if (current_rule[j].first.first.count("\\L") == 0) // No Epsilon.
@@ -48,8 +47,6 @@ void Utility::compute_follow_terminals(NonTerminal *non_terminal, set<string> &f
     {
         NonTerminal parent = non_terminal->follow_helper[i].second;
         auto next_tokens = non_terminal->follow_helper[i].first;
-//        if (next_tokens.empty() && parent.non_terminal == "") // Get the follow of the parent.
-//            continue;
         if (next_tokens.empty()) // Get the follow of the parent.
         {
             set<string> follow_set_aux;
