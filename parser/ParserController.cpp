@@ -12,8 +12,10 @@ using namespace std;
 
 void ParserController::construct_grammar() {
 
-    add_grammar_rule("A = A 'c' | S 'd' | 'f'");
-    add_grammar_rule("S = A 'a' | 'b'");
+    add_grammar_rule("A = 'a' 'b' B | 'a' B | 'c' 'd' 'g' | 'c' 'd' 'e' B | 'c' 'd' 'f' B");
+
+//    add_grammar_rule("A = A 'c' | S 'd' | 'f'");
+//    add_grammar_rule("S = A 'a' | 'b'");
 
 //    add_grammar_rule("E = E '+' T | T");
 //    add_grammar_rule("T = T '*' F | F");
@@ -170,7 +172,7 @@ void ParserController::run_parser() {
 
     GrammarNormalizer normalizer(grammar_rules);
     normalizer.perform_grammar_normalization();
-    normalizer.print_grammar(normalizer.normalized_grammar);
+    // normalizer.print_grammar(normalizer.normalized_grammar);
 
     // Here we have vector<string> grammar that we have to normalize
     // TO DO: CALL NORMALIZER
