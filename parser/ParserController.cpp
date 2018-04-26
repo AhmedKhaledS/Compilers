@@ -4,16 +4,16 @@
 
 #include "ParserController.h"
 #include "../lexical analyzer/automata/Helper.h"
+#include "GrammarNormalizer.h"
 
 #include <iostream>
 
 using namespace std;
 
 void ParserController::construct_grammar() {
-    add_grammar_rule("S = B C A | 'X'");
-    add_grammar_rule("B = A B C B");
-    add_grammar_rule("C = A 'id' B 'x' | 'C' | 'c' B C A");
-    add_grammar_rule("A = 'Z' | \\L");
+    add_grammar_rule("E = E '+' T | T");
+    add_grammar_rule("T = T '*' F | F");
+    add_grammar_rule("F = 'id' | '(' E ')'");
 }
 
 void ParserController::construct_non_terminals() {
@@ -164,24 +164,31 @@ void ParserController::run_parser() {
     // TO DO: Read from actual file...
     construct_grammar();
 
-    construct_non_terminals();
+    GrammarNormalizer normalizer(grammar_rules);
+    // normalizer.print_grammar();
+    normalizer.left_recursion_elimination();
 
-    construct_terminals();
+    // Here we have vector<string> grammar that we have to normalize
+    // TO DO: CALL NORMALIZER
 
-    construct_non_terminals_classes();
-
-    construct_productions();
-
-    // print_productions();
-
-    construct_follow_helper();
-
-    // print_follow_helper();
-
-    // TO DO: CALL FIRST()
-    // TO DO: CALL FOLLOW()
-    // TO DO: CALL CONSTRUCT_PARSE_TABLE()
-    // TO DO: CALL SIMULATE_STACK()
+//    construct_non_terminals();
+//
+//    construct_terminals();
+//
+//    construct_non_terminals_classes();
+//
+//    construct_productions();
+//
+//    // print_productions();
+//
+//    construct_follow_helper();
+//
+//    // print_follow_helper();
+//
+//    // TO DO: CALL FIRST()
+//    // TO DO: CALL FOLLOW()
+//    // TO DO: CALL CONSTRUCT_PARSE_TABLE()
+//    // TO DO: CALL SIMULATE_STACK()
 
 }
 
