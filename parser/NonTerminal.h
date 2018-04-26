@@ -20,7 +20,7 @@ class NonTerminal {
 
         NonTerminal(string non_terminal_name);
 
-        string non_terminal;
+        string name;
         vector<vector<pair<NonTerminal, string>>> productions;
         set<string> first;
         set<string> follow;

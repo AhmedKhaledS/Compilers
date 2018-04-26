@@ -10,14 +10,21 @@
 #include <vector>
 #include "NonTerminal.h"
 
+using namespace std ;
 
 class ParserTable{
 private:
-    std::map< std::pair<std::string,std::string>, std::vector<std::string> > predictive_parse_table;
-    void insert_into_parse_table(std::string , std::string , std::vector<std::string> );
+
+    map< pair<string,string>, vector<pair<NonTerminal,string>> > predictive_parse_table;
+
+    void insert_into_parse_table(string non_term, string term, vector<pair<NonTerminal, string>> Trans);
+
+
 public:
-    void build_parse_table(std::vector<NonTerminal> grammar_rules);
-    std::vector<std::string> fetch_from_parse_table(std::string , std::string );
+
+    void build_parse_table( vector<NonTerminal> grammar_rules);
+    vector<pair<NonTerminal,string>> fetch_from_parse_table( string non_term ,  string term );
+
 };
 
 #endif //COMPILERS_PARSERTABLE_H

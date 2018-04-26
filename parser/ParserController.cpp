@@ -3,7 +3,7 @@
 //
 
 #include "ParserController.h"
-#include "../lexical analyzer/automata/Helper.h"
+#include "../lexical_analyzer/automata/Helper.h"
 
 #include <iostream>
 
@@ -130,8 +130,8 @@ void ParserController::construct_follow_helper() {
         for (int j = 0; j < productions.size(); ++j) {
             vector<pair<NonTerminal, string> > current_production = productions[j];
             for (int k = 0; k < current_production.size(); ++k) {
-                if (current_production[k].first.non_terminal != "") {
-                    string non_terminal_name = current_production[k].first.non_terminal;
+                if (current_production[k].first.name != "") {
+                    string non_terminal_name = current_production[k].first.name;
                     NonTerminal &child = non_terminals_classes[non_terminal_name];
                     vector<pair<NonTerminal, string>> temps;
                     for (int l = k + 1; l < current_production.size(); ++l) {
@@ -168,15 +168,15 @@ void ParserController::run_parser() {
 //        string temp = non_terminals[i];
 //        NonTerminal x = non_terminals_classes[temp];
 //
-//        cout << x.non_terminal << " = ";
+//        cout << x.name << " = ";
 //
 //        vector<vector<pair<NonTerminal, string>>> productions = x.productions;
 //
 //        for (int j = 0; j < productions.size(); ++j) {
 //            vector<pair<NonTerminal, string>> single_production = productions[j];
 //            for (int k = 0; k < single_production.size(); ++k) {
-//                if(single_production[k].first.non_terminal != "") {
-//                    cout << single_production[k].first.non_terminal << " ";
+//                if(single_production[k].first.name != "") {
+//                    cout << single_production[k].first.name << " ";
 //                } else {
 //                    cout << single_production[k].second << " ";
 //                }
@@ -200,15 +200,15 @@ void ParserController::run_parser() {
         vector<pair<NonTerminal, string>> productions = current_production.first;
         for (int i = 0; i < productions.size(); ++i) {
 
-            if(productions[i].first.non_terminal != "") {
-                cout << productions[i].first.non_terminal << " ";
+            if(productions[i].first.name != "") {
+                cout << productions[i].first.name << " ";
             } else {
                 cout << productions[i].second << " ";
             }
 
         }
 
-        cout << " P:" << current_production.second.non_terminal << endl;
+        cout << " P:" << current_production.second.name << endl;
     }
 
 

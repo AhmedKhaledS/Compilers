@@ -30,16 +30,16 @@ int main()
      p.run_parser();
 
     NonTerminal a, b, c, d;
-    a.non_terminal = "A";
+    a.name = "A";
 
-    c.non_terminal = "C";
-    d.non_terminal = "D";
+    c.name = "C";
+    d.name = "D";
 //    a.first.insert("id");
 //    c.first.insert("(");
 //    c.first.insert("\\L");
 //    d.first.insert("num");
 //
-    b.non_terminal = "B";
+    b.name = "B";
 //    b.first.insert("id");
 //
 //    vector<pair <NonTerminal, string> > tmp;
@@ -52,7 +52,7 @@ int main()
 //    for (auto it = b.follow.begin(); it != b.follow.end(); ++it)
 //        cout << *it << " ";
     NonTerminal tt;
-    tt.non_terminal = "";
+    tt.name = "";
 
     vector<pair<NonTerminal, string> > tmp2;
     tmp2.push_back({tt, "id"});
