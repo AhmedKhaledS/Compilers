@@ -11,13 +11,18 @@ GrammarNormalizer::GrammarNormalizer(vector<string> grammar) {
     this->grammar = grammar;
 }
 
+
+void GrammarNormalizer::perform_grammar_normalization() {
+    perform_left_recursion_elimination();
+    perform_left_factoring();
+}
+
+
 void GrammarNormalizer::perform_left_recursion_elimination() {
 
     for (int i = 0; i < grammar.size(); ++i) {
 
         string current_grammar_rule = left_recursion_substitution(grammar[i]);
-
-        cout << "Currently: " << current_grammar_rule << endl;
 
         left_recursion_elimination(current_grammar_rule);
 
@@ -42,9 +47,9 @@ string GrammarNormalizer::left_recursion_substitution(string grammar_rule) {
         vector<string> tokens = helper.tokenaize(or_tokens[i], ' ');
 
         // Loop on previously added grammar...
-        for (int j = 0; j < normalized_grammar.size() && !is_substituted; ++j) {
+        for (int j = 0; j < non_recursive_grammar.size() && !is_substituted; ++j) {
 
-            vector<string> equal_tokens_temp = helper.tokenaize(normalized_grammar[j], '=');
+            vector<string> equal_tokens_temp = helper.tokenaize(non_recursive_grammar[j], '=');
 
             if(tokens[0] == equal_tokens_temp[0]) {
 
@@ -132,22 +137,25 @@ void GrammarNormalizer::left_recursion_elimination(string grammar_rule) {
 
         second_rule += "\\L";
 
-        normalized_grammar.push_back(first_rule);
-        normalized_grammar.push_back(second_rule);
+        non_recursive_grammar.push_back(first_rule);
+        non_recursive_grammar.push_back(second_rule);
 
     } else {
 
-        normalized_grammar.push_back(grammar_rule);
+        non_recursive_grammar.push_back(grammar_rule);
     }
 }
+
+
+void GrammarNormalizer::perform_left_factoring() {
+    for (int i = 0; i < non_recursive_grammar.size(); ++i) {
+        normalized_grammar.push_back(non_recursive_grammar[i]);
+    }
+}
+
 
 void GrammarNormalizer::print_grammar(vector<string> grammar) {
     for (int i = 0; i < grammar.size(); ++i) {
         cout << grammar[i] << endl;
     }
 }
-
-
-
-
-
