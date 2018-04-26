@@ -16,8 +16,14 @@ GrammarNormalizer::GrammarNormalizer(vector<string> grammar) {
 
 
 void GrammarNormalizer::perform_grammar_normalization() {
-    // perform_left_recursion_elimination();
+
+    perform_left_recursion_elimination();
+
+    cout << "STEP (1): Eliminating Left Recursion" << endl;
+    print_grammar(non_recursive_grammar);
+
     perform_left_factoring();
+
 }
 
 
@@ -156,22 +162,21 @@ void GrammarNormalizer::perform_left_factoring() {
 
     Helper helper;
 
-    for (int i = 0; i < grammar.size(); ++i) {
+    for (int i = 0; i < non_recursive_grammar.size(); ++i) {
 
-        string current_rule = grammar[i];
-
-        cout << "RULE: " << current_rule << endl;
+        string current_rule = non_recursive_grammar[i];
 
         vector<string> equal_tokens = helper.tokenaize(current_rule, '=');
         vector<string> or_tokens = helper.tokenaize(equal_tokens[1], '|');
         std::sort(or_tokens.begin(), or_tokens.end());
 
+        bool visited_token[or_tokens.size()] = {false};
+        int uncovered_tokens = or_tokens.size();
+
         string output_grammar_rule = "";
         output_grammar_rule += equal_tokens[0];
         output_grammar_rule += " = ";
 
-
-        bool finished_rule = false;
         for (int j = 0; j < or_tokens.size() - 1; ++j) {
             string temp_prefix = common_prefix_util(or_tokens[j], or_tokens[j + 1]);
             if(temp_prefix.size() != 0) {
@@ -185,30 +190,36 @@ void GrammarNormalizer::perform_left_factoring() {
                     j++;
                 }
 
+                for (int k = start_index; k <= end_index; ++k) {
+                    visited_token[k] = true;
+                    uncovered_tokens--;
+                }
+
                 output_grammar_rule = left_factoring_substitution(start_index,end_index,temp_prefix,
                                                                   or_tokens, output_grammar_rule);
 
                 if(j != or_tokens.size()) {
-                    output_grammar_rule += " | ";
                     j--;
-                } else {
-                    finished_rule = true;
                 }
 
-            } else {
-                output_grammar_rule += or_tokens[j];
-                output_grammar_rule += " | ";
-                cout << "Ordinary Production: " << output_grammar_rule;
+                if(uncovered_tokens != 0) {
+                    output_grammar_rule += " | ";
+                }
+
             }
         }
 
-        if(!finished_rule) {
-            output_grammar_rule += " | ";
-            output_grammar_rule += or_tokens[or_tokens.size() - 1];
+        for (int l = 0; l < or_tokens.size(); ++l) {
+            if(visited_token[l] == false) {
+                output_grammar_rule += or_tokens[l];
+                uncovered_tokens--;
+                if(uncovered_tokens != 0) {
+                    output_grammar_rule += " | ";
+                }
+            }
         }
 
-        cout << "TO BE ENTERED: " << output_grammar_rule << endl;
-        // normalized_grammar.push_back(non_recursive_grammar[i]);
+        normalized_grammar.push_back(output_grammar_rule);
     }
 }
 
@@ -225,13 +236,15 @@ string GrammarNormalizer::left_factoring_substitution(int start, int end, string
 
     for (int i = start; i < end + 1; ++i) {
         string current_production = or_tokens[i];
+        if(or_tokens[i].substr(prefix.size(), or_tokens[i].size() - prefix.size()).size() == 0) {
+            continue;
+        }
         new_rule += or_tokens[i].substr(prefix.size(), or_tokens[i].size() - prefix.size());
         if(i != end)
             new_rule += " | ";
     }
 
-    cout << "Factored Production:" << output_grammar << endl;
-    cout << "NEW:" << new_rule << endl;
+    normalized_grammar.push_back(new_rule);
 
     return output_grammar;
 }
@@ -252,6 +265,10 @@ string GrammarNormalizer::common_prefix_util(string str1, string str2) {
         result = result.substr(0,result.size() - 1);
     }
 
+    if(result[result.size() - 1] == ' ') {
+        result = result.substr(0,result.size() - 1);
+    }
+
     return (result);
 }
 
@@ -261,4 +278,5 @@ void GrammarNormalizer::print_grammar(vector<string> grammar) {
     for (int i = 0; i < grammar.size(); ++i) {
         cout << grammar[i] << endl;
     }
+    cout << endl;
 }

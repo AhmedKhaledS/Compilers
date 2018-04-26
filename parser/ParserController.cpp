@@ -12,14 +12,14 @@ using namespace std;
 
 void ParserController::construct_grammar() {
 
-    add_grammar_rule("A = 'a' 'b' B | 'a' B | 'c' 'd' 'g' | 'c' 'd' 'e' B | 'c' 'd' 'f' B");
+//    add_grammar_rule("A = 'a' 'b' B | 'a' B | 'c' 'd' 'g' | 'c' 'd' 'e' B | 'c' 'd' 'f' B");
 
 //    add_grammar_rule("A = A 'c' | S 'd' | 'f'");
 //    add_grammar_rule("S = A 'a' | 'b'");
 
-//    add_grammar_rule("E = E '+' T | T");
-//    add_grammar_rule("T = T '*' F | F");
-//    add_grammar_rule("F = 'id' | '(' E ')'");
+    add_grammar_rule("E = E '+' T | T");
+    add_grammar_rule("T = T '*' F | F");
+    add_grammar_rule("F = 'id' | 'id' F");
 }
 
 void ParserController::construct_non_terminals() {
@@ -166,35 +166,48 @@ void ParserController::construct_follow_helper() {
 
 void ParserController::run_parser() {
 
-
-    // TO DO: Read from actual file...
+    // TO DO: Read from actual file
     construct_grammar();
 
     GrammarNormalizer normalizer(grammar_rules);
+
+    /* FOR TESTING */
+    cout << "STEP(0): Actual grammar from file" << endl;
+    normalizer.print_grammar(grammar_rules);
+
+
     normalizer.perform_grammar_normalization();
-    // normalizer.print_grammar(normalizer.normalized_grammar);
+    grammar_rules.clear();
+    grammar_rules = normalizer.normalized_grammar;
 
-    // Here we have vector<string> grammar that we have to normalize
-    // TO DO: CALL NORMALIZER
 
-//    construct_non_terminals();
-//
-//    construct_terminals();
-//
-//    construct_non_terminals_classes();
-//
-//    construct_productions();
-//
-//    // print_productions();
-//
-//    construct_follow_helper();
-//
-//    // print_follow_helper();
-//
-//    // TO DO: CALL FIRST()
-//    // TO DO: CALL FOLLOW()
-//    // TO DO: CALL CONSTRUCT_PARSE_TABLE()
-//    // TO DO: CALL SIMULATE_STACK()
+    /* FOR TESTING */
+    cout << "STEP (2): Performing Left Factoring (Working Version)" << endl;
+    normalizer.print_grammar(grammar_rules);
+
+
+
+
+    construct_non_terminals();
+
+    construct_terminals();
+
+    construct_non_terminals_classes();
+
+    construct_productions();
+
+    /* FOR TESTING */
+    print_productions();
+
+    construct_follow_helper();
+
+    /* FOR TESTING */
+    print_follow_helper();
+
+    // TO DO: CALL FIRST()
+    // TO DO: CALL FOLLOW()
+    // TO DO: CALL CONSTRUCT_PARSE_TABLE()
+    // TO DO: CALL SIMULATE_STACK()
 
 }
 
@@ -230,6 +243,8 @@ bool ParserController::is_non_terminal(NonTerminal nonTerminal) {
 
 void ParserController::print_productions() {
 
+    cout << "STEP(3): Productions" << endl;
+
     for (int i = 0; i < non_terminals.size(); ++i) {
         string non_terminal = non_terminals[i];
         NonTerminal non_terminal_class = non_terminals_classes[non_terminal];
@@ -254,10 +269,14 @@ void ParserController::print_productions() {
         }
         cout << endl;
     }
+    cout << endl;
 
 }
 
 void ParserController::print_follow_helper() {
+
+    cout << "STEP(4): Follow Helper" << endl;
+
     for (int i = 0; i < non_terminals.size(); ++i) {
         print_current_follow_helper(non_terminals[i]);
     }
