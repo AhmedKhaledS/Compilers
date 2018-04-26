@@ -179,9 +179,9 @@ void GrammarNormalizer::perform_left_factoring() {
                 j++;
                 while(j < or_tokens.size() &&
                         common_prefix_util(temp_prefix,or_tokens[j]).size() > 2) {
+                    temp_prefix = common_prefix_util(temp_prefix,or_tokens[j]);
                     end_index = j;
                     j++;
-                    temp_prefix = common_prefix_util(temp_prefix,or_tokens[j]);
                 }
 
                 output_grammar_rule = left_factoring_substitution(start_index,end_index,temp_prefix,
@@ -189,6 +189,7 @@ void GrammarNormalizer::perform_left_factoring() {
 
                 if(j != or_tokens.size()) {
                     output_grammar_rule += " | ";
+                    j--;
                 } else {
                     finished_rule = true;
                 }
