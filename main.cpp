@@ -3,16 +3,16 @@
 #include <string>
 #include <vector>
 #include <fstream>
-#include "lexical analyzer/file_services/FileWriter.h"
-#include "lexical analyzer/file_services/GrammarReader.h"
-#include "lexical analyzer/file_services/SourceProgramReader.h"
-#include "lexical analyzer/LexicalController.h"
-#include "lexical analyzer/SymbolTable.h"
-#include "lexical analyzer/automata/DFATransformer.h"
+#include "lexical_analyzer/file_services/FileWriter.h"
+#include "lexical_analyzer/file_services/GrammarReader.h"
+#include "lexical_analyzer/file_services/SourceProgramReader.h"
+#include "lexical_analyzer/LexicalController.h"
+#include "lexical_analyzer/SymbolTable.h"
+#include "lexical_analyzer/automata/DFATransformer.h"
 
-#include "lexical analyzer/automata/NFAOperations.h"
-#include "lexical analyzer/automata/NFA.h"
-#include "lexical analyzer/automata/NFAGenerator.h"
+#include "lexical_analyzer/automata/NFAOperations.h"
+#include "lexical_analyzer/automata/NFA.h"
+#include "lexical_analyzer/automata/NFAGenerator.h"
 
 #include "parser/ParserController.h"
 #include "parser/NonTerminal.h"
@@ -29,75 +29,23 @@ int main()
     ParserController p;
     p.run_parser();
 
-//     NonTerminal *a = new NonTerminal();
-//    NonTerminal *b = new NonTerminal();
-//    NonTerminal *c = new NonTerminal();
-//    NonTerminal *d = new NonTerminal();
-//    NonTerminal *e = new NonTerminal();
-//    a->non_terminal = "A";
-//    a->starting_state = true;
-//    b->non_terminal = "B";
-//    c->non_terminal = "C";
-//    d->non_terminal = "D";
-//    e->non_terminal = "E";
-//    //    a.first.insert("id");
-////    c.first.insert("(");
-////    c.first.insert("\\L");
-////    d.first.insert("num");
-////
-////    b.first.insert("id");
-////
-////    vector<pair<NonTerminal, string> > tmp4;
-////    tmp4.push_back({tt, "("});
-////    d.productions.push_back(tmp4);
-////
-////    vector<pair<NonTerminal, string> > tmp;
-////    tmp.push_back({b, ""});
-////    tmp.push_back({c, ""});
-////    a.productions.push_back(tmp);
-////    vector<pair<NonTerminal, string> > tmp1;
-////    tmp1.push_back({d, ""});
-////    a.productions.push_back(tmp1);
-////
-////    vector<pair<NonTerminal, string> > tmp0;
-////    tmp0.push_back({tt, "\\L"});
-////    a.productions.push_back(tmp0);
-////
-////    Utility::compute_first_terminals(&a, a.first);
-////    for (auto it = a.first.begin(); it != a.first.end(); ++it)
-////        cout << *it << " ";
-//    NonTerminal tt;
-//    tt.non_terminal = "";
+    NonTerminal *a = new NonTerminal();
+    NonTerminal *b = new NonTerminal();
+    NonTerminal *c = new NonTerminal();
+    NonTerminal *d = new NonTerminal();
+    NonTerminal *e = new NonTerminal();
+    a->non_terminal = "A";
+    a->starting_state = true;
+    b->non_terminal = "B";
+    c->non_terminal = "C";
+    d->non_terminal = "D";
+    e->non_terminal = "E";
+    //    a.first.insert("id");
+//    c.first.insert("(");
+//    c.first.insert("\\L");
+//    d.first.insert("num");
 //
-//    vector<pair<NonTerminal, string> > tmp2;
-//    tmp2.push_back({tt, "not"});
-//    tmp2.push_back({*e, ""});
-//    e->productions.push_back(tmp2);
-//    tmp2.clear();
-//    tmp2.push_back({tt, "("});
-//    tmp2.push_back({*a, ""});
-//    tmp2.push_back({tt, ")"});
-//    e->productions.push_back(tmp2);
-//    tmp2.clear();
-//    tmp2.push_back({tt, "true"});
-//    e->productions.push_back(tmp2);
-//    tmp2.clear();
-//    tmp2.push_back({tt, "false"});
-//    e->productions.push_back(tmp2);
-//    // E is done
-//
-//
-//    vector<pair<NonTerminal, string> > tmp3;
-//    tmp3.push_back({tt, "and"});
-//    tmp3.push_back({*e, ""});
-//    tmp3.push_back({*d, ""});
-//    d->productions.push_back(tmp3);
-//    tmp3.clear();
-//    tmp3.push_back({tt, "\\L"});
-//    d->productions.push_back(tmp3);
-//    // D is done
-//
-//
+//    b.first.insert("id");
 //
 //    vector<pair<NonTerminal, string> > tmp4;
 //    tmp4.push_back({*e, ""});

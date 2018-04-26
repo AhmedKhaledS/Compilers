@@ -4,7 +4,7 @@
 
 #include <algorithm>
 #include "GrammarNormalizer.h"
-#include "../lexical analyzer/automata/Helper.h"
+#include "../lexical_analyzer/automata/Helper.h"
 
 #include "iostream"
 
