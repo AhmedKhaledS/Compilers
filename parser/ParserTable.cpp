@@ -14,7 +14,8 @@ void ParserTable::build_parse_table( vector<NonTerminal> grammar_rules)
                     insert_into_parse_table(grammar_rules[i].name,z,trans);
                 }
             } else {
-                // to be understood
+                vector<pair<NonTerminal,string>> trans = production[j];
+                insert_into_parse_table(grammar_rules[i].name,production[j][0].second,trans);
             }
         }
 
