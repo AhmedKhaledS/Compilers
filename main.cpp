@@ -26,9 +26,9 @@ int main()
 //     Lexical_controller l;
 //     l.run_("test_simple.txt", "test_1_simple.txt");
 
-     ParserController p;
-     p.run_parser();
-     NonTerminal *a = new NonTerminal();
+    ParserController p;
+    p.run_parser();
+    NonTerminal *a = new NonTerminal();
     NonTerminal *b = new NonTerminal();
     NonTerminal *c = new NonTerminal();
     NonTerminal *d = new NonTerminal();

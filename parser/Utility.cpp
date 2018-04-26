@@ -14,17 +14,28 @@ void Utility::compute_first_terminals(NonTerminal *non_terminal, set<string> &fi
     for (int i = 0; i < non_terminal->productions.size(); ++i)
     {
         vector< pair<NonTerminal, string > > current_rule = non_terminal->productions[i];
-        if (!current_rule.empty())
+        for (int j = 0; j < current_rule.size(); ++j)
         {
-            if (current_rule[0].second != "")
+            set<string> first_of_current_non_terminal = current_rule[j].first.first;
+            if (current_rule[j].second != "")
             {
-                first_set.insert(current_rule[0].second);
+                if (first_of_current_non_terminal.count("\\L") != 0)
+                {
+                    if (j + 1 != current_rule.size())
+                        first_of_current_non_terminal.erase(first_of_current_non_terminal.find("\\L"));
+                    first_set.insert(first_of_current_non_terminal.begin(), first_of_current_non_terminal.end());
+                }
+                else
+                    first_set.insert(current_rule[j].second);
+                break;
             }
             else
             {
                 //set<string> first_set_aux;
-                compute_first_terminals(&current_rule[0].first, current_rule[0].first.first);
-                first_set.insert(current_rule[0].first.first.begin(), current_rule[0].first.first.end());
+                compute_first_terminals(&current_rule[j].first, current_rule[j].first.first);
+                first_set.insert(current_rule[j].first.first.begin(), current_rule[j].first.first.end());
+                if (current_rule[j].first.first.count("\\L") == 0) // No Epsilon.
+                    break;
             }
         }
     }
