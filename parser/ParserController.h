@@ -41,6 +41,12 @@ class ParserController {
 
         bool is_terminal(string token);
         bool is_epsilon(string token);
+        bool is_non_terminal(NonTerminal nonTerminal);
+
+
+        void print_productions();
+        void print_follow_helper();
+        void print_current_follow_helper(string non_terminal);
 
 };
 

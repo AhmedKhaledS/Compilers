@@ -29,6 +29,7 @@ int main()
      ParserController p;
      p.run_parser();
 
+<<<<<<< HEAD
     NonTerminal a, b, c, d;
     a.name = "A";
 
@@ -41,16 +42,61 @@ int main()
 //
     b.name = "B";
 //    b.first.insert("id");
+=======
+//    NonTerminal a, b, c, d;
+//    a.non_terminal = "A";
 //
-//    vector<pair <NonTerminal, string> > tmp;
+//    c.non_terminal = "C";
+//    d.non_terminal = "D";
+////    a.first.insert("id");
+////    c.first.insert("(");
+////    c.first.insert("\\L");
+////    d.first.insert("num");
+////
+//    b.non_terminal = "B";
+////    b.first.insert("id");
+////
+////    vector<pair <NonTerminal, string> > tmp;
+////    tmp.push_back({c, ""});
+////    tmp.push_back({d, ""});
+////
+////    b.follow_helper.push_back({tmp, a});
+////    Utility::compute_follow_terminals(&b, b.follow);
+////
+////    for (auto it = b.follow.begin(); it != b.follow.end(); ++it)
+////        cout << *it << " ";
+//    NonTerminal tt;
+//    tt.non_terminal = "";
+//
+//    vector<pair<NonTerminal, string> > tmp2;
+//    tmp2.push_back({tt, "id"});
+//    b.productions.push_back(tmp2);
+//
+//    vector<pair<NonTerminal, string> > tmp3;
+//    tmp3.push_back({tt, "num"});
+//    c.productions.push_back(tmp3);
+>>>>>>> master
+//
+//    vector<pair<NonTerminal, string> > tmp4;
+//    tmp4.push_back({tt, "("});
+//    d.productions.push_back(tmp4);
+//
+//    vector<pair<NonTerminal, string> > tmp;
+//    tmp.push_back({b, ""});
 //    tmp.push_back({c, ""});
-//    tmp.push_back({d, ""});
+//    a.productions.push_back(tmp);
+//    vector<pair<NonTerminal, string> > tmp1;
+//    tmp1.push_back({d, ""});
+//    a.productions.push_back(tmp1);
 //
-//    b.follow_helper.push_back({tmp, a});
-//    Utility::compute_follow_terminals(&b, b.follow);
+//    vector<pair<NonTerminal, string> > tmp0;
+//    tmp0.push_back({tt, "\\L"});
+//    a.productions.push_back(tmp0);
 //
-//    for (auto it = b.follow.begin(); it != b.follow.end(); ++it)
+//    Utility::compute_first_terminals(&a, a.first);
+//    for (auto it = a.first.begin(); it != a.first.end(); ++it)
 //        cout << *it << " ";
+<<<<<<< HEAD
     NonTerminal tt;
     tt.name = "";
 
@@ -81,5 +127,7 @@ int main()
     Utility::compute_first_terminals(&a, a.first);
     for (auto it = a.first.begin(); it != a.first.end(); ++it)
         cout << *it << " ";
+=======
+>>>>>>> master
     return 0;
 }
