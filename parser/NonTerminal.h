@@ -25,7 +25,7 @@ class NonTerminal {
         set<string> first;
         set<string> follow;
         vector<pair<vector<pair<NonTerminal,string>>, NonTerminal>> follow_helper;
-
+        bool starting_state;
 };
 
 
