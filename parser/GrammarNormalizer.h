@@ -17,10 +17,15 @@ class GrammarNormalizer {
 
         GrammarNormalizer(vector<string> grammar);
 
-        void left_recursion_elimination();
-        void print_grammar();
+        void perform_left_recursion_elimination();
+        string left_recursion_substitution(string grammar);
+        void left_recursion_elimination(string grammar);
+
+        void print_grammar(vector<string> grammar);
+
 
         vector<string> grammar;
+        vector<string> normalized_grammar;
 
 
 
