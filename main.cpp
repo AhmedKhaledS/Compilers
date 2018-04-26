@@ -3,16 +3,16 @@
 #include <string>
 #include <vector>
 #include <fstream>
-#include "lexical analyzer/file_services/FileWriter.h"
-#include "lexical analyzer/file_services/GrammarReader.h"
-#include "lexical analyzer/file_services/SourceProgramReader.h"
-#include "lexical analyzer/LexicalController.h"
-#include "lexical analyzer/SymbolTable.h"
-#include "lexical analyzer/automata/DFATransformer.h"
+#include "lexical_analyzer/file_services/FileWriter.h"
+#include "lexical_analyzer/file_services/GrammarReader.h"
+#include "lexical_analyzer/file_services/SourceProgramReader.h"
+#include "lexical_analyzer/LexicalController.h"
+#include "lexical_analyzer/SymbolTable.h"
+#include "lexical_analyzer/automata/DFATransformer.h"
 
-#include "lexical analyzer/automata/NFAOperations.h"
-#include "lexical analyzer/automata/NFA.h"
-#include "lexical analyzer/automata/NFAGenerator.h"
+#include "lexical_analyzer/automata/NFAOperations.h"
+#include "lexical_analyzer/automata/NFA.h"
+#include "lexical_analyzer/automata/NFAGenerator.h"
 
 #include "parser/ParserController.h"
 #include "parser/NonTerminal.h"

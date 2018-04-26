@@ -3,7 +3,7 @@
 //
 
 #include "ParserController.h"
-#include "../lexical analyzer/automata/Helper.h"
+#include "../lexical_analyzer/automata/Helper.h"
 #include "GrammarNormalizer.h"
 
 #include <iostream>
