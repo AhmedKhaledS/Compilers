@@ -1,7 +1,7 @@
+////
+//// Created by ahmed on 16/03/18.
+////
 //
-// Created by ahmed on 16/03/18.
-//
-
 //#include <algorithm>
 //#include <iostream>
 //#include "ReducedDFA.h"
@@ -48,7 +48,7 @@
 //    int previous_marked_count ;
 //    do{
 //        previous_marked_count = marked_count;
-//       marked_count =  Myhill_Nerode_Iteration();
+//        marked_count =  Myhill_Nerode_Iteration();
 //    }while(marked_count != previous_marked_count );
 //    determine_Final_Unmatched_States();
 //}
@@ -60,7 +60,7 @@
 //        for (int i = 0 ; i < Graph.size() ; i++){
 //            for(int j = 0 ; j < i ; j++){
 //                if(Cells_to_be_marked[i][j] == false &&
-//                    (int)State_Nodes[i].acceptance_state + (int)State_Nodes[j].acceptance_state == 1){
+//                   (int)State_Nodes[i].acceptance_state + (int)State_Nodes[j].acceptance_state == 1){
 //                    Cells_to_be_marked[i][j] = true;
 //                    marked_count++;
 //                }
@@ -71,7 +71,7 @@
 //        for (int i = 0 ; i < Graph.size() ; i++){
 //            for(int j = 0 ; j < i ; j++){
 //                if(Cells_to_be_marked[i][j] == false &&
-//                        is_one_a_terminal_state(i, j)){
+//                   is_one_a_terminal_state(i, j)){
 //                    Cells_to_be_marked[i][j] = true;
 //                    marked_count++;
 //                }
@@ -112,7 +112,7 @@
 //        DFANode temp1 = *get_next_node(Graph,i , x);
 //        DFANode temp2 = *get_next_node(Graph,j , x);
 //        if( Cells_to_be_marked[temp1.id][temp2.id] == true ||
-//                Cells_to_be_marked[temp2.id][temp1.id] == true ){
+//            Cells_to_be_marked[temp2.id][temp1.id] == true ){
 //
 //            return true;
 //        }
@@ -236,13 +236,13 @@
 //
 //    for(char x : set_duplicates){
 //        for(int m = 0 ; m < Reduced_Graph[index].size() ; m++){
-//             if(Reduced_Graph[index][m].second == x){
+//            if(Reduced_Graph[index][m].second == x){
 //                Reduced_Graph[index].erase(Reduced_Graph[index].begin()+ m );
-//                 break;
-//             }
+//                break;
+//            }
 //        }
 //    }
 //
 //    return duplicates_found;
-
+//
 //}

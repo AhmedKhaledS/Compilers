@@ -13,7 +13,7 @@
 
 class Minimize_DFA
 {
-    private:
+private:
     int marked_count = 0 ;
     DFANode start_node;
     std::vector<std::vector<std::pair<DFANode,EdgeLabel>>> Graph ;
@@ -30,10 +30,10 @@ class Minimize_DFA
     void trim_redundant_states();
     int trim_redundant_states_single_node(int index);
 
-    public:
+public:
 
     Minimize_DFA(std::vector<std::vector<std::pair<DFANode, EdgeLabel>>> dfa_graph,
-                     DFANode start_node);
+                 DFANode start_node);
     std::vector<std::vector<std::pair<DFANode,char>>> Calculate_Minimum_DFA();
 };
 

@@ -14,17 +14,28 @@ void Utility::compute_first_terminals(NonTerminal *non_terminal, set<string> &fi
     for (int i = 0; i < non_terminal->productions.size(); ++i)
     {
         vector< pair<NonTerminal, string > > current_rule = non_terminal->productions[i];
-        if (!current_rule.empty())
+        for (int j = 0; j < current_rule.size(); ++j)
         {
-            if (current_rule[0].second != "")
+            set<string> first_of_current_non_terminal = current_rule[j].first.first;
+            if (current_rule[j].second != "")
             {
-                first_set.insert(current_rule[0].second);
+                if (first_of_current_non_terminal.count("\\L") != 0)
+                {
+                    if (j + 1 != current_rule.size())
+                        first_of_current_non_terminal.erase(first_of_current_non_terminal.find("\\L"));
+                    first_set.insert(first_of_current_non_terminal.begin(), first_of_current_non_terminal.end());
+                }
+                else
+                    first_set.insert(current_rule[j].second);
+                break;
             }
             else
             {
                 //set<string> first_set_aux;
-                compute_first_terminals(&current_rule[0].first, current_rule[0].first.first);
-                first_set.insert(current_rule[0].first.first.begin(), current_rule[0].first.first.end());
+                compute_first_terminals(&current_rule[j].first, current_rule[j].first.first);
+                first_set.insert(current_rule[j].first.first.begin(), current_rule[j].first.first.end());
+                if (current_rule[j].first.first.count("\\L") == 0) // No Epsilon.
+                    break;
             }
         }
     }
@@ -37,11 +48,14 @@ void Utility::compute_follow_terminals(NonTerminal *non_terminal, set<string> &f
     {
         NonTerminal parent = non_terminal->follow_helper[i].second;
         auto next_tokens = non_terminal->follow_helper[i].first;
+//        if (next_tokens.empty() && parent.non_terminal == "") // Get the follow of the parent.
+//            continue;
         if (next_tokens.empty()) // Get the follow of the parent.
         {
             set<string> follow_set_aux;
             compute_follow_terminals(&parent, follow_set_aux);
             follow_set.insert(follow_set_aux.begin(), follow_set_aux.end());
+            follow_set.insert("$");
         }
         for (int j = 0; j < non_terminal->follow_helper[i].first.size(); ++j)
         {
@@ -52,16 +66,7 @@ void Utility::compute_follow_terminals(NonTerminal *non_terminal, set<string> &f
                 follow_set.insert(terminal_name);
                 break;
             }
-//            else if (current_non_terminal.name == "" && terminal_name == "") // Epsilon case.
-//            {
-//                if (j + 1 ==  name->follow_helper[i].first.size()) // Add follow of the parent;
-//                {
-//                    set<string> follow_set_aux;
-//                    compute_follow_terminals(&parent, follow_set_aux);
-//                    follow_set.insert(follow_set_aux.begin(), follow_set_aux.end());
-//                }
-//                continue;
-//            }
+
             else // Non-terminal case.
             {
                 set<string> first_of_current_non_terminal = current_non_terminal.first;
@@ -69,6 +74,13 @@ void Utility::compute_follow_terminals(NonTerminal *non_terminal, set<string> &f
                 {
                     first_of_current_non_terminal.erase(first_of_current_non_terminal.find("\\L"));
                     follow_set.insert(first_of_current_non_terminal.begin(), first_of_current_non_terminal.end());
+                    if (j + 1 == non_terminal->follow_helper[i].first.size())
+                    {
+                        set<string> follow_set_aux;
+                        compute_follow_terminals(&parent, follow_set_aux);
+                        follow_set.insert(follow_set_aux.begin(), follow_set_aux.end());
+                        follow_set.insert("$");
+                    }
                     continue;
                 }
                 else // Epsilon doesn't exist.
@@ -80,5 +92,7 @@ void Utility::compute_follow_terminals(NonTerminal *non_terminal, set<string> &f
 
         }
     }
+    if (non_terminal->starting_state)
+        non_terminal->follow.insert("$");
 }
 
