@@ -10,6 +10,7 @@
 
 GrammarNormalizer::GrammarNormalizer(vector<string> grammar) {
     this->grammar = grammar;
+    this->normalization_characher = '1';
 }
 
 
@@ -178,7 +179,7 @@ void GrammarNormalizer::perform_left_factoring() {
                 j++;
                 j++;
                 while(j < or_tokens.size() &&
-                        common_prefix_util(temp_prefix,or_tokens[j]).size() > 2) {
+                        common_prefix_util(temp_prefix,or_tokens[j]).size() > 0) {
                     temp_prefix = common_prefix_util(temp_prefix,or_tokens[j]);
                     end_index = j;
                     j++;
@@ -214,6 +215,7 @@ void GrammarNormalizer::perform_left_factoring() {
 string GrammarNormalizer::left_factoring_substitution(int start, int end, string prefix,
                                                     vector<string> or_tokens, string output_grammar) {
     string new_symbol = "X";
+    new_symbol += normalization_characher++;
     string new_rule = new_symbol;
     new_rule += " = ";
 
@@ -233,6 +235,7 @@ string GrammarNormalizer::left_factoring_substitution(int start, int end, string
 
     return output_grammar;
 }
+
 string GrammarNormalizer::common_prefix_util(string str1, string str2) {
     string result;
     int n1 = str1.length(), n2 = str2.length();
@@ -243,6 +246,10 @@ string GrammarNormalizer::common_prefix_util(string str1, string str2) {
         if (str1[i] != str2[j])
             break;
         result.push_back(str1[i]);
+    }
+
+    while (std::count(result.begin(), result.end(), '\'') % 2 != 0) {
+        result = result.substr(0,result.size() - 1);
     }
 
     return (result);

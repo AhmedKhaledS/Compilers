@@ -30,7 +30,7 @@ public:
 
     void print_grammar(vector<string> grammar);
 
-
+    char normalization_characher;
     vector<string> grammar;
     vector<string> non_recursive_grammar;
     vector<string> normalized_grammar;
