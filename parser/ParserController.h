@@ -21,7 +21,7 @@ class ParserController {
         vector<string> terminals;
         vector<string> non_terminals;
 
-        map<string, NonTerminal> non_terminals_classes;
+        map<string, NonTerminal*> non_terminals_classes;
 
 
         void construct_grammar();

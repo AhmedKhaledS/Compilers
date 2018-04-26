@@ -29,17 +29,17 @@ int main()
     ParserController p;
     p.run_parser();
 
-    NonTerminal *a = new NonTerminal();
-    NonTerminal *b = new NonTerminal();
-    NonTerminal *c = new NonTerminal();
-    NonTerminal *d = new NonTerminal();
-    NonTerminal *e = new NonTerminal();
-    a->non_terminal = "A";
-    a->starting_state = true;
-    b->non_terminal = "B";
-    c->non_terminal = "C";
-    d->non_terminal = "D";
-    e->non_terminal = "E";
+//    NonTerminal *a = new NonTerminal();
+//    NonTerminal *b = new NonTerminal();
+//    NonTerminal *c = new NonTerminal();
+//    NonTerminal *d = new NonTerminal();
+//    NonTerminal *e = new NonTerminal();
+//    a->non_terminal = "A";
+//    a->starting_state = true;
+//    b->non_terminal = "B";
+//    c->non_terminal = "C";
+//    d->non_terminal = "D";
+//    e->non_terminal = "E";
     //    a.first.insert("id");
 //    c.first.insert("(");
 //    c.first.insert("\\L");

@@ -21,7 +21,7 @@ class NonTerminal {
         NonTerminal(string non_terminal_name);
 
         string non_terminal;
-        vector<vector<pair<NonTerminal, string>>> productions;
+        vector<vector<pair<NonTerminal*, string>>> productions;
         set<string> first;
         set<string> follow;
         vector<pair<vector<pair<NonTerminal,string>>, NonTerminal>> follow_helper;
