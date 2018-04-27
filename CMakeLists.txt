@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.9)
+
 project(Compilers)
 
 set(CMAKE_CXX_STANDARD 11)
@@ -47,4 +48,8 @@ add_executable(Compilers
         parser/ParserController.h
         parser/Utility.cpp
         parser/Utility.h
+        parser/ParserStack.cpp
+        parser/ParserStack.h
+        parser/ParserTable.cpp
+        parser/ParserTable.h
         main.cpp)

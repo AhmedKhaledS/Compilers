@@ -93,6 +93,12 @@ void Lexical_controller::run_(const string grammar_rule_file, const string src_p
         }
     }*/
 
+    // Minimizing dfa
+    DFANode starting_state = *transformer.get_starting_dfa_state();
+
+
+
+
 
     // Reading source programs::
     // Revise starting state of DFA Node.
@@ -101,7 +107,6 @@ void Lexical_controller::run_(const string grammar_rule_file, const string src_p
     src_prog_reader.set_src_file_name(src_program_file);
     Grammar_Reader src_reader;
     stack<DFANode> stk_node;
-    DFANode starting_state = *transformer.get_starting_dfa_state();
     DFANode current_state = starting_state;
     for (int i = 1; i <= MAX_NO_OF_LINES; ++i)
     {

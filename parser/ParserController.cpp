@@ -8,6 +8,7 @@
 #include "Utility.h"
 #include "../lexical_analyzer/file_services/GrammarReader.h"
 
+
 #include <iostream>
 
 using namespace std;
@@ -31,7 +32,6 @@ void ParserController::construct_grammar(const string grammar_rule_file) {
         grammar_rule = grammar_rule.substr(2,grammar_rule.size() - 2);
         add_grammar_rule(grammar_rule);
     }
-
 }
 
 void ParserController::construct_non_terminals() {
@@ -256,8 +256,8 @@ void ParserController::add_grammar_rule(string grammar_rule) {
     grammar_rules.push_back(grammar_rule);
 }
 
-void ParserController::add_non_terminal(string non_terminal) {
-    non_terminals.push_back(non_terminal);
+void ParserController::add_non_terminal(string name) {
+    non_terminals.push_back(name);
 }
 
 void ParserController::add_terminal(string terminal) {
@@ -321,12 +321,12 @@ void ParserController::print_follow_helper() {
     }
 }
 
-void ParserController::print_current_follow_helper(string non_terminal) {
+void ParserController::print_current_follow_helper(string name) {
 
-    cout << "Non-Terminal: " << non_terminal << endl;
+    cout << "Non-Terminal: " << name << endl;
 
     vector<pair<vector<pair<NonTerminal*, string>>, NonTerminal*>> follow_helper =
-            non_terminals_classes[non_terminal]->follow_helper;
+            non_terminals_classes[name]->follow_helper;
 
     for (int l = 0; l < follow_helper.size(); ++l) {
         pair<vector<pair<NonTerminal*, string>>, NonTerminal*> current_production = follow_helper[l];
