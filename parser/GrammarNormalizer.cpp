@@ -43,7 +43,7 @@ string GrammarNormalizer::left_recursion_substitution(string grammar_rule) {
 
     Helper helper;
 
-    vector<string> equal_tokens = helper.tokenaize(grammar_rule, '=');
+    vector<string> equal_tokens = helper.tokenaize_first(grammar_rule, '=');
     vector<string> or_tokens = helper.tokenaize(equal_tokens[1], '|');
 
     string output_grammar_rule = "";
@@ -59,7 +59,7 @@ string GrammarNormalizer::left_recursion_substitution(string grammar_rule) {
         // Loop on previously added grammar...
         for (int j = 0; j < non_recursive_grammar.size() && !is_substituted; ++j) {
 
-            vector<string> equal_tokens_temp = helper.tokenaize(non_recursive_grammar[j], '=');
+            vector<string> equal_tokens_temp = helper.tokenaize_first(non_recursive_grammar[j], '=');
 
             if(tokens[0] == equal_tokens_temp[0]) {
 
@@ -110,7 +110,7 @@ void GrammarNormalizer::left_recursion_elimination(string grammar_rule) {
 
     Helper helper;
 
-    vector<string> equal_tokens = helper.tokenaize(grammar_rule, '=');
+    vector<string> equal_tokens = helper.tokenaize_first(grammar_rule, '=');
     vector<string> or_tokens = helper.tokenaize(equal_tokens[1], '|');
 
     string current_non_terminal = equal_tokens[0];
@@ -169,7 +169,7 @@ void GrammarNormalizer::perform_left_factoring() {
 
         string current_rule = non_recursive_grammar[i];
 
-        vector<string> equal_tokens = helper.tokenaize(current_rule, '=');
+        vector<string> equal_tokens = helper.tokenaize_first(current_rule, '=');
         vector<string> or_tokens = helper.tokenaize(equal_tokens[1], '|');
         std::sort(or_tokens.begin(), or_tokens.end());
 

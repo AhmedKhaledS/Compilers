@@ -23,6 +23,8 @@ class Helper {
 
         vector<string> tokenaize(string s, char delim);
 
+        vector<string> tokenaize_first(string s, char delim);
+
         string remove_escape_char(string s);
 
         string trim(const string& str);

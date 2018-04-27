@@ -91,6 +91,29 @@ vector<string> Helper::tokenaize(string s, char delim) {
     return tokens;
 }
 
+vector<string> Helper::tokenaize_first(string s, char delim) {
+
+    std::stringstream test(s);
+    std::string segment;
+    std::vector<std::string> tokens;
+    int size = 0;
+
+    while(std::getline(test, segment, delim))
+    {
+        size = segment.size();
+        tokens.push_back(trim(segment));
+        break;
+    }
+
+    s = s.substr(size + 1, s.size() - size + 1);
+
+    tokens.push_back(trim(s));
+
+    return tokens;
+}
+
+
+
 string Helper::remove_escape_char(string s) {
     string result = "";
     for (int i = 0; i < s.length(); i++) {

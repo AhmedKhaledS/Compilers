@@ -6,63 +6,32 @@
 #include "../lexical_analyzer/automata/Helper.h"
 #include "GrammarNormalizer.h"
 #include "Utility.h"
+#include "../lexical_analyzer/file_services/GrammarReader.h"
 
 #include <iostream>
 
 using namespace std;
 
-void ParserController::construct_grammar() {
+void ParserController::construct_grammar(const string grammar_rule_file) {
 
-//    add_grammar_rule("A = 'a' 'b' B | 'a' B | 'c' 'd' 'g' | 'c' 'd' 'e' B | 'c' 'd' 'f' B");
+    Grammar_Reader x;
+    int line_count = 1;
 
-//    add_grammar_rule("A = A 'c' | S 'd' | 'f'");
-//    add_grammar_rule("S = A 'a' | 'b'");
+    while(x.read_next_grammar_rule_line(grammar_rule_file, line_count) != "~") {
 
-//    add_grammar_rule("E = E '+' T | T");
-//    add_grammar_rule("T = T '*' F | F");
-//    add_grammar_rule("F = 'id' | 'id' F");
+        string grammar_rule = x.read_next_grammar_rule_line(grammar_rule_file, line_count);
+        line_count++;
 
-    // Test1
-//    add_grammar_rule("A = C B");
-//    add_grammar_rule("B = 'or' C B | \\L");
-//    add_grammar_rule("C = E D");
-//    add_grammar_rule("D = 'and' E D | \\L");
-//    add_grammar_rule("E = 'not' E | '(' A ')' | 'true' | 'false'");
+        while(x.read_next_grammar_rule_line(grammar_rule_file, line_count)[0] == '|') {
+            grammar_rule.append(" ");
+            grammar_rule.append(x.read_next_grammar_rule_line(grammar_rule_file, line_count));
+            line_count++;
+        }
 
-    // Test2
-//    add_grammar_rule("E = T E'");
-//    add_grammar_rule("E' = '+' E | \\L");
-//    add_grammar_rule("T = F T'");
-//    add_grammar_rule("T' = T | \\L");
-//    add_grammar_rule("F = P F'");
-//    add_grammar_rule("F' = '*' F | \\L");
-//    add_grammar_rule("P = '(' E ')' | 'a' | 'b' | 'Em'");
+        grammar_rule = grammar_rule.substr(2,grammar_rule.size() - 2);
+        add_grammar_rule(grammar_rule);
+    }
 
-    // Test3
-//    add_grammar_rule("E = T E'");
-//    add_grammar_rule("E' = '+' E | \\L");
-//    add_grammar_rule("T = F T'");
-//    add_grammar_rule("T' = '*' F T' | \\L");
-//    add_grammar_rule("F = '(' E ')' | 'id'");
-
-    // Test4
-//    add_grammar_rule("S = A 'b' S | 'e' | \\L");
-//    add_grammar_rule("A = 'a' | 'c' A 'd'");
-
-    // Test 5
-//    add_grammar_rule("S = 'i' C 't' S E | 'a'");
-//    add_grammar_rule("E = 'e' S | \\L");
-//    add_grammar_rule("C = 'b'");
-
-    // Test 6
-//    add_grammar_rule("P = P ';' Def | Def");
-//    add_grammar_rule("Def = 'id' '(' 'id' ')' '=' E");
-//    add_grammar_rule("E = 'id' | 'num' | '(' E E ')' | '(' E '+' E ')' | '[' E ',' E ']'");
-
-    // Test 7
-    add_grammar_rule("S = 'a' S | 'b' X");
-    add_grammar_rule("X = X X 'c' | X 'd' | Y");
-    add_grammar_rule("Y = Y 'e' | 'f' | 'g'");
 }
 
 void ParserController::construct_non_terminals() {
@@ -71,7 +40,7 @@ void ParserController::construct_non_terminals() {
 
     for (int i = 0; i < grammar_rules.size(); ++i) {
 
-        vector<string> equal_tokens = helper.tokenaize(grammar_rules[i], '=');
+        vector<string> equal_tokens = helper.tokenaize_first(grammar_rules[i], '=');
 
         add_non_terminal(equal_tokens[0]);
     }
@@ -83,7 +52,7 @@ void ParserController::construct_terminals() {
 
     for (int i = 0; i < grammar_rules.size(); ++i) {
 
-        vector<string> equal_tokens = helper.tokenaize(grammar_rules[i], '=');
+        vector<string> equal_tokens = helper.tokenaize_first(grammar_rules[i], '=');
         vector<string> or_tokens = helper.tokenaize(equal_tokens[1], '|');
 
         for (int j = 0; j < or_tokens.size(); ++j) {
@@ -122,7 +91,7 @@ void ParserController::construct_productions() {
 
     for (int i = 0; i < grammar_rules.size(); ++i) {
 
-        vector<string> equal_tokens = helper.tokenaize(grammar_rules[i], '=');
+        vector<string> equal_tokens = helper.tokenaize_first(grammar_rules[i], '=');
         vector<string> or_tokens = helper.tokenaize(equal_tokens[1], '|');
 
         NonTerminal &current_non_terminal = *non_terminals_classes[equal_tokens[0]];
@@ -204,17 +173,16 @@ void ParserController::construct_follow_helper() {
 
 
 
-void ParserController::run_parser() {
+void ParserController::run_parser(const string grammar_rule_file) {
 
-    // TO DO: Read from actual file
-    construct_grammar();
+    construct_grammar(grammar_rule_file);
 
     GrammarNormalizer normalizer(grammar_rules);
 
-    /* FOR TESTING */
+    /* START: FOR TESTING */
     cout << "STEP(0): Actual grammar from file" << endl;
     normalizer.print_grammar(grammar_rules);
-
+    /* END: FOR TESTING */
 
     normalizer.perform_grammar_normalization();
     grammar_rules.clear();
@@ -224,9 +192,6 @@ void ParserController::run_parser() {
     /* FOR TESTING */
     cout << "STEP (2): Performing Left Factoring (Working Version)" << endl;
     normalizer.print_grammar(grammar_rules);
-
-
-
 
     construct_non_terminals();
 

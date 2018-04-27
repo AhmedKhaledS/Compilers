@@ -24,7 +24,7 @@ class ParserController {
         map<string, NonTerminal*> non_terminals_classes;
 
 
-        void construct_grammar();
+        void construct_grammar(const string grammar_rule_file);
         void construct_non_terminals();
         void construct_terminals();
         void construct_non_terminals_classes();
@@ -32,7 +32,7 @@ class ParserController {
         void construct_follow_helper();
 
 
-        void run_parser ();
+        void run_parser (const string grammar_rule_file);
 
 
         void add_grammar_rule (string grammar_rule);
