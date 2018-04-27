@@ -66,6 +66,7 @@ void Utility::compute_follow_terminals(NonTerminal *non_terminal, set<string> &f
                 follow_set.insert(terminal_name);
                 break;
             }
+
             else // Non-terminal case.
             {
                 set<string> first_of_current_non_terminal = current_non_terminal.first;
