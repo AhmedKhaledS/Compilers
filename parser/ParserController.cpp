@@ -22,12 +22,47 @@ void ParserController::construct_grammar() {
 //    add_grammar_rule("T = T '*' F | F");
 //    add_grammar_rule("F = 'id' | 'id' F");
 
-    add_grammar_rule("A = C B");
-    add_grammar_rule("B = 'or' C B | \\L");
-    add_grammar_rule("C = E D");
-    add_grammar_rule("D = 'and' E D | \\L");
-    add_grammar_rule("E = 'not' E | '(' A ')' | 'true' | 'false'");
+    // Test1
+//    add_grammar_rule("A = C B");
+//    add_grammar_rule("B = 'or' C B | \\L");
+//    add_grammar_rule("C = E D");
+//    add_grammar_rule("D = 'and' E D | \\L");
+//    add_grammar_rule("E = 'not' E | '(' A ')' | 'true' | 'false'");
 
+    // Test2
+//    add_grammar_rule("E = T E'");
+//    add_grammar_rule("E' = '+' E | \\L");
+//    add_grammar_rule("T = F T'");
+//    add_grammar_rule("T' = T | \\L");
+//    add_grammar_rule("F = P F'");
+//    add_grammar_rule("F' = '*' F | \\L");
+//    add_grammar_rule("P = '(' E ')' | 'a' | 'b' | 'Em'");
+
+    // Test3
+//    add_grammar_rule("E = T E'");
+//    add_grammar_rule("E' = '+' E | \\L");
+//    add_grammar_rule("T = F T'");
+//    add_grammar_rule("T' = '*' F T' | \\L");
+//    add_grammar_rule("F = '(' E ')' | 'id'");
+
+    // Test4
+//    add_grammar_rule("S = A 'b' S | 'e' | \\L");
+//    add_grammar_rule("A = 'a' | 'c' A 'd'");
+
+    // Test 5
+//    add_grammar_rule("S = 'i' C 't' S E | 'a'");
+//    add_grammar_rule("E = 'e' S | \\L");
+//    add_grammar_rule("C = 'b'");
+
+    // Test 6
+//    add_grammar_rule("P = P ';' Def | Def");
+//    add_grammar_rule("Def = 'id' '(' 'id' ')' '=' E");
+//    add_grammar_rule("E = 'id' | 'num' | '(' E E ')' | '(' E '+' E ')' | '[' E ',' E ']'");
+
+    // Test 7
+    add_grammar_rule("S = 'a' S | 'b' X");
+    add_grammar_rule("X = X X 'c' | X 'd' | Y");
+    add_grammar_rule("Y = Y 'e' | 'f' | 'g'");
 }
 
 void ParserController::construct_non_terminals() {

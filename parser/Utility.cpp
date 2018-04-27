@@ -7,6 +7,8 @@
 
 using namespace std;
 
+map<string, bool> Utility::cyclic_checker;
+
 void Utility::compute_first_terminals(NonTerminal *non_terminal, set<string> &first_set)
 {
     if (!non_terminal->first.empty())
@@ -41,6 +43,7 @@ void Utility::compute_first_terminals(NonTerminal *non_terminal, set<string> &fi
 
 void Utility::compute_follow_terminals(NonTerminal *non_terminal, set<string> &follow_set)
 {
+    cyclic_checker[non_terminal->non_terminal] = true;
     /// Iterate over each line in follow_productions.
     for (int i = 0; i < non_terminal->follow_helper.size(); ++i)
     {
@@ -49,7 +52,7 @@ void Utility::compute_follow_terminals(NonTerminal *non_terminal, set<string> &f
         if (next_tokens.empty()) // Get the follow of the parent.
         {
             set<string> follow_set_aux;
-            if (parent.non_terminal != non_terminal->non_terminal)
+            if (!cyclic_checker[parent.non_terminal])
                 compute_follow_terminals(&parent, follow_set_aux);
             follow_set.insert(follow_set_aux.begin(), follow_set_aux.end());
             follow_set.insert("$");
@@ -73,7 +76,8 @@ void Utility::compute_follow_terminals(NonTerminal *non_terminal, set<string> &f
                     if (j + 1 == non_terminal->follow_helper[i].first.size())
                     {
                         set<string> follow_set_aux;
-                        compute_follow_terminals(&parent, follow_set_aux);
+                        if (!cyclic_checker[parent.non_terminal])
+                            compute_follow_terminals(&parent, follow_set_aux);
                         follow_set.insert(follow_set_aux.begin(), follow_set_aux.end());
                         follow_set.insert("$");
                     }
@@ -90,4 +94,5 @@ void Utility::compute_follow_terminals(NonTerminal *non_terminal, set<string> &f
     }
     if (non_terminal->starting_state)
         non_terminal->follow.insert("$");
+    cyclic_checker[non_terminal->non_terminal] = false;
 }

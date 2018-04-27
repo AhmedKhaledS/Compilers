@@ -68,9 +68,12 @@ string GrammarNormalizer::left_recursion_substitution(string grammar_rule) {
                 vector<string> or_tokens_temp = helper.tokenaize(equal_tokens_temp[1], '|');
                 for (int k = 0; k < or_tokens_temp.size(); ++k) {
                     output_grammar_rule += or_tokens_temp[k];
-                    output_grammar_rule += " ";
 
                     int size = tokens[0].size();
+                    if( or_tokens[i].size() - size == 0) {
+                        continue;
+                    }
+                    output_grammar_rule += " ";
                     output_grammar_rule += or_tokens[i].substr(size + 1, or_tokens[i].size() - size);
 
                     if(k != or_tokens_temp.size() - 1)
