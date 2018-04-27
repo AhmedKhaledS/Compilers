@@ -112,12 +112,12 @@ void ParserController::run_parser(const string grammar_rule_file) {
     vector<NonTerminal> non_ts;
     ParserTable parse_table;
 
-    tp.AddColumn("Non-Terminals", 15);
+    tp.AddColumn("Non-Terminals", 20);
     for (string t : terminals) {
         if(t == "\\L") {
             t = "$";
         }
-        tp.AddColumn(t, 10);
+        tp.AddColumn(t, 27);
     }
     tp.PrintHeader();
 
@@ -216,10 +216,12 @@ void ParserController::construct_terminals() {
 void ParserController::construct_non_terminals_classes() {
 
     for (int i = 0; i < non_terminals.size(); ++i) {
-
         non_terminals_classes[non_terminals[i]] = new
                 NonTerminal(non_terminals[i]);
-
+        if (i == 0)
+            non_terminals_classes[non_terminals[i]]->starting_state = true;
+        else
+            non_terminals_classes[non_terminals[i]]->starting_state = false;
     }
 
 }
