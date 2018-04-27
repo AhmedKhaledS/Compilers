@@ -6,7 +6,9 @@
 #define COMPILERS_PARSERSTACK_H
 
 #include "ParserTable.h"
+#include "../lexical_analyzer/LexicalController.h"
 #include <stack>
+using namespace std ;
 
 enum ERROR_ROUTINE {Synch , Panic , Reject , Correct};
 
@@ -14,15 +16,15 @@ class ParserStack{
 
 private:
 
-    std::stack<std::string> input_parsing_stack ;
+    stack<string> input_parsing_stack ;
     ParserTable predictive_parse_table ;
-    void match_next(std::string input);
+    string initial_parse_state ;
+    void match_next(string input);
     void error_logger(ERROR_ROUTINE err);
 
 public:
-    ParserStack(ParserTable table ,
-                std::string initial_state);
-    void run_string_matcher();
+    ParserStack(ParserTable table, pair<NonTerminal, String> initial_state);
+    void run_string_matcher(Lexical_controller input);
 
 };
 
