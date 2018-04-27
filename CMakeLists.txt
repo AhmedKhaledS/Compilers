@@ -25,6 +25,8 @@ add_executable(Compilers
         "lexical_analyzer/automata/State.h"
         "lexical_analyzer/automata/Tokenizer.cpp"
         "lexical_analyzer/automata/Tokenizer.h"
+        "lexical_analyzer/automata/Utilities.cpp"
+        "lexical_analyzer/automata/Utilities.h"
         "lexical_analyzer/file_services/FileHandler.h"
         "lexical_analyzer/file_services/FileReader.cpp"
         "lexical_analyzer/file_services/FileReader.h"
