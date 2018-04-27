@@ -2,11 +2,13 @@
 // Created by ahmed on 24/04/18.
 //
 
+
 #include "ParserController.h"
 #include "../lexical_analyzer/automata/Helper.h"
 #include "GrammarNormalizer.h"
 #include "Utility.h"
 #include "../lexical_analyzer/file_services/GrammarReader.h"
+#include "algorithm"
 
 #include <iostream>
 
@@ -197,6 +199,14 @@ void ParserController::run_parser(const string grammar_rule_file) {
 
     construct_terminals();
 
+    /* FOR TESTING */
+    cout << "STEP (2.1): Terminals" << endl;
+    normalizer.print_grammar(terminals);
+
+    /* FOR TESTING */
+    cout << "STEP (2.2): Non-Terminals" << endl;
+    normalizer.print_grammar(non_terminals);
+
     construct_non_terminals_classes();
 
     construct_productions();
@@ -224,7 +234,7 @@ void ParserController::run_parser(const string grammar_rule_file) {
 
     for (int i = 0; i < non_terminals.size(); ++i) {
 
-        cout << "First of :" << non_terminals_classes[non_terminals[i]]->non_terminal << " ";
+        cout << "First of " << non_terminals_classes[non_terminals[i]]->non_terminal << " ";
 
         for (auto it = non_terminals_classes[non_terminals[i]]->first.begin();
              it != non_terminals_classes[non_terminals[i]]->first.end(); ++it)
@@ -234,9 +244,11 @@ void ParserController::run_parser(const string grammar_rule_file) {
 
     }
 
+    cout << endl;
+
     for (int i = 0; i < non_terminals.size(); ++i) {
 
-        cout << "Follow of :" << non_terminals_classes[non_terminals[i]]->non_terminal << " ";
+        cout << "Follow of " << non_terminals_classes[non_terminals[i]]->non_terminal << " ";
 
         for (auto it = non_terminals_classes[non_terminals[i]]->follow.begin();
              it != non_terminals_classes[non_terminals[i]]->follow.end(); ++it)
@@ -261,7 +273,11 @@ void ParserController::add_non_terminal(string non_terminal) {
 }
 
 void ParserController::add_terminal(string terminal) {
-    terminals.push_back(terminal);
+    if(std::find(terminals.begin(), terminals.end(), terminal) != terminals.end()) {
+        // DO NOTHING
+    } else {
+        terminals.push_back(terminal);
+    }
 }
 
 

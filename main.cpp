@@ -31,7 +31,7 @@ int main()
 //     l.run_("test_simple.txt", "test_1_simple.txt");
 
     ParserController p;
-    p.run_parser("grammar.txt");
+    p.run_parser("test_cases/Example_2.txt");
 
     return 0;
 }
