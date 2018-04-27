@@ -16,14 +16,14 @@ class ParserStack{
 
 private:
 
-    stack<string> input_parsing_stack ;
+    stack<pair<NonTerminal,string>> input_parsing_stack ;
     ParserTable predictive_parse_table ;
-    string initial_parse_state ;
+    pair<NonTerminal,string> initial_parse_state ;
     void match_next(string input);
     void error_logger(ERROR_ROUTINE err);
 
 public:
-    ParserStack(ParserTable table, pair<NonTerminal, String> initial_state);
+    ParserStack(ParserTable table, pair<NonTerminal, string > initial_state);
     void run_string_matcher(Lexical_controller input);
 
 };

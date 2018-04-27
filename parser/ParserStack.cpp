@@ -9,9 +9,12 @@ using namespace std ;
 
 void ParserStack::ParserStack(ParserTable table, pair<NonTerminal, string> initial_state)
 {
+    NonTerminal empty;
+    empty.non_terminal = "";
     this->predictive_parse_table = table ;
     this->initial_parse_state = initial_state;
-    this->input_parsing_stack.push("$");
+
+    this->input_parsing_stack.push({});
     this->input_parsing_stack.push(initial_parse_state);
 }
 
