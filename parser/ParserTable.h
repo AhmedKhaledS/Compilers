@@ -14,16 +14,16 @@ using namespace std ;
 
 class ParserTable{
 private:
+    NonTerminal empty;
+    map< pair<string,string>, vector<pair<NonTerminal*,string>> > predictive_parse_table;
 
-    map< pair<string,string>, vector<pair<NonTerminal,string>> > predictive_parse_table;
-
-    void insert_into_parse_table(string non_term, string term, vector<pair<NonTerminal, string>> Trans);
+    void insert_into_parse_table(string non_term, string term, vector<pair<NonTerminal*, string>> Trans);
 
 
 public:
-
-    void build_parse_table( vector<NonTerminal> grammar_rules);
-    vector<pair<NonTerminal,string>> fetch_from_parse_table( string non_term ,  string term );
+    ParserTable();
+    void build_parse_table(vector<NonTerminal> grammar_rules);
+    vector<pair<NonTerminal*, string>> fetch_from_parse_table(string non_term ,  string term );
 
 };
 

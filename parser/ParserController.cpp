@@ -24,11 +24,11 @@ void ParserController::construct_grammar() {
 //    add_grammar_rule("F = 'id' | 'id' F");
 
     // Test1
-//    add_grammar_rule("A = C B");
-//    add_grammar_rule("B = 'or' C B | \\L");
-//    add_grammar_rule("C = E D");
-//    add_grammar_rule("D = 'and' E D | \\L");
-//    add_grammar_rule("E = 'not' E | '(' A ')' | 'true' | 'false'");
+    add_grammar_rule("A = C B");
+    add_grammar_rule("B = 'or' C B | \\L");
+    add_grammar_rule("C = E D");
+    add_grammar_rule("D = 'and' E D | \\L");
+    add_grammar_rule("E = 'not' E | '(' A ')' | 'true' | 'false'");
 
     // Test2
 //    add_grammar_rule("E = T E'");
@@ -61,9 +61,9 @@ void ParserController::construct_grammar() {
 //    add_grammar_rule("E = 'id' | 'num' | '(' E E ')' | '(' E '+' E ')' | '[' E ',' E ']'");
 
     // Test 7
-    add_grammar_rule("S = 'a' S | 'b' X");
-    add_grammar_rule("X = X X 'c' | X 'd' | Y");
-    add_grammar_rule("Y = Y 'e' | 'f' | 'g'");
+//    add_grammar_rule("S = 'a' S | 'b' X");
+//    add_grammar_rule("X = X X 'c' | X 'd' | Y");
+//    add_grammar_rule("Y = Y 'e' | 'f' | 'g'");
 }
 
 void ParserController::construct_non_terminals() {

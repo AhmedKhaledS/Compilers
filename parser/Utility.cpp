@@ -61,7 +61,7 @@ void Utility::compute_follow_terminals(NonTerminal *non_terminal, set<string> &f
         {
             NonTerminal current_non_terminal = *non_terminal->follow_helper[i].first[j].first;
             string terminal_name = non_terminal->follow_helper[i].first[j].second;
-            if (current_non_terminal.name == "" && terminal_name != "") // Terminal symbol case.
+            if (current_non_terminal.non_terminal == "" && terminal_name != "") // Terminal symbol case.
             {
                 follow_set.insert(terminal_name);
                 break;

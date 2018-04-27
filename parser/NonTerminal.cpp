@@ -9,7 +9,7 @@ NonTerminal::NonTerminal() {
 }
 
 NonTerminal::NonTerminal(string non_terminal_name) {
-    this->name = non_terminal_name;
+    this->non_terminal = non_terminal_name;
 }
 
 
