@@ -111,17 +111,15 @@ void Lexical_controller::run_(const string grammar_rule_file, const string src_p
     for (int i = 1; i <= MAX_NO_OF_LINES; ++i)
     {
         string current_rule = src_reader.read_next_grammar_rule_line(src_program_file, i);
-
-        for(int ii = 0; ii < current_rule.length(); ii++)
-        {
-            while (current_rule[ii] == ' ')
-                current_rule.erase(ii,1);
-
-        }
         if (current_rule == "~") {
             break;
         }
-        tokenizer.tokenize(current_rule, &current_state, cached_tokens);
+
+        std::replace(current_rule.begin(), current_rule.end(), ' ', '\n');
+        Helper h;
+        auto vec = h.tokenaize(current_rule, '\n');
+        for (auto x : vec)
+            tokenizer.tokenize(x, &current_state, cached_tokens);
     }
 }
 
