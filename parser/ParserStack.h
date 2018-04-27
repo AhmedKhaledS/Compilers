@@ -10,20 +10,21 @@
 #include <stack>
 using namespace std ;
 
-enum ERROR_ROUTINE {Synch , Panic , Reject , Correct};
+enum ERROR_ROUTINE {Synch , Missing , Reject};
 
 class ParserStack{
 
 private:
 
-    stack<pair<NonTerminal,string>> input_parsing_stack ;
+    stack<pair<NonTerminal*,string>> input_parsing_stack ;
     ParserTable predictive_parse_table ;
-    pair<NonTerminal,string> initial_parse_state ;
-    void match_next(string input);
+    pair<NonTerminal*,string> initial_parse_state ;
+    void initialize_stack();
+    void match_token(string input);
     void error_logger(ERROR_ROUTINE err);
 
 public:
-    ParserStack(ParserTable table, pair<NonTerminal, string > initial_state);
+    ParserStack(ParserTable table, pair<NonTerminal*, string > initial_state);
     void run_string_matcher(Lexical_controller input);
 
 };
