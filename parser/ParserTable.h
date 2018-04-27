@@ -24,6 +24,7 @@ public:
     ParserTable();
     void build_parse_table(vector<NonTerminal> grammar_rules);
     vector<pair<NonTerminal*, string>> fetch_from_parse_table(string non_term ,  string term );
+    map< pair<string,string>, vector<pair<NonTerminal*,string>> > get_parse_table();
 
 };
 

@@ -52,7 +52,16 @@ void ParserTable::insert_into_parse_table(string non_term, string term, vector<p
     pair<string , string> key ;
     key.first = non_term ;
     key.second = term ;
-    pair < pair<string,string> , vector<pair<NonTerminal*,string>> > input(key , Trans) ;
+    pair < pair<string,string> , vector<pair<NonTerminal*,string>> > input(key , Trans);
+    auto fetched_data = fetch_from_parse_table(non_term, term);
+    if (Trans[0].second == "Synch" && !fetched_data.empty()) // Case of overwriting with Synch.
+        return;
+    if (!fetched_data.empty()) // Case of insertion on a non-empty entry.
+    {
+        cout << "Duplicates appeared while constructing Parse table under: \nNon-Terminal: "
+                << non_term << " -- Terminal: " << term << endl;
+        exit(0);
+    }
     predictive_parse_table.insert(input);
 }
 
@@ -72,3 +81,8 @@ vector<pair<NonTerminal*,string>> ParserTable::fetch_from_parse_table( string no
     return empty;
 
 };
+
+map< pair<string,string>, vector<pair<NonTerminal*,string>> > ParserTable::get_parse_table()
+{
+    return this->predictive_parse_table;
+}

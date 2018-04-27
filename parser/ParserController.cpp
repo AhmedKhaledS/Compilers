@@ -15,6 +15,121 @@
 
 using namespace std;
 
+void ParserController::run_parser(const string grammar_rule_file) {
+
+    construct_grammar(grammar_rule_file);
+
+    GrammarNormalizer normalizer(grammar_rules);
+
+    /* START: FOR TESTING */
+    cout << "STEP(0): Actual grammar from file" << endl;
+    normalizer.print_grammar(grammar_rules);
+    /* END: FOR TESTING */
+
+    normalizer.perform_grammar_normalization();
+    grammar_rules.clear();
+    grammar_rules = normalizer.normalized_grammar;
+
+
+    /* FOR TESTING */
+    cout << "STEP (2): Performing Left Factoring (Working Version)" << endl;
+    normalizer.print_grammar(grammar_rules);
+
+    construct_non_terminals();
+
+    construct_terminals();
+
+    /* FOR TESTING */
+    cout << "STEP (2.1): Terminals" << endl;
+    normalizer.print_grammar(terminals);
+
+    /* FOR TESTING */
+    cout << "STEP (2.2): Non-Terminals" << endl;
+    normalizer.print_grammar(non_terminals);
+
+    construct_non_terminals_classes();
+
+    construct_productions();
+
+    /* FOR TESTING */
+    print_productions();
+
+    construct_follow_helper();
+
+    /* FOR TESTING */
+    print_follow_helper();
+
+    // TO DO: CALL FIRST()
+    for (int i = 0; i < non_terminals.size(); ++i) {
+
+        Utility::compute_first_terminals(non_terminals_classes[non_terminals[i]],
+                                         non_terminals_classes[non_terminals[i]]->first);
+    }
+
+    for (int i = 0; i < non_terminals.size(); ++i) {
+
+        Utility::compute_follow_terminals(non_terminals_classes[non_terminals[i]],
+                                          non_terminals_classes[non_terminals[i]]->follow);
+    }
+
+    for (int i = 0; i < non_terminals.size(); ++i) {
+
+        cout << "First of " << non_terminals_classes[non_terminals[i]]->non_terminal << " ";
+
+        for (auto it = non_terminals_classes[non_terminals[i]]->first.begin();
+             it != non_terminals_classes[non_terminals[i]]->first.end(); ++it)
+            cout << *it << " ";
+
+        cout << endl;
+
+    }
+
+    cout << endl;
+
+    for (int i = 0; i < non_terminals.size(); ++i) {
+
+        cout << "Follow of " << non_terminals_classes[non_terminals[i]]->non_terminal << " ";
+
+        for (auto it = non_terminals_classes[non_terminals[i]]->follow.begin();
+             it != non_terminals_classes[non_terminals[i]]->follow.end(); ++it)
+            cout << *it << " ";
+
+        cout << endl;
+    }
+
+    vector<NonTerminal> non_ts;
+    ParserTable parse_table;
+    for (string non_t : non_terminals)
+    {
+        non_ts.push_back(*non_terminals_classes[non_t]);
+    }
+    parse_table.build_parse_table(non_ts);
+    auto table = parse_table.get_parse_table();
+    cout << "Parse Table: \n\t\t";
+    cout << endl;
+    for (string non_terminal_sym : non_terminals)
+    {
+        for (string terminal_sym : terminals)
+        {
+            if (terminal_sym == "\\L")
+                terminal_sym = "$";
+            auto tmp = parse_table.fetch_from_parse_table(non_terminal_sym, terminal_sym);
+            for (auto curr : tmp)
+            {
+                if (curr.second == "")
+                cout << "{" << non_terminal_sym
+                     << ", " <<  terminal_sym << "} -> " << curr.first->non_terminal << endl;
+                else
+                    cout << "{" << non_terminal_sym
+                         << ", " << terminal_sym << "} -> " << curr.second << endl;
+            }
+        }
+    }
+    // TO DO: CALL CONSTRUCT_PARSE_TABLE()
+    // TO DO: CALL SIMULATE_STACK()
+
+}
+
 void ParserController::construct_grammar(const string grammar_rule_file) {
 
     Grammar_Reader x;
@@ -138,6 +253,8 @@ void ParserController::construct_productions() {
 
 }
 
+
+
 void ParserController::construct_follow_helper() {
 
     for (int i = 0; i < non_terminals.size(); ++i) {
@@ -171,95 +288,6 @@ void ParserController::construct_follow_helper() {
         }
 
     }
-}
-
-
-
-void ParserController::run_parser(const string grammar_rule_file) {
-
-    construct_grammar(grammar_rule_file);
-
-    GrammarNormalizer normalizer(grammar_rules);
-
-    /* START: FOR TESTING */
-    cout << "STEP(0): Actual grammar from file" << endl;
-    normalizer.print_grammar(grammar_rules);
-    /* END: FOR TESTING */
-
-    normalizer.perform_grammar_normalization();
-    grammar_rules.clear();
-    grammar_rules = normalizer.normalized_grammar;
-
-
-    /* FOR TESTING */
-    cout << "STEP (2): Performing Left Factoring (Working Version)" << endl;
-    normalizer.print_grammar(grammar_rules);
-
-    construct_non_terminals();
-
-    construct_terminals();
-
-    /* FOR TESTING */
-    cout << "STEP (2.1): Terminals" << endl;
-    normalizer.print_grammar(terminals);
-
-    /* FOR TESTING */
-    cout << "STEP (2.2): Non-Terminals" << endl;
-    normalizer.print_grammar(non_terminals);
-
-    construct_non_terminals_classes();
-
-    construct_productions();
-
-    /* FOR TESTING */
-    print_productions();
-
-    construct_follow_helper();
-
-    /* FOR TESTING */
-    print_follow_helper();
-
-    // TO DO: CALL FIRST()
-    for (int i = 0; i < non_terminals.size(); ++i) {
-
-        Utility::compute_first_terminals(non_terminals_classes[non_terminals[i]],
-                                         non_terminals_classes[non_terminals[i]]->first);
-    }
-
-    for (int i = 0; i < non_terminals.size(); ++i) {
-
-        Utility::compute_follow_terminals(non_terminals_classes[non_terminals[i]],
-                                          non_terminals_classes[non_terminals[i]]->follow);
-    }
-
-    for (int i = 0; i < non_terminals.size(); ++i) {
-
-        cout << "First of " << non_terminals_classes[non_terminals[i]]->non_terminal << " ";
-
-        for (auto it = non_terminals_classes[non_terminals[i]]->first.begin();
-             it != non_terminals_classes[non_terminals[i]]->first.end(); ++it)
-            cout << *it << " ";
-
-        cout << endl;
-
-    }
-
-    cout << endl;
-
-    for (int i = 0; i < non_terminals.size(); ++i) {
-
-        cout << "Follow of " << non_terminals_classes[non_terminals[i]]->non_terminal << " ";
-
-        for (auto it = non_terminals_classes[non_terminals[i]]->follow.begin();
-             it != non_terminals_classes[non_terminals[i]]->follow.end(); ++it)
-            cout << *it << " ";
-
-        cout << endl;
-    }
-
-    // TO DO: CALL CONSTRUCT_PARSE_TABLE()
-    // TO DO: CALL SIMULATE_STACK()
-
 }
 
 

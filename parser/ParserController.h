@@ -9,6 +9,7 @@
 #include <vector>
 #include <map>
 #include "NonTerminal.h"
+#include "ParserTable.h"
 
 using namespace std;
 
