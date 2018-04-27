@@ -43,7 +43,7 @@ void ParserTable::build_parse_table( vector<NonTerminal> grammar_rules)
 
 
 
-    std::cout << "Test Finished" << std::endl;
+    // std::cout << "Test Finished" << std::endl;
 
 }
 

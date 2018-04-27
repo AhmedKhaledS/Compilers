@@ -2,6 +2,16 @@
 // Created by ahmed on 24/04/18.
 //
 
+#include "printing/table_printer.h"
+#define _USE_MATH_DEFINES
+#include <math.h>
+
+#if defined(USE_BOOST_KARMA)
+#include <boost/spirit/include/karma.hpp>
+namespace karma = boost::spirit::karma;
+#endif
+
+using bprinter::TablePrinter;
 
 #include "ParserController.h"
 #include "../lexical_analyzer/automata/Helper.h"
@@ -97,34 +107,46 @@ void ParserController::run_parser(const string grammar_rule_file) {
         cout << endl;
     }
 
+    TablePrinter tp(&std::cout);
+
     vector<NonTerminal> non_ts;
     ParserTable parse_table;
+
+    tp.AddColumn("Non-Terminals", 15);
+    for (string t : terminals) {
+        if(t == "\\L") {
+            t = "$";
+        }
+        tp.AddColumn(t, 10);
+    }
+    tp.PrintHeader();
+
     for (string non_t : non_terminals)
     {
         non_ts.push_back(*non_terminals_classes[non_t]);
     }
     parse_table.build_parse_table(non_ts);
     auto table = parse_table.get_parse_table();
-    cout << "Parse Table: \n\t\t";
-    cout << endl;
     for (string non_terminal_sym : non_terminals)
     {
+        tp << non_terminal_sym;
         for (string terminal_sym : terminals)
         {
             if (terminal_sym == "\\L")
                 terminal_sym = "$";
             auto tmp = parse_table.fetch_from_parse_table(non_terminal_sym, terminal_sym);
+            string production = "";
             for (auto curr : tmp)
             {
                 if (curr.second == "")
-                cout << "{" << non_terminal_sym
-                     << ", " <<  terminal_sym << "} -> " << curr.first->non_terminal << endl;
+                    production.append(curr.first->non_terminal + " ");
                 else
-                    cout << "{" << non_terminal_sym
-                         << ", " << terminal_sym << "} -> " << curr.second << endl;
+                    production.append(curr.second + " ");
             }
+            tp << production;
         }
     }
+    tp.PrintFooter();
     // TO DO: CALL CONSTRUCT_PARSE_TABLE()
     // TO DO: CALL SIMULATE_STACK()
 
