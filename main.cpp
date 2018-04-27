@@ -32,7 +32,7 @@ int main()
 //     l.run_("test_simple.txt", "test_1_simple.txt");
 
     ParserController p;
-    p.run_parser("test_cases/Example_3.txt");
+    p.run_parser("test_cases/Example_2.txt");
 
 
 //    NonTerminal e,e2,t,t2,f;
