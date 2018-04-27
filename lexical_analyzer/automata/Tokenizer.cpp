@@ -28,6 +28,7 @@ void Tokenizer::tokenize(string input_line, DFANode *current_state, vector<strin
         tmp.push_back(input_line[j]);
         if (input_line[j] == '\r')
         {
+            if (stk_node.size() == 0) continue;
             string accepted_state_name = stk_node.top().acceptance_state_name;
             *current_state = *starting_state;
             while (!stk_node.empty()) {

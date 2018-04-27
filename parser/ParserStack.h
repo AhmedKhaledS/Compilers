@@ -15,7 +15,6 @@ enum ERROR_ROUTINE {Synch , Missing , Reject};
 class ParserStack{
 
 private:
-
     stack<pair<NonTerminal*,string>> input_parsing_stack ;
     ParserTable predictive_parse_table ;
     pair<NonTerminal*,string> initial_parse_state ;
@@ -25,7 +24,7 @@ private:
 
 public:
     ParserStack(ParserTable table, pair<NonTerminal*, string > initial_state);
-    void run_string_matcher(Lexical_controller input);
+    void run_string_matcher(Lexical_controller *input);
 
 };
 

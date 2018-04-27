@@ -55,4 +55,4 @@ add_executable(Compilers
         parser/printing/table_printer.cpp
         parser/printing/table_printer.h
         parser/printing/table_printer.tpp.h
-        main.cpp)
+        main.cpp MainController.cpp MainController.h)

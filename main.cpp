@@ -22,6 +22,7 @@
 #include "lexical_analyzer/file_services/GrammarReader.h"
 
 #include "lexical_analyzer/automata/Helper.h"
+#include "MainController.h"
 
 
 using namespace std;
@@ -31,9 +32,8 @@ int main()
 //     Lexical_controller l;
 //     l.run_("test_simple.txt", "test_1_simple.txt");
 
-    ParserController p;
-
-    p.run_parser("./test_cases/Example_2.txt");
+    MainController mc;
+    mc.run();
 
 
 

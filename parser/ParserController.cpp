@@ -149,6 +149,8 @@ void ParserController::run_parser(const string grammar_rule_file) {
     tp.PrintFooter();
     // TO DO: CALL CONSTRUCT_PARSE_TABLE()
     // TO DO: CALL SIMULATE_STACK()
+//    ParserStack parser_stk(parse_table, {starting_state, ""});
+//    parser_stk.run_string_matcher(lexical_controller);
 
 }
 
@@ -219,7 +221,10 @@ void ParserController::construct_non_terminals_classes() {
         non_terminals_classes[non_terminals[i]] = new
                 NonTerminal(non_terminals[i]);
         if (i == 0)
+        {
             non_terminals_classes[non_terminals[i]]->starting_state = true;
+            starting_state = non_terminals_classes[non_terminals[i]];
+        }
         else
             non_terminals_classes[non_terminals[i]]->starting_state = false;
     }
@@ -417,4 +422,8 @@ void ParserController::print_current_follow_helper(string name) {
     }
 
     cout << endl;
+}
+
+void ParserController::set_lexical_controller(Lexical_controller *lc) {
+    this->lexical_controller = lc;
 }

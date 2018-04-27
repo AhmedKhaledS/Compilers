@@ -8,19 +8,19 @@
 
 using namespace std ;
 
-void ParserStack::ParserStack(ParserTable table, pair<NonTerminal*, string> initial_state)
+ParserStack::ParserStack(ParserTable table, pair<NonTerminal*, string> initial_state)
 {
     this->predictive_parse_table = table ;
     this->initial_parse_state = initial_state;
     initialize_stack();
 }
 
-void ParserStack::run_string_matcher(Lexical_controller input)
+void ParserStack::run_string_matcher(Lexical_controller *input)
 {
-    string temp = input.next_token();
+    string temp = input->next_token();
     while(temp != ""){
         match_token(temp);
-        temp = input.next_token();
+        temp = input->next_token();
     }
 }
 
