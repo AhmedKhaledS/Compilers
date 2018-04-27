@@ -44,18 +44,19 @@ void Utility::compute_follow_terminals(NonTerminal *non_terminal, set<string> &f
     /// Iterate over each line in follow_productions.
     for (int i = 0; i < non_terminal->follow_helper.size(); ++i)
     {
-        NonTerminal parent = non_terminal->follow_helper[i].second;
+        NonTerminal parent = *non_terminal->follow_helper[i].second;
         auto next_tokens = non_terminal->follow_helper[i].first;
         if (next_tokens.empty()) // Get the follow of the parent.
         {
             set<string> follow_set_aux;
-            compute_follow_terminals(&parent, follow_set_aux);
+            if (parent.non_terminal != non_terminal->non_terminal)
+                compute_follow_terminals(&parent, follow_set_aux);
             follow_set.insert(follow_set_aux.begin(), follow_set_aux.end());
             follow_set.insert("$");
         }
         for (int j = 0; j < non_terminal->follow_helper[i].first.size(); ++j)
         {
-            NonTerminal current_non_terminal = non_terminal->follow_helper[i].first[j].first;
+            NonTerminal current_non_terminal = *non_terminal->follow_helper[i].first[j].first;
             string terminal_name = non_terminal->follow_helper[i].first[j].second;
             if (current_non_terminal.non_terminal == "" && terminal_name != "") // Terminal symbol case.
             {
@@ -90,4 +91,3 @@ void Utility::compute_follow_terminals(NonTerminal *non_terminal, set<string> &f
     if (non_terminal->starting_state)
         non_terminal->follow.insert("$");
 }
-

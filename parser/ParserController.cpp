@@ -134,8 +134,6 @@ void ParserController::construct_productions() {
 
 void ParserController::construct_follow_helper() {
 
-    Helper helper;
-
     for (int i = 0; i < non_terminals.size(); ++i) {
 
         NonTerminal &parent = *non_terminals_classes[non_terminals[i]];
@@ -152,15 +150,15 @@ void ParserController::construct_follow_helper() {
                     string non_terminal_name = current_production[k].first->non_terminal;
                     NonTerminal &child = *non_terminals_classes[non_terminal_name];
 
-                    vector<pair<NonTerminal, string>> follow_ups;
+                    vector<pair<NonTerminal*, string>> follow_ups;
 
                     for (int l = k + 1; l < current_production.size(); ++l) {
-                        follow_ups.push_back({*current_production[l].first,current_production[l].second});
+                        follow_ups.push_back({current_production[l].first, current_production[l].second});
                     }
 
-                    pair<vector<pair<NonTerminal, string>>, NonTerminal> paired_follow_ups;
+                    pair<vector<pair<NonTerminal*, string>>, NonTerminal*> paired_follow_ups;
                     paired_follow_ups.first = follow_ups;
-                    paired_follow_ups.second = parent;
+                    paired_follow_ups.second = non_terminals_classes[non_terminals[i]];
                     child.follow_helper.push_back(paired_follow_ups);
                 }
             }
@@ -327,18 +325,18 @@ void ParserController::print_current_follow_helper(string non_terminal) {
 
     cout << "Non-Terminal: " << non_terminal << endl;
 
-    vector<pair<vector<pair<NonTerminal, string>>, NonTerminal>> follow_helper =
+    vector<pair<vector<pair<NonTerminal*, string>>, NonTerminal*>> follow_helper =
             non_terminals_classes[non_terminal]->follow_helper;
 
     for (int l = 0; l < follow_helper.size(); ++l) {
-        pair<vector<pair<NonTerminal, string>>, NonTerminal> current_production = follow_helper[l];
+        pair<vector<pair<NonTerminal*, string>>, NonTerminal*> current_production = follow_helper[l];
 
-        vector<pair<NonTerminal, string>> productions = current_production.first;
+        vector<pair<NonTerminal*, string>> productions = current_production.first;
         cout << "Number#" << l+1 << "(size:" << productions.size() << ") ";
         for (int i = 0; i < productions.size(); ++i) {
 
-            if(productions[i].first.non_terminal != "") {
-                cout << productions[i].first.non_terminal << " ";
+            if(productions[i].first->non_terminal != "") {
+                cout << productions[i].first->non_terminal << " ";
             } else if(productions[i].second != "") {
                 cout << productions[i].second << " ";
             } else {
@@ -347,7 +345,7 @@ void ParserController::print_current_follow_helper(string non_terminal) {
 
         }
 
-        cout << " (Parent:" << current_production.second.non_terminal << ")" << endl;
+        cout << " (Parent:" << current_production.second->non_terminal << ")" << endl;
     }
 
     cout << endl;

@@ -24,7 +24,7 @@ class NonTerminal {
         vector<vector<pair<NonTerminal*, string>>> productions;
         set<string> first;
         set<string> follow;
-        vector<pair<vector<pair<NonTerminal,string>>, NonTerminal>> follow_helper;
+        vector<pair<vector<pair<NonTerminal*, string>>, NonTerminal*>> follow_helper;
         bool starting_state;
 };
 
