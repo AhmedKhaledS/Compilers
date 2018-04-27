@@ -1,5 +1,4 @@
 cmake_minimum_required(VERSION 3.9)
-
 project(Compilers)
 
 set(CMAKE_CXX_STANDARD 11)
@@ -13,6 +12,7 @@ add_executable(Compilers
         lexical_analyzer/automata/EdgeLabel.h
         lexical_analyzer/automata/Helper.cpp
         lexical_analyzer/automata/Helper.h
+        lexical_analyzer/automata/MinimizationTest.cpp
         lexical_analyzer/automata/NFA.cpp
         lexical_analyzer/automata/NFA.h
         lexical_analyzer/automata/NFAGenerator.cpp
@@ -46,10 +46,13 @@ add_executable(Compilers
         parser/NonTerminal.h
         parser/ParserController.cpp
         parser/ParserController.h
-        parser/Utility.cpp
-        parser/Utility.h
         parser/ParserStack.cpp
         parser/ParserStack.h
         parser/ParserTable.cpp
         parser/ParserTable.h
+        parser/Utility.cpp
+        parser/Utility.h
+        parser/printing/table_printer.cpp
+        parser/printing/table_printer.h
+        parser/printing/table_printer.tpp.h
         main.cpp)
