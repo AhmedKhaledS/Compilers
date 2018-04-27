@@ -15,16 +15,17 @@ enum ERROR_ROUTINE {Synch , Missing , Reject};
 class ParserStack{
 
 private:
-    stack<pair<NonTerminal*,string>> input_parsing_stack ;
+    NonTerminal empty;
+    stack<pair<NonTerminal*, string>> input_parsing_stack;
     ParserTable predictive_parse_table ;
-    pair<NonTerminal*,string> initial_parse_state ;
+    pair<NonTerminal*, string> initial_parse_state ;
     void initialize_stack();
-    void match_token(string input);
     void error_logger(ERROR_ROUTINE err);
-
+    void print_stack();
 public:
-    ParserStack(ParserTable table, pair<NonTerminal*, string > initial_state);
-    void run_string_matcher(Lexical_controller *input);
+
+    ParserStack(ParserTable table, pair<NonTerminal*, string> initial_state);
+    void match_tokens(string current_token, Lexical_controller *input);
 
 };
 

@@ -12,7 +12,8 @@
 
 using namespace std ;
 
-class ParserTable{
+class ParserTable
+{
 private:
     NonTerminal empty;
     map< pair<string,string>, vector<pair<NonTerminal*,string>> > predictive_parse_table;

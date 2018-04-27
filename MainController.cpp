@@ -18,13 +18,4 @@ void MainController::run()
     ParserController p;
     p.set_lexical_controller(&l);
     p.run_parser("./test_cases/main_grammar.txt");
-
-    cout << l.next_token() << endl;
-    cout << l.next_token() << endl;
-    cout << l.next_token() << endl;
-    cout << l.next_token() << endl;
-    cout << l.next_token() << endl;
-    cout << l.next_token() << endl;
-    cout << l.next_token() << endl;
-    cout << l.next_token() << endl;
 }

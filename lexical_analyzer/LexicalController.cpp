@@ -128,7 +128,7 @@ void Lexical_controller::run_(const string grammar_rule_file, const string src_p
 string Lexical_controller::next_token()
 {
     if (cached_tokens.size() == token_count)
-        return "";
+        return "$";
     return cached_tokens[token_count++];
 }
 

@@ -149,8 +149,8 @@ void ParserController::run_parser(const string grammar_rule_file) {
     tp.PrintFooter();
     // TO DO: CALL CONSTRUCT_PARSE_TABLE()
     // TO DO: CALL SIMULATE_STACK()
-//    ParserStack parser_stk(parse_table, {starting_state, ""});
-//    parser_stk.run_string_matcher(lexical_controller);
+    ParserStack parser_stk(parse_table, {starting_state, ""});
+    parser_stk.match_tokens(lexical_controller->next_token(), lexical_controller);
 
 }
 
