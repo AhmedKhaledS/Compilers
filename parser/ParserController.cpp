@@ -5,6 +5,7 @@
 #include "ParserController.h"
 #include "../lexical_analyzer/automata/Helper.h"
 #include "GrammarNormalizer.h"
+#include "Utility.h"
 
 
 #include <iostream>
@@ -18,9 +19,51 @@ void ParserController::construct_grammar() {
 //    add_grammar_rule("A = A 'c' | S 'd' | 'f'");
 //    add_grammar_rule("S = A 'a' | 'b'");
 
-    add_grammar_rule("E = E '+' T | T");
-    add_grammar_rule("T = T '*' F | F");
-    add_grammar_rule("F = 'id' | 'id' F");
+//    add_grammar_rule("E = E '+' T | T");
+//    add_grammar_rule("T = T '*' F | F");
+//    add_grammar_rule("F = 'id' | 'id' F");
+
+    // Test1
+//    add_grammar_rule("A = C B");
+//    add_grammar_rule("B = 'or' C B | \\L");
+//    add_grammar_rule("C = E D");
+//    add_grammar_rule("D = 'and' E D | \\L");
+//    add_grammar_rule("E = 'not' E | '(' A ')' | 'true' | 'false'");
+
+    // Test2
+//    add_grammar_rule("E = T E'");
+//    add_grammar_rule("E' = '+' E | \\L");
+//    add_grammar_rule("T = F T'");
+//    add_grammar_rule("T' = T | \\L");
+//    add_grammar_rule("F = P F'");
+//    add_grammar_rule("F' = '*' F | \\L");
+//    add_grammar_rule("P = '(' E ')' | 'a' | 'b' | 'Em'");
+
+    // Test3
+//    add_grammar_rule("E = T E'");
+//    add_grammar_rule("E' = '+' E | \\L");
+//    add_grammar_rule("T = F T'");
+//    add_grammar_rule("T' = '*' F T' | \\L");
+//    add_grammar_rule("F = '(' E ')' | 'id'");
+
+    // Test4
+//    add_grammar_rule("S = A 'b' S | 'e' | \\L");
+//    add_grammar_rule("A = 'a' | 'c' A 'd'");
+
+    // Test 5
+//    add_grammar_rule("S = 'i' C 't' S E | 'a'");
+//    add_grammar_rule("E = 'e' S | \\L");
+//    add_grammar_rule("C = 'b'");
+
+    // Test 6
+//    add_grammar_rule("P = P ';' Def | Def");
+//    add_grammar_rule("Def = 'id' '(' 'id' ')' '=' E");
+//    add_grammar_rule("E = 'id' | 'num' | '(' E E ')' | '(' E '+' E ')' | '[' E ',' E ']'");
+
+    // Test 7
+    add_grammar_rule("S = 'a' S | 'b' X");
+    add_grammar_rule("X = X X 'c' | X 'd' | Y");
+    add_grammar_rule("Y = Y 'e' | 'f' | 'g'");
 }
 
 void ParserController::construct_non_terminals() {
@@ -67,7 +110,8 @@ void ParserController::construct_non_terminals_classes() {
 
     for (int i = 0; i < non_terminals.size(); ++i) {
 
-        non_terminals_classes[non_terminals[i]] = NonTerminal(non_terminals[i]);
+        non_terminals_classes[non_terminals[i]] = new
+                NonTerminal(non_terminals[i]);
 
     }
 
@@ -82,27 +126,25 @@ void ParserController::construct_productions() {
         vector<string> equal_tokens = helper.tokenaize(grammar_rules[i], '=');
         vector<string> or_tokens = helper.tokenaize(equal_tokens[1], '|');
 
-        NonTerminal &current_non_terminal = non_terminals_classes[equal_tokens[0]];
-        vector<vector<pair<NonTerminal, string>>> productions;
+        NonTerminal &current_non_terminal = *non_terminals_classes[equal_tokens[0]];
+        vector<vector<pair<NonTerminal*, string>>> productions;
 
         for (int j = 0; j < or_tokens.size(); ++j) {
 
             vector<string> current_tokens = helper.tokenaize(or_tokens[j], ' ');
-            vector<pair<NonTerminal, string>> single_production;
+            vector<pair<NonTerminal*, string>> single_production;
 
             for (int k = 0; k < current_tokens.size(); ++k) {
 
                 string current = current_tokens[k];
-                pair<NonTerminal, string> single_identifier;
+                pair<NonTerminal*, string> single_identifier;
 
                 if(is_terminal(current)) {
-                    NonTerminal temp_class("");
-                    single_identifier.first = temp_class;
+                    single_identifier.first = new NonTerminal("");
                     single_identifier.second = current.substr(1, current.length() - 2);
                 } else if(is_epsilon(current)) {
-                    NonTerminal temp_class("");
-                    single_identifier.first = temp_class;
-                    single_identifier.second = "";
+                    single_identifier.first = new NonTerminal("");
+                    single_identifier.second = "\\L";
                 } else {
 
                     // Check for valid non-terminal
@@ -128,34 +170,31 @@ void ParserController::construct_productions() {
 
 void ParserController::construct_follow_helper() {
 
-    Helper helper;
-
     for (int i = 0; i < non_terminals.size(); ++i) {
 
-        NonTerminal &parent = non_terminals_classes[non_terminals[i]];
-        vector<vector<pair<NonTerminal, string>>> productions = parent.productions;
+        NonTerminal &parent = *non_terminals_classes[non_terminals[i]];
+        vector<vector<pair<NonTerminal*, string>>> productions = parent.productions;
 
         for (int j = 0; j < productions.size(); ++j) {
 
-            vector<pair<NonTerminal, string> > current_production = productions[j];
+            vector<pair<NonTerminal*, string> > current_production = productions[j];
 
             for (int k = 0; k < current_production.size(); ++k) {
 
+                if (is_non_terminal(*current_production[k].first)) {
 
-                if (is_non_terminal(current_production[k].first)) {
+                    string non_terminal_name = current_production[k].first->non_terminal;
+                    NonTerminal &child = *non_terminals_classes[non_terminal_name];
 
-                    string non_terminal_name = current_production[k].first.name;
-                    NonTerminal &child = non_terminals_classes[non_terminal_name];
-
-                    vector<pair<NonTerminal, string>> follow_ups;
+                    vector<pair<NonTerminal*, string>> follow_ups;
 
                     for (int l = k + 1; l < current_production.size(); ++l) {
-                        follow_ups.push_back(current_production[l]);
+                        follow_ups.push_back({current_production[l].first, current_production[l].second});
                     }
 
-                    pair<vector<pair<NonTerminal, string>>, NonTerminal> paired_follow_ups;
+                    pair<vector<pair<NonTerminal*, string>>, NonTerminal*> paired_follow_ups;
                     paired_follow_ups.first = follow_ups;
-                    paired_follow_ups.second = parent;
+                    paired_follow_ups.second = non_terminals_classes[non_terminals[i]];
                     child.follow_helper.push_back(paired_follow_ups);
                 }
             }
@@ -208,7 +247,41 @@ void ParserController::run_parser() {
     print_follow_helper();
 
     // TO DO: CALL FIRST()
-    // TO DO: CALL FOLLOW()
+    for (int i = 0; i < non_terminals.size(); ++i) {
+
+        Utility::compute_first_terminals(non_terminals_classes[non_terminals[i]],
+                                         non_terminals_classes[non_terminals[i]]->first);
+    }
+
+    for (int i = 0; i < non_terminals.size(); ++i) {
+
+        Utility::compute_follow_terminals(non_terminals_classes[non_terminals[i]],
+                                          non_terminals_classes[non_terminals[i]]->follow);
+    }
+
+    for (int i = 0; i < non_terminals.size(); ++i) {
+
+        cout << "First of :" << non_terminals_classes[non_terminals[i]]->non_terminal << " ";
+
+        for (auto it = non_terminals_classes[non_terminals[i]]->first.begin();
+             it != non_terminals_classes[non_terminals[i]]->first.end(); ++it)
+            cout << *it << " ";
+
+        cout << endl;
+
+    }
+
+    for (int i = 0; i < non_terminals.size(); ++i) {
+
+        cout << "Follow of :" << non_terminals_classes[non_terminals[i]]->non_terminal << " ";
+
+        for (auto it = non_terminals_classes[non_terminals[i]]->follow.begin();
+             it != non_terminals_classes[non_terminals[i]]->follow.end(); ++it)
+            cout << *it << " ";
+
+        cout << endl;
+    }
+
     // TO DO: CALL CONSTRUCT_PARSE_TABLE()
     // TO DO: CALL SIMULATE_STACK()
 
@@ -239,7 +312,7 @@ bool ParserController::is_epsilon(string token) {
 }
 
 bool ParserController::is_non_terminal(NonTerminal nonTerminal) {
-    return nonTerminal.name != "";
+    return nonTerminal.non_terminal != "";
 }
 
 
@@ -249,18 +322,18 @@ void ParserController::print_productions() {
     cout << "STEP(3): Productions" << endl;
 
     for (int i = 0; i < non_terminals.size(); ++i) {
-        string name = non_terminals[i];
-        NonTerminal non_terminal_class = non_terminals_classes[name];
+        string non_terminal = non_terminals[i];
+        NonTerminal* non_terminal_class = non_terminals_classes[non_terminal];
 
-        cout << non_terminal_class.name << " = ";
+        cout << non_terminal_class->non_terminal << " = ";
 
-        vector<vector<pair<NonTerminal, string>>> productions = non_terminal_class.productions;
+        vector<vector<pair<NonTerminal*, string>>> productions = non_terminal_class->productions;
 
         for (int j = 0; j < productions.size(); ++j) {
-            vector<pair<NonTerminal, string>> single_production = productions[j];
+            vector<pair<NonTerminal*, string>> single_production = productions[j];
             for (int k = 0; k < single_production.size(); ++k) {
-                if(single_production[k].first.name != "") {
-                    cout << single_production[k].first.name << " ";
+                if(single_production[k].first->non_terminal != "") {
+                    cout << single_production[k].first->non_terminal << " ";
                 } else if(single_production[k].second != "") {
                     cout << single_production[k].second << " ";
                 } else {
@@ -289,18 +362,18 @@ void ParserController::print_current_follow_helper(string name) {
 
     cout << "Non-Terminal: " << name << endl;
 
-    vector<pair<vector<pair<NonTerminal, string>>, NonTerminal>> follow_helper =
-            non_terminals_classes[name].follow_helper;
+    vector<pair<vector<pair<NonTerminal*, string>>, NonTerminal*>> follow_helper =
+            non_terminals_classes[name]->follow_helper;
 
     for (int l = 0; l < follow_helper.size(); ++l) {
-        pair<vector<pair<NonTerminal, string>>, NonTerminal> current_production = follow_helper[l];
+        pair<vector<pair<NonTerminal*, string>>, NonTerminal*> current_production = follow_helper[l];
 
-        vector<pair<NonTerminal, string>> productions = current_production.first;
+        vector<pair<NonTerminal*, string>> productions = current_production.first;
         cout << "Number#" << l+1 << "(size:" << productions.size() << ") ";
         for (int i = 0; i < productions.size(); ++i) {
 
-            if(productions[i].first.name != "") {
-                cout << productions[i].first.name << " ";
+            if(productions[i].first->non_terminal != "") {
+                cout << productions[i].first->non_terminal << " ";
             } else if(productions[i].second != "") {
                 cout << productions[i].second << " ";
             } else {
@@ -309,7 +382,7 @@ void ParserController::print_current_follow_helper(string name) {
 
         }
 
-        cout << " (Parent:" << current_production.second.name << ")" << endl;
+        cout << " (Parent:" << current_production.second->non_terminal << ")" << endl;
     }
 
     cout << endl;

@@ -20,11 +20,11 @@ class NonTerminal {
 
         NonTerminal(string non_terminal_name);
 
-        string name;
-        vector<vector<pair<NonTerminal, string>>> productions;
+        string non_terminal;
+        vector<vector<pair<NonTerminal*, string>>> productions;
         set<string> first;
         set<string> follow;
-        vector<pair<vector<pair<NonTerminal,string>>, NonTerminal>> follow_helper;
+        vector<pair<vector<pair<NonTerminal*, string>>, NonTerminal*>> follow_helper;
         bool starting_state;
 };
 
