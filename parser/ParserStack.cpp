@@ -19,12 +19,7 @@ ParserStack::ParserStack(ParserTable table, pair<NonTerminal*, string> initial_s
 
 void ParserStack::match_tokens(std::string current_token, Lexical_controller *input)
 {
-//    while (!input_parsing_stack.empty())
-//    {
-//        input_parsing_stack.pop();
-//    }
-//    initialize_stack();
-    while(input_parsing_stack.top().second != "$" && current_token != "$")
+    while(!input_parsing_stack.empty())
     {
         if(input_parsing_stack.top().second != "") // TOS is a terminal.
         {
@@ -68,10 +63,16 @@ void ParserStack::match_tokens(std::string current_token, Lexical_controller *in
             }
         }
     }
-    if (input_parsing_stack.top().second == "$" && current_token == "$")
-        return;
-    cout << "Error exist while matching!!!\n";
-    exit(0);
+    if (current_token != "$")
+    {
+        cout << "Error exist while matching!!!\n";
+        exit(0);
+    }
+//    if (input_parsing_stack.top().second == "$" && current_token == "$")
+//        return;
+//
+//    cout << "Error exist while matching!!!\n";
+//    exit(0);
 }
 
 void ParserStack::error_logger(ERROR_ROUTINE err)

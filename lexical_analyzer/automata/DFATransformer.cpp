@@ -173,6 +173,8 @@ DFANode DFATransformer::normal_transition(DFANode dfa_state, string input)
     {
         if (curr.is_acceptance_state())
         {
+            if (curr.get_acceptance_state_name() == "num")
+                int debug = -1;
             acc_state_name = curr.get_acceptance_state_name();
             break;
         }
