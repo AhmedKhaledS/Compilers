@@ -43,6 +43,11 @@ void Utility::compute_first_terminals(NonTerminal *non_terminal, set<string> &fi
 
 void Utility::compute_follow_terminals(NonTerminal *non_terminal, set<string> &follow_set)
 {
+    if (!non_terminal->follow.empty())
+    {
+        follow_set.insert(non_terminal->follow.begin(), non_terminal->follow.end());
+        return;
+    }
     cyclic_checker[non_terminal->non_terminal] = true;
     /// Iterate over each line in follow_productions.
     for (int i = 0; i < non_terminal->follow_helper.size(); ++i)
@@ -55,7 +60,7 @@ void Utility::compute_follow_terminals(NonTerminal *non_terminal, set<string> &f
             if (!cyclic_checker[parent.non_terminal])
                 compute_follow_terminals(&parent, follow_set_aux);
             follow_set.insert(follow_set_aux.begin(), follow_set_aux.end());
-            follow_set.insert("$");
+           // follow_set.insert("$");
         }
         for (int j = 0; j < non_terminal->follow_helper[i].first.size(); ++j)
         {
@@ -80,7 +85,7 @@ void Utility::compute_follow_terminals(NonTerminal *non_terminal, set<string> &f
                         if (!cyclic_checker[parent.non_terminal])
                             compute_follow_terminals(&parent, follow_set_aux);
                         follow_set.insert(follow_set_aux.begin(), follow_set_aux.end());
-                        follow_set.insert("$");
+              //          follow_set.insert("$");
                     }
                     continue;
                 }

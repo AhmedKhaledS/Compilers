@@ -240,14 +240,15 @@ string GrammarNormalizer::left_factoring_substitution(int start, int end, string
     for (int i = start; i < end + 1; ++i) {
         string current_production = or_tokens[i];
         if(or_tokens[i].substr(prefix.size(), or_tokens[i].size() - prefix.size()).size() == 0) {
-            continue;
+            new_rule += "\\L";
+        } else {
+            new_rule += or_tokens[i].substr(prefix.size() + 1, or_tokens[i].size() - prefix.size());
         }
-        new_rule += or_tokens[i].substr(prefix.size(), or_tokens[i].size() - prefix.size());
         if(i != end)
             new_rule += " | ";
     }
 
-    normalized_grammar.push_back(new_rule);
+    non_recursive_grammar.push_back(new_rule);
 
     return output_grammar;
 }
