@@ -73,8 +73,10 @@ void ParserStack::match_tokens(std::string current_token, Lexical_controller *in
 
                 tp << "Error: No Transition, Skip this Input";
 
+                string prev_token = current_token;
                 current_token = input->next_token();
-                if(current_token == "$") {
+
+                if(prev_token == "$" && current_token == "$") {
                     break;
                 }
 
