@@ -19,18 +19,20 @@ ParserStack::ParserStack(ParserTable table, pair<NonTerminal*, string> initial_s
 
 void ParserStack::match_tokens(std::string current_token, Lexical_controller *input)
 {
+    string matched_string = "";
+    print_stack();
+    left_most_derivation.push_back(input_parsing_stack.top().first->non_terminal + " $");
     while(!input_parsing_stack.empty())
     {
         if(input_parsing_stack.top().second != "") // TOS is a terminal.
         {
+            string tmp = current_token;
             if (current_token == input_parsing_stack.top().second)
-            {
-                cout << "Token: " << current_token << " is matched.\n";
                 current_token = input->next_token();
-            }
-            else
-                cout << "Missing the current TOS: " << input_parsing_stack.top().first->non_terminal <<"\n";
             input_parsing_stack.pop();
+        //    left_most_derivation.push_back(matched_string + tmp + " ");
+            matched_string += tmp + " ";
+            cout << "\t\tMatch(" << matched_string << ")";
             print_stack();
         } else {
             string key_non_terminal =  input_parsing_stack.top().first->non_terminal;
@@ -40,14 +42,13 @@ void ParserStack::match_tokens(std::string current_token, Lexical_controller *in
             if(replacement.empty())
             {
 //                error_logger(Reject);
-                cout << "No entry for the current token: " << current_token << ".\n";
                 current_token = input->next_token();
             } else if (replacement[0].second == "Synch") {
 //                error_logger(Synch);
                 input_parsing_stack.pop();
                 print_stack();
-                cout << "The TOS of stack is a Non-Terminal that has a 'Synch' entry in the Parse-Table.\n";
             } else {
+
                 input_parsing_stack.pop();
                 if(replacement[0].second != "\\L")
                 {
@@ -56,18 +57,29 @@ void ParserStack::match_tokens(std::string current_token, Lexical_controller *in
                     {
                         input_parsing_stack.push(x);
                     }
-                    cout << "TOS is a Non-Terminal and replaced by its transition.\n";
+                }
+                left_most_derivation.push_back(matched_string + (matched_string == ""? "" : " "));
+                auto temp_stack = input_parsing_stack;
+                while (!temp_stack.empty())
+                {
+                    string tmp = (temp_stack.top().second != "" ?
+                                  temp_stack.top().second : temp_stack.top().first->non_terminal);
+                    left_most_derivation.back().append(tmp + " ");
+                    temp_stack.pop();
                 }
                 print_stack();
 
             }
         }
     }
+    cout << "\n\nLeft-most derivation predictive parsing: \n";
     if (current_token != "$")
     {
         cout << "Error exist while matching!!!\n";
         exit(0);
     }
+    for (auto curr : left_most_derivation)
+        cout << curr << endl;
 //    if (input_parsing_stack.top().second == "$" && current_token == "$")
 //        return;
 //
@@ -102,11 +114,12 @@ void ParserStack::initialize_stack()
 
 void ParserStack::print_stack()
 {
+    cout << endl;
     auto temp_stack = input_parsing_stack;
     while (!temp_stack.empty())
     {
-        cout << (temp_stack.top().second != "" ? temp_stack.top().second : temp_stack.top().first->non_terminal) << " ";
+        string tmp = (temp_stack.top().second != "" ? temp_stack.top().second : temp_stack.top().first->non_terminal);
+        cout << tmp << " ";
         temp_stack.pop();
     }
-    cout << endl;
 }

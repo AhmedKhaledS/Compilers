@@ -19,6 +19,7 @@ private:
     stack<pair<NonTerminal*, string>> input_parsing_stack;
     ParserTable predictive_parse_table ;
     pair<NonTerminal*, string> initial_parse_state ;
+    vector<string> left_most_derivation;
     void initialize_stack();
     void error_logger(ERROR_ROUTINE err);
     void print_stack();
