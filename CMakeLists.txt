@@ -40,6 +40,9 @@ add_executable(Compilers
         lexical_analyzer/LexicalController.h
         lexical_analyzer/SymbolTable.cpp
         lexical_analyzer/SymbolTable.h
+        parser/printing/table_printer.cpp
+        parser/printing/table_printer.h
+        parser/printing/table_printer.tpp.h
         parser/GrammarNormalizer.cpp
         parser/GrammarNormalizer.h
         parser/NonTerminal.cpp
@@ -50,9 +53,9 @@ add_executable(Compilers
         parser/ParserStack.h
         parser/ParserTable.cpp
         parser/ParserTable.h
+        parser/TestParseTableStack.cpp
         parser/Utility.cpp
         parser/Utility.h
-        parser/printing/table_printer.cpp
-        parser/printing/table_printer.h
-        parser/printing/table_printer.tpp.h
-        main.cpp MainController.cpp MainController.h)
+        main.cpp
+        MainController.cpp
+        MainController.h)

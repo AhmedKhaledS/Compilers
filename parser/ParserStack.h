@@ -22,7 +22,7 @@ private:
     vector<string> left_most_derivation;
     void initialize_stack();
     void error_logger(ERROR_ROUTINE err);
-    void print_stack();
+    string print_stack();
 public:
 
     ParserStack(ParserTable table, pair<NonTerminal*, string> initial_state);

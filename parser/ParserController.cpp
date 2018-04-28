@@ -154,6 +154,7 @@ void ParserController::run_parser(const string grammar_rule_file) {
 
 }
 
+
 void ParserController::construct_grammar(const string grammar_rule_file) {
 
     Grammar_Reader x;
@@ -282,8 +283,6 @@ void ParserController::construct_productions() {
 
 }
 
-
-
 void ParserController::construct_follow_helper() {
 
     for (int i = 0; i < non_terminals.size(); ++i) {
@@ -320,7 +319,6 @@ void ParserController::construct_follow_helper() {
 }
 
 
-
 void ParserController::add_grammar_rule(string grammar_rule) {
     grammar_rules.push_back(grammar_rule);
 }
@@ -338,7 +336,6 @@ void ParserController::add_terminal(string terminal) {
 }
 
 
-
 bool ParserController::is_terminal(string token) {
     return token[0] == '\'' && token[token.length() - 1] == '\'';
 }
@@ -350,7 +347,6 @@ bool ParserController::is_epsilon(string token) {
 bool ParserController::is_non_terminal(NonTerminal nonTerminal) {
     return nonTerminal.non_terminal != "";
 }
-
 
 
 void ParserController::print_productions() {
