@@ -59,7 +59,7 @@ void ParserTable::insert_into_parse_table(string non_term, string term, vector<p
     if (!fetched_data.empty()) // Case of insertion on a non-empty entry.
     {
         cout << "Duplicates appeared while constructing Parse table under: \nNon-Terminal: "
-                << non_term << " -- Terminal: " << term << endl;
+             << non_term << " -- Terminal: " << term << endl;
         exit(0);
     }
     predictive_parse_table.insert(input);

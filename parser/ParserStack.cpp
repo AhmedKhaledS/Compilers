@@ -4,6 +4,7 @@
 #include <iostream>
 #include <algorithm>
 #include "ParserStack.h"
+#include "../lexical_analyzer/file_services/FileWriter.h"
 #include "../lexical_analyzer/LexicalController.h"
 
 using namespace std ;
@@ -27,12 +28,18 @@ void ParserStack::match_tokens(std::string current_token, Lexical_controller *in
         if(input_parsing_stack.top().second != "") // TOS is a terminal.
         {
             string tmp = current_token;
-            if (current_token == input_parsing_stack.top().second)
+            if (current_token == input_parsing_stack.top().second) {
                 current_token = input->next_token();
+                matched_string += tmp + " ";
+                cout << "\t\tMatch(" << matched_string << ")";
+            } else {
+                matched_string += input_parsing_stack.top().second;
+                cout << "-----ERROR: Missing " << input_parsing_stack.top().second << ", inserted to input" << endl;
+            }
             input_parsing_stack.pop();
         //    left_most_derivation.push_back(matched_string + tmp + " ");
-            matched_string += tmp + " ";
-            cout << "\t\tMatch(" << matched_string << ")";
+            // matched_string += tmp + " ";
+
             print_stack();
         } else {
             string key_non_terminal =  input_parsing_stack.top().first->non_terminal;
@@ -43,9 +50,16 @@ void ParserStack::match_tokens(std::string current_token, Lexical_controller *in
             {
 //                error_logger(Reject);
                 current_token = input->next_token();
+                cout << "-----ERROR: Empty Entry" << endl;
+                if(current_token == "$") {
+                    cout << "-----ERROR: Empty Entry and $" << endl;
+                    break;
+                }
+
             } else if (replacement[0].second == "Synch") {
 //                error_logger(Synch);
                 input_parsing_stack.pop();
+                cout << "-----ERROR: Sync Entry" << endl;
                 print_stack();
             } else {
 
@@ -72,14 +86,30 @@ void ParserStack::match_tokens(std::string current_token, Lexical_controller *in
             }
         }
     }
+
+
     cout << "\n\nLeft-most derivation predictive parsing: \n";
-    if (current_token != "$")
-    {
-        cout << "Error exist while matching!!!\n";
-        exit(0);
-    }
     for (auto curr : left_most_derivation)
         cout << curr << endl;
+
+
+    if (current_token != "$")
+    {
+        cout << "Error exist while matching_1!!!\n";
+        exit(0);
+    } else if (!input_parsing_stack.empty()) {
+        cout << "Error exist while matching_2!!!\n";
+        exit(0);
+    }
+
+//    cout << "\n\nLeft-most derivation predictive parsing: \n";
+//    for (auto curr : left_most_derivation)
+//        cout << curr << endl;
+
+
+    File_Writer parser_file;
+    parser_file.write("parsing_file.txt", left_most_derivation);
+
 //    if (input_parsing_stack.top().second == "$" && current_token == "$")
 //        return;
 //
