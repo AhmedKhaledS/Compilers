@@ -19,8 +19,8 @@ void GrammarNormalizer::perform_grammar_normalization() {
 
     perform_left_recursion_elimination();
 
-    cout << "STEP (1): Eliminating Left Recursion" << endl;
-    print_grammar(non_recursive_grammar);
+    // cout << "STEP (1): Eliminating Left Recursion" << endl;
+    // print_grammar(non_recursive_grammar);
 
     perform_left_factoring();
 

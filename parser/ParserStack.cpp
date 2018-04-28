@@ -34,6 +34,8 @@ ParserStack::ParserStack(ParserTable table, pair<NonTerminal*, string> initial_s
 void ParserStack::match_tokens(std::string current_token, Lexical_controller *input)
 {
 
+    cout << "Stack Simulation" << endl;
+
     TablePrinter tp(&std::cout);
     tp.AddColumn("Stack", 90);
     tp.AddColumn("Input", 40);
@@ -45,6 +47,8 @@ void ParserStack::match_tokens(std::string current_token, Lexical_controller *in
     tp << current_token;
     left_most_derivation.push_back(input_parsing_stack.top().first->non_terminal + " $");
 
+    // stack is empty || input = $
+
     while(!input_parsing_stack.empty())
     {
         if(input_parsing_stack.top().second != "") // TOS is a terminal.
@@ -55,7 +59,7 @@ void ParserStack::match_tokens(std::string current_token, Lexical_controller *in
                 current_token = input->next_token();
                 matched_string += tmp + " ";
             } else { // Not Matched
-                matched_string += input_parsing_stack.top().second;
+                matched_string += input_parsing_stack.top().second + " ";
                tp << "Error: Missing Token, but Inserted";
             }
             input_parsing_stack.pop();
@@ -125,21 +129,21 @@ void ParserStack::match_tokens(std::string current_token, Lexical_controller *in
     if (current_token != "$")
     {
         tp << "";
-        cout << "Error exist after matching: Some tokens from the user are discarded!!!\n";
+        cout << "Status: Error exist after matching: Some tokens from the user are discarded!!!\n";
         tp.PrintFooter();
         // exit(1);
     } else if (!input_parsing_stack.empty()) {
         tp.PrintFooter();
-        cout << "Error exist after matching: Some tokens form the user can not be matched!!!\n";
+        cout << "Status: Error exist after matching: Some tokens form the user can not be matched!!!\n";
         // exit(2);
     } else {
         tp << "Done";
         tp.PrintFooter();
-        cout << "Successfully parsed\n";
+        cout << "Status: Successfully parsed\n";
     }
 
 
-    cout << "\n\nLeft-most derivation predictive parsing: \n";
+    cout << "\nLeft-most derivation predictive parsing: \n\n";
     for (auto curr : left_most_derivation)
         cout << curr << endl;
 
