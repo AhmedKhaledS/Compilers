@@ -60,7 +60,7 @@ void ParserStack::match_tokens(std::string current_token, Lexical_controller *in
                 matched_string += tmp + " ";
             } else { // Not Matched
                 matched_string += input_parsing_stack.top().second + " ";
-               tp << "Error: Missing Token, but Inserted";
+               tp << ("Error: Missing Token, but Inserted: " + input_parsing_stack.top().second);
             }
             input_parsing_stack.pop();
 
@@ -89,7 +89,7 @@ void ParserStack::match_tokens(std::string current_token, Lexical_controller *in
 
             } else if (replacement[0].second == "Synch") { // Sync Entry
 
-                tp << "Error: Synch Transition, Pop TOS";
+                tp << "Error: Synch Transition, Missing Term";
 
                 input_parsing_stack.pop();
 
@@ -126,13 +126,13 @@ void ParserStack::match_tokens(std::string current_token, Lexical_controller *in
         }
     }
 
-    if (current_token != "$")
+    if (current_token != "$") // Empty Stack but still there is input
     {
         tp << "";
         cout << "Status: Error exist after matching: Some tokens from the user are discarded!!!\n";
         tp.PrintFooter();
         // exit(1);
-    } else if (!input_parsing_stack.empty()) {
+    } else if (!input_parsing_stack.empty()) { // Non-Empty Stack and no other input
         tp.PrintFooter();
         cout << "Status: Error exist after matching: Some tokens form the user can not be matched!!!\n";
         // exit(2);
@@ -143,7 +143,7 @@ void ParserStack::match_tokens(std::string current_token, Lexical_controller *in
     }
 
 
-    cout << "\nLeft-most derivation predictive parsing: \n\n";
+    cout << "\nLeft-most derivation predictive parsing: \n";
     for (auto curr : left_most_derivation)
         cout << curr << endl;
 
